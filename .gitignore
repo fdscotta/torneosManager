@@ -1,0 +1,40 @@
+.DS_Store
+
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+back/app/node_modules
+back/app/.pnp
+back/app/.pnp.js
+
+# testing
+back/app/coverage
+
+# next.js
+back/app/.next/
+back/app/out/
+
+# production
+back/app/build
+
+# misc
+back/app/.DS_Store
+*.pem
+
+# debug
+back/app/npm-debug.log*
+back/app/yarn-debug.log*
+back/app/yarn-error.log*
+
+# local env files
+back/app/.env*.local
+back/app/.env
+
+# vercel
+back/app/.vercel
+
+# typescript
+*.tsbuildinfo
+back/app/next-env.d.ts
+back/app/.nvmrc
+back/app/.eslintrc.json
