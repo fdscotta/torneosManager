@@ -6,36 +6,22 @@ import {
 import { unstable_noStore as noStore } from 'next/cache';
 
 
-export async function fetchActiveTournaments() {
-  noStore();
-  try {
-    const data = await sql<Tournaments>`
-      SELECT *
-      FROM tournaments
-      WHERE status = 0
-      LIMIT 1`;
-
-    const activeTournaments = data.rows;
-    return activeTournaments?.id;
-  } catch (error) {
-    console.error('Database Error:', error);
-    throw new Error('Failed to fetch the active tournaments.');
-  }
-}
-
 const ITEMS_PER_PAGE = 6;
-export async function fetchFilteredTournaments(
+export async function fetchFilteredTournamentsCouples(
   query: string,
   currentPage: number,
+  tournamentID: string,
 ) {
   noStore();
   const offset = (currentPage - 1) * ITEMS_PER_PAGE;
   try {
     const tournaments = await sql<Tournaments>`
       SELECT *
-      FROM tournaments
+        FROM couples as a
+        INNER JOIN tournaments as b ON a.tournament_id = b.id
       WHERE
-        name::text ILIKE ${`%${query}%`}
+        a.name::text ILIKE ${`%${query}%`}
+        AND b.id = ${tournamentID}
       LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
     `;
 
@@ -46,11 +32,20 @@ export async function fetchFilteredTournaments(
   }
 }
 
-export async function fetchTournamentsPages(query: string) {
+export async function fetchTournamentsCouplesPages(
+    query: string,
+    tournamentID: string,
+) {
   noStore();
   try {
-    const count = await sql`SELECT COUNT(*)
-    FROM tournaments`;
+    const count = await sql`
+      SELECT COUNT(*)
+        FROM couples as a
+        INNER JOIN tournaments as b ON a.tournament_id = b.id
+      WHERE
+        a.name::text ILIKE ${`%${query}%`}
+        AND b.id = ${tournamentID}
+    `;
 
     const totalPages = Math.ceil(Number(count.rows[0].count) / ITEMS_PER_PAGE);
     return totalPages;
@@ -60,13 +55,15 @@ export async function fetchTournamentsPages(query: string) {
   }
 }
 
-export async function fetchTournamentById(id: string) {
+export async function fetchTournamentCoupleById(id: string) {
   noStore();
   try {
     const data = await sql<Tournaments>`
       SELECT *
-      FROM tournaments
-      WHERE id = ${id};
+        FROM couples as a
+        INNER JOIN tournaments as b ON a.tournament_id = b.id
+      WHERE
+        b.id = ${id}
     `;
 
     const tournament = data.rows;
@@ -75,15 +72,5 @@ export async function fetchTournamentById(id: string) {
   } catch (error) {
     console.error('Database Error:', error);
     throw new Error('Failed to fetch tournament.');
-  }
-}
-
-export async function getUser(email: string) {
-  try {
-    const user = await sql`SELECT * from USERS where email=${email}`;
-    return user.rows[0] as User;
-  } catch (error) {
-    console.error('Failed to fetch user:', error);
-    throw new Error('Failed to fetch user.');
   }
 }

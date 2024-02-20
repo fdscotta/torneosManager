@@ -1,15 +1,16 @@
 import Pagination from '@/app/ui/pagination';
 import Search from '@/app/ui/search';
-import Table from '@/app/ui/tournaments/table';
-import { CreateTournament } from '@/app/ui/tournaments/buttons';
+import Table from '@/app/ui/tournamentsCouples/table';
+import { CreateTournamentCouple } from '@/app/ui/tournamentsCouples/buttons';
 import { lusitana } from '@/app/ui/fonts';
 import { TournamentTableSkeleton } from '@/app/ui/skeletons';
 import { Suspense } from 'react';
-import { fetchTournamentsPages } from '@/app/lib/data';
+import { fetchTournamentsCouplesPages } from '@/app/lib/couplesData';
+import { fetchActiveTournaments } from '@/app/lib/data';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Torneos',
+  title: 'Parejas del Torneo',
 };
 
 export default async function Page({
@@ -23,19 +24,21 @@ export default async function Page({
   const query = searchParams?.query || '';
   const currentPage = Number(searchParams?.page) || 1;
 
-  const totalPages = await fetchTournamentsPages(query);
+  const tournamentID = await fetchActiveTournaments();
+
+  const totalPages = await fetchTournamentsCouplesPages(query, tournamentID);
 
   return (
     <div className="w-full">
       <div className="flex w-full items-center justify-between">
-        <h1 className={`${lusitana.className} text-2xl`}>Torneos</h1>
+        <h1 className={`${lusitana.className} text-2xl`}>Parejas del Torneo</h1>
       </div>
       <div className="mt-4 flex items-center justify-between gap-2 md:mt-8">
-        <Search placeholder="Buscar Torneo..." />
-        <CreateTournament />
+        <Search placeholder="Buscar Pareja..." />
+        <CreateTournamentCouple />
       </div>
       <Suspense key={query + currentPage} fallback={<TournamentTableSkeleton />}>
-        <Table query={query} currentPage={currentPage} />
+        <Table query={query} currentPage={currentPage} tournamentID={tournamentID} />
       </Suspense>
       <div className="mt-5 flex w-full justify-center">
         <Pagination totalPages={totalPages} />

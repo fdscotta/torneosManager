@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { UpdateTournament, DeleteTournament } from '@/app/ui/tournaments/buttons';
+import { UpdateTournament, DeleteTournament, AddCouples } from '@/app/ui/tournaments/buttons';
 import TournamentStatus from '@/app/ui/tournaments/status';
 import { formatDateToLocal } from '@/app/lib/utils';
 import { fetchFilteredTournaments } from '@/app/lib/data';
@@ -91,6 +91,8 @@ export default async function TournamentsTable({
                   </td>
                   <td className="whitespace-nowrap py-3 pl-6 pr-3">
                     <div className="flex justify-end gap-3">
+                      {(tournament.status === 0) && <AddCouples id={tournament.id} />}
+
                       <UpdateTournament id={tournament.id} />
                       <DeleteTournament id={tournament.id} />
                     </div>

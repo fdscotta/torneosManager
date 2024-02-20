@@ -1,6 +1,6 @@
-import { PencilIcon, PlusIcon, TrashIcon } from '@heroicons/react/24/outline';
+import { PencilIcon, PlusIcon, TrashIcon, PlusCircleIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
-import { deleteTournament } from '@/app/lib/actions';
+import { deleteTournament } from '@/app/lib/tournamentsActions';
 
 export function CreateTournament() {
   return (
@@ -10,6 +10,19 @@ export function CreateTournament() {
     >
       <span className="hidden md:block">Crear Torneo</span>{' '}
       <PlusIcon className="h-5 md:ml-4" />
+    </Link>
+  );
+}
+
+export function AddCouples({ id }: { id: string }) {
+  return (
+    <Link
+      href={`/dashboard/tournaments/${id}/couples`}
+      className="rounded-md border p-2 hover:bg-gray-100"
+      data-toggle='tooltip'
+      title="My New Title"
+    >
+      <PlusCircleIcon className="w-5" />
     </Link>
   );
 }

@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { Button } from '@/app/ui/button';
-import { createTournament } from '@/app/lib/actions';
+import { createTournament } from '@/app/lib/tournamentsActions';
 import { useFormState } from 'react-dom';
 
 export default function FormTournament() {

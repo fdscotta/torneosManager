@@ -3,7 +3,7 @@
 import { Tournaments } from '@/app/lib/definitions';
 import Link from 'next/link';
 import { Button } from '@/app/ui/button';
-import { updateTournament } from '@/app/lib/actions';
+import { updateTournament } from '@/app/lib/tournamentsActions';
 import { useFormState } from 'react-dom';
 import Image from 'next/image';
 
@@ -39,10 +39,15 @@ export default function EditTournamentForm({
                 id="image"
                 name="image"
                 type="file"
-                defaultValue={tournament.image}
                 placeholder="Cargar Flyer"
                 className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
                 aria-describedby="image-error"
+              />
+              <input
+                id="currentImage"
+                name="currentImage"
+                type="hidden"
+                value={tournament.image}
               />
             </div>
             <div id="status-error" aria-live="polite" aria-atomic="true">
@@ -88,7 +93,7 @@ export default function EditTournamentForm({
                 name="date"
                 type="date"
                 placeholder="Fecha de inicio del Torneo"
-                defaultValue={tournament.date}
+                defaultValue={tournament.date.toISOString().substring(0,10)}
                 className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
                 aria-describedby="date-error"
               />
