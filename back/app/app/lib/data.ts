@@ -15,8 +15,8 @@ export async function fetchActiveTournaments() {
       WHERE status = 0
       LIMIT 1`;
 
-    const activeTournaments = data.rows;
-    return activeTournaments?.id;
+    return data.rows;
+    //return activeTournaments?.id;
   } catch (error) {
     console.error('Database Error:', error);
     throw new Error('Failed to fetch the active tournaments.');

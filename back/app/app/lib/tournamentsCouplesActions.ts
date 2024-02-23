@@ -4,49 +4,39 @@ import { z } from 'zod';
 import { sql } from '@vercel/postgres';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
-import { updateImageCloud } from './cloudinary';
-
-const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/jpg", "image/png", "image/webp"];
 
 const FormSchema = z.object({
   id: z.string(),
-  image: z.any()
-    .refine(
-      (file) => ACCEPTED_IMAGE_TYPES.includes(file.type),
-      "Esto no es una foto"
-    ),
-  name: z.string().min(1,{
-    message: 'Por favor complete el Nombre del Torneo.',
+  player1: z.string().min(1,{
+    message: 'Por favor complete el Nombre del Jugador 2.',
   }),
-  date: z.coerce.date(
-    {
-      errorMap: () => ({
-        message: "Fecha incorrecta",
-      }),
-    },
-  ),
+  player2: z.string().min(1,{
+    message: 'Por favor complete el Nombre del Jugador 2.',
+  }),
 });
 
-const CreateTournament = FormSchema.omit({ id: true });
-const UpdateTournament = FormSchema.omit({ id: true, image: true });
+const CreateCouple = FormSchema.omit({ id: true });
+const UpdateCouple = FormSchema.omit({ id: true });
 
 // This is temporary
 export type State = {
   errors?: {
-    name?: string[];
-    image?: string[];
-    date?: string[];
+    player1?: string[];
+    player2?: string[];
   };
   message?: string | null;
 };
 
-export async function createTournament(prevState: State, formData: FormData) {
+export async function createCouple(
+  tournamentID: string,
+  prevState: State,
+  formData: FormData
+) {
 
   // Validate form fields using Zod
-  const validatedFields = CreateTournament.safeParse({
-    name: formData.get('name'),
-    image: formData.get('image'),
-    date: formData.get('date'),
+  const validatedFields = CreateCouple.safeParse({
+    player1: formData.get('player1'),
+    player2: formData.get('player2'),
   });
 
   // If form validation fails, return errors early. Otherwise, continue.
@@ -57,74 +47,45 @@ export async function createTournament(prevState: State, formData: FormData) {
     };
   }
 
-  const file = formData.get('image') as File;
-  let imagePosted = '';
-/*   if (file.size === 0) {
-    return {
-      errors: {
-        image: ['Por favor suba una imagen para el torneo.'],
-      },
-      message: "Complete los datos",
-    };
-  } */
-
-  if (file.size > 0) {
-    imagePosted = await updateImageCloud(file);
-  }
-
   // Prepare data for insertion into the database
   const {
-    name,
-    date
+    player1,
+    player2
   } = validatedFields.data;
-
-  const formatDate = date.toISOString().split('T');
 
   // Insert data into the database
   try {
     await sql`
-      INSERT INTO tournaments (
-        name,
-        status,
-        type,
-        date,
-        image
+      INSERT INTO tournament_couples (
+        player1,
+        player2,
+        tournament_id
       )
       VALUES (
-        ${name},
-        0,
-        'torneo',
-        ${formatDate},
-        ${imagePosted}
+        ${player1},
+        ${player2},
+        ${tournamentID}
       )
     `;
   } catch (error) {
     // If a database error occurs, return a more specific error.
     return {
-      message: error + 'Database Error: Error al crear torneo.',
+      message: error + 'Database Error: Error al crear pareja.',
     };
   }
-
   // Revalidate the cache for the vinyls page and redirect the user.
-  revalidatePath('/dashboard/tournaments');
-  redirect('/dashboard/tournaments');
+  revalidatePath(`/dashboard/tournaments/${tournamentID}/couples`);
+  redirect(`/dashboard/tournaments/${tournamentID}/couples`);
 }
 
-export async function updateTournament(
+export async function updateCouple(
   id: string,
   prevState: State,
   formData: FormData,
 ) {
-  const file = formData.get('image') as File;
-  let imagePosted = formData.get('currentImage');
-
-  if (file.size > 0) {
-    imagePosted = await updateImageCloud(file);
-  }
-
-  const validatedFields = UpdateTournament.safeParse({
-    name: formData.get('name'),
-    date: formData.get('date')
+  const validatedFields = UpdateCouple.safeParse({
+    player1: formData.get('player1'),
+    player2: formData.get('player2')
   });
 
   // If form validation fails, return errors early. Otherwise, continue.
@@ -136,38 +97,45 @@ export async function updateTournament(
   }
 
   const {
-    name,
-    date
+    player1,
+    player2
   } = validatedFields.data;
-
-  const formatDate = date.toISOString().split('T');
-
-  console.log(imagePosted)
 
   try {
     await sql`
-      UPDATE tournaments SET
-      name = ${name},
-      image = ${imagePosted},
-      date = ${formatDate}
+      UPDATE tournament_couples SET
+      player1 = ${player1},
+      player2 = ${player2},
+      tournament_id = ${tournamentID}
       WHERE id = ${id}
     `;
   } catch (error) {
     return { message: JSON.stringify(error) };
   }
 
-  revalidatePath('/dashboard/tournaments');
-  redirect('/dashboard/tournaments');
-}
-
-export async function deleteTournamentCouple(id: string) {
-  // throw new Error('Failed to Delete Tournament');
+  const group = formData.get('group');
 
   try {
-    await sql`DELETE FROM tournaments WHERE id = ${id}`;
-    revalidatePath('/dashboard/tournaments');
-    return { message: 'Borrar Torneo' };
+    await sql`
+      UPDATE group_couples SET
+      group_id = ${player1},
+      WHERE couple_id = ${id}
+      and tournament_id = ${tournamentID}
+    `;
   } catch (error) {
-    return { message: 'Database Error: Failed to Delete Vinyl.' };
+    return { message: JSON.stringify(error) };
+  }
+
+  revalidatePath(`/dashboard/tournaments/${id}/couples`);
+  redirect(`/dashboard/tournaments/${id}/couples`);
+}
+
+export async function deleteCouple(id: string) {
+  try {
+    await sql`DELETE FROM tournament_couples WHERE id = ${id}`;
+    revalidatePath(`/dashboard/tournaments/${id}/couples`);
+    return { message: 'Borrar Pareja' };
+  } catch (error) {
+    return { message: 'Database Error: Failed to Delete Couple.' };
   }
 }

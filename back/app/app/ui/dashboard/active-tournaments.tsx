@@ -8,11 +8,7 @@ import { formatDateToLocal } from '@/app/lib/utils';
 import { auth, getUser } from '@/auth';
 
 export default async function ActiveTournaments() {
-
-  const session = await auth()
-  const sessionEmail = session?.user?.email || ''
-  const user = await getUser(sessionEmail)
-  const activeTournaments = await fetchActiveTournaments(user?.id!);
+  const activeTournaments = await fetchActiveTournaments();
 
   return (
     <div className="flex w-full flex-col md:col-span-4 lg:col-span-4">

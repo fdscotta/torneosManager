@@ -71,28 +71,6 @@ async function createTorneos (client) {
   }
 }
 
-async function createJugadores (client) {
-  try {
-    await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
-    const createTable = await client.sql`
-      CREATE TABLE IF NOT EXISTS players (
-        id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
-        name VARCHAR(255) NOT NULL,
-        level INTEGER NOT NULL
-      );
-    `;
-
-    console.log(`Created "players" table`);
-
-    return {
-      createTable,
-    };
-  } catch (error) {
-    console.error('Error creating players:', error);
-    throw error;
-  }
-}
-
 async function createParejasTorneo (client) {
   try {
     await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
@@ -172,7 +150,7 @@ async function main () {
   //await seedUsers(client);
   //await createTorneos(client);
   //await createJugadores(client);
-  //await createParejasTorneo(client);
+  await createParejasTorneo(client);
   //await createParejasZona(client);
   //await createResultadosZona(client);
 
