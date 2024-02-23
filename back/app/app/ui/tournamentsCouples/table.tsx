@@ -1,12 +1,14 @@
 import { UpdateCouple, DeleteCouple } from '@/app/ui/tournamentsCouples/buttons';
-import { fetchTournamentCouples } from '@/app/lib/couplesData';
+import { fetchFilteredCouples } from '@/app/lib/couplesData';
 
 export default async function TournamentsCoupleTable({
-  tournamentID
+  tournamentID,
+  query
 }: {
   tournamentID: string;
+  query: string;
 }) {
-  const couples = await fetchTournamentCouples(tournamentID);
+  const couples = await fetchFilteredCouples(tournamentID, query);
 
   return (
     <>
@@ -31,7 +33,7 @@ export default async function TournamentsCoupleTable({
                   </div>
                   <div className="flex w-full items-center justify-between pt-4">
                     <div className="flex justify-end gap-2">
-                      <UpdateCouple id={couple.id} />
+                      <UpdateCouple tournamentID={tournamentID} coupleID={couple.id} />
                       <DeleteCouple id={couple.id} />
                     </div>
                   </div>
@@ -68,12 +70,12 @@ export default async function TournamentsCoupleTable({
                     </td>
                     <td className="whitespace-nowrap py-3 pl-6 pr-3">
                       <div className="flex items-center gap-3">
-                        <p>{couple.group}</p>
+                        <p>{couple.group_id}</p>
                       </div>
                     </td>
                     <td className="whitespace-nowrap py-3 pl-6 pr-3">
                       <div className="flex justify-end gap-3">
-                        <UpdateCouple id={couple.id} />
+                        <UpdateCouple tournamentID={tournamentID} coupleID={couple.id} />
                         <DeleteCouple id={couple.id} />
                       </div>
                     </td>

@@ -1,4 +1,3 @@
-'use client';
 import FormTournament from '@/app/ui/tournaments/create-form';
 import Breadcrumbs from '@/app/ui/tournaments/breadcrumbs';
 

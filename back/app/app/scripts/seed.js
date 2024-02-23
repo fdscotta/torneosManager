@@ -101,7 +101,7 @@ async function createParejasZona (client) {
       CREATE TABLE IF NOT EXISTS group_couples (
         id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
         group_id VARCHAR(255) NOT NULL,
-        couple_id VARCHAR(255) NOT NULL
+        couple_id VARCHAR(255) NOT NULL UNIQUE
       );
     `;
 
@@ -150,8 +150,8 @@ async function main () {
   //await seedUsers(client);
   //await createTorneos(client);
   //await createJugadores(client);
-  await createParejasTorneo(client);
-  //await createParejasZona(client);
+  //await createParejasTorneo(client);
+  await createParejasZona(client);
   //await createResultadosZona(client);
 
 

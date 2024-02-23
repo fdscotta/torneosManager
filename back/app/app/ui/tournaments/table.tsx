@@ -41,6 +41,7 @@ export default async function TournamentsTable({
                 </div>
                 <div className="flex w-full items-center justify-between pt-4">
                   <div className="flex justify-end gap-2">
+                    {(tournament.status === 0) && <AddCouples id={tournament.id} />}
                     <UpdateTournament id={tournament.id} />
                     <DeleteTournament id={tournament.id} />
                   </div>
@@ -92,7 +93,6 @@ export default async function TournamentsTable({
                   <td className="whitespace-nowrap py-3 pl-6 pr-3">
                     <div className="flex justify-end gap-3">
                       {(tournament.status === 0) && <AddCouples id={tournament.id} />}
-
                       <UpdateTournament id={tournament.id} />
                       <DeleteTournament id={tournament.id} />
                     </div>

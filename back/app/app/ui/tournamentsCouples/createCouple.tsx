@@ -1,6 +1,5 @@
 'use client'
 import { createCouple } from '@/app/lib/tournamentsCouplesActions';
-import TournamentsCoupleTable from '@/app/ui/tournamentsCouples/table';
 import { useFormState } from 'react-dom';
 import { Button } from '../button';
 
@@ -88,9 +87,6 @@ export default function FormTournamentCouples({
                 <Button type="submit">Crear</Button>
             </div>
         </form>
-      </div>
-      <div>
-        <TournamentsCoupleTable tournamentID={tournamentID} />
       </div>
     </section>
   );

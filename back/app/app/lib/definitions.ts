@@ -18,6 +18,7 @@ export type Couple = {
   player1: string,
   player2: string,
   tournament_id: string,
+  group_id: string
 }
 
 export type TournamentGroup = {

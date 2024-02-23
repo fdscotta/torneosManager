@@ -79,7 +79,8 @@ export async function createCouple(
 }
 
 export async function updateCouple(
-  id: string,
+  coupleID: string,
+  tournamentID: string,
   prevState: State,
   formData: FormData,
 ) {
@@ -105,29 +106,34 @@ export async function updateCouple(
     await sql`
       UPDATE tournament_couples SET
       player1 = ${player1},
-      player2 = ${player2},
-      tournament_id = ${tournamentID}
-      WHERE id = ${id}
+      player2 = ${player2}
+      WHERE id = ${coupleID}
     `;
   } catch (error) {
     return { message: JSON.stringify(error) };
   }
 
-  const group = formData.get('group');
+  const group = formData.get('group')?.toString();
 
   try {
     await sql`
-      UPDATE group_couples SET
-      group_id = ${player1},
-      WHERE couple_id = ${id}
-      and tournament_id = ${tournamentID}
+      INSERT INTO group_couples (
+        group_id,
+        couple_id
+        ) VALUES (
+          ${group},
+          ${coupleID}
+        ) ON CONFLICT(couple_id)
+      DO UPDATE SET
+          group_id = EXCLUDED.group_id
+      WHERE group_couples.couple_id = EXCLUDED.couple_id;
     `;
   } catch (error) {
     return { message: JSON.stringify(error) };
   }
 
-  revalidatePath(`/dashboard/tournaments/${id}/couples`);
-  redirect(`/dashboard/tournaments/${id}/couples`);
+  revalidatePath(`/dashboard/tournaments/${tournamentID}/couples`);
+  redirect(`/dashboard/tournaments/${tournamentID}/couples`);
 }
 
 export async function deleteCouple(id: string) {

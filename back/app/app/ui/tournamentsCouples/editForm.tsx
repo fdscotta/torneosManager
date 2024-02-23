@@ -1,23 +1,21 @@
 'use client'
 
+import { Couple } from '@/app/lib/definitions';
 import { updateCouple } from '@/app/lib/tournamentsCouplesActions';
 import { Button } from '@/app/ui/button';
+import Link from 'next/link';
 import { useFormState } from 'react-dom';
 
-export default function ModalTournamentCouples({
-    coupleID,
-    onClose,
+export default function EditCouplesForm({
+    couple,
+    tournamentID
 }: {
-    coupleID: string;
-    onClose: any;
+    couple: Couple;
+    tournamentID: string;
 }) {
     const initialState = { message: null, errors: {} };
-    const updateCoupleAction = updateCouple.bind(null, coupleID);
+    const updateCoupleAction = updateCouple.bind(null, couple.id, tournamentID);
     const [ state, dispatch ] = useFormState(updateCoupleAction, initialState);
-
-    if (state === undefined) {
-        onClose();
-    }
 
     return (
         <form action={dispatch}>
@@ -33,6 +31,7 @@ export default function ModalTournamentCouples({
                                 name="player1"
                                 type="text"
                                 placeholder="Jugador 1"
+                                defaultValue={couple.player1}
                                 className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
                             />
                         </div>
@@ -55,6 +54,7 @@ export default function ModalTournamentCouples({
                                 name="player2"
                                 type="text"
                                 placeholder="Jugador 2"
+                                defaultValue={couple.player2}
                                 className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
                             />
                         </div>
@@ -77,6 +77,7 @@ export default function ModalTournamentCouples({
                                 name="group"
                                 type="text"
                                 placeholder="Grupo"
+                                defaultValue={couple.group_id}
                                 className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
                             />
                         </div>
@@ -89,6 +90,12 @@ export default function ModalTournamentCouples({
             ) : null}
             </div>
             <div className="mt-6 flex justify-end gap-4">
+                <Link
+                    href={`/dashboard/tournaments/${tournamentID}/couples`}
+                    className="flex h-10 items-center rounded-lg bg-gray-100 px-4 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-200"
+                >
+                Cancelar
+                </Link>
                 <Button type="submit">Crear</Button>
             </div>
         </form>
