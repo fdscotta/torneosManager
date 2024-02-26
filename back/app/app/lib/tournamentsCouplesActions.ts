@@ -53,9 +53,10 @@ export async function createCouple(
     player2
   } = validatedFields.data;
 
+  let couple_id = '';
   // Insert data into the database
   try {
-    await sql`
+    const result = await sql`
       INSERT INTO tournament_couples (
         player1,
         player2,
@@ -66,13 +67,38 @@ export async function createCouple(
         ${player2},
         ${tournamentID}
       )
+      RETURNING id
     `;
+
+    couple_id = result.rows[0].id;
+
   } catch (error) {
     // If a database error occurs, return a more specific error.
     return {
       message: error + 'Database Error: Error al crear pareja.',
     };
   }
+
+  const group = formData.get('group')?.toString();
+
+
+  try {
+    await sql`
+      INSERT INTO group_couples (
+        group_id,
+        couple_id
+        ) VALUES (
+          ${group},
+          ${couple_id}
+        ) ON CONFLICT(couple_id)
+      DO UPDATE SET
+          group_id = EXCLUDED.group_id
+      WHERE group_couples.couple_id = EXCLUDED.couple_id;
+    `;
+  } catch (error) {
+    return { message: JSON.stringify(error) };
+  }
+
   // Revalidate the cache for the vinyls page and redirect the user.
   revalidatePath(`/dashboard/tournaments/${tournamentID}/couples`);
   redirect(`/dashboard/tournaments/${tournamentID}/couples`);
@@ -139,6 +165,7 @@ export async function updateCouple(
 export async function deleteCouple(id: string) {
   try {
     await sql`DELETE FROM tournament_couples WHERE id = ${id}`;
+    await sql`DELETE FROM group_couple WHERE couple=id = ${id}`;
     revalidatePath(`/dashboard/tournaments/${id}/couples`);
     return { message: 'Borrar Pareja' };
   } catch (error) {

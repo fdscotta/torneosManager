@@ -126,9 +126,12 @@ async function createResultadosZona (client) {
         couple1_id VARCHAR(255) NOT NULL,
         couple2_id VARCHAR(255) NOT NULL,
         winner VARCHAR(255),
-        set_1 VARCHAR(255),
-        set_2 VARCHAR(255),
-        set_3 VARCHAR(255),
+        set_1_c1 VARCHAR(255),
+        set_2_c1 VARCHAR(255),
+        set_3_c1 VARCHAR(255),
+        set_1_c2 VARCHAR(255),
+        set_2_c2 VARCHAR(255),
+        set_3_c2 VARCHAR(255),
         match_date DATE
       );
     `;
@@ -151,8 +154,8 @@ async function main () {
   //await createTorneos(client);
   //await createJugadores(client);
   //await createParejasTorneo(client);
-  await createParejasZona(client);
-  //await createResultadosZona(client);
+  //await createParejasZona(client);
+  await createResultadosZona(client);
 
 
   await client.end();

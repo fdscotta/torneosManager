@@ -1,6 +1,6 @@
 import { sql } from '@vercel/postgres';
 import {
-  Couple
+  Couple, GroupResult
 } from './definitions';
 import { unstable_noStore as noStore } from 'next/cache';
 
@@ -61,5 +61,45 @@ export async function fetchCoupleGroup(id: string) {
   } catch (error) {
     console.error('Database Error:', error);
     throw new Error('Failed to fetch couple.');
+  }
+}
+
+export async function fetchFilteredResultsLikeCouple(
+  resultID: string,
+  query: string
+) {
+  noStore();
+  try {
+    const data = await sql<GroupResult>`
+      SELECT *
+        FROM group_results as a
+        INNER JOIN tournament_couples as b ON a.couple1_id = b.id::text OR a.couple2_id = b.id::text
+      WHERE
+        a.player1::text ILIKE ${`%${query}%`} OR a.player2::text ILIKE ${`%${query}%`}
+    `;
+
+    return data.rows;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch group results.');
+  }
+}
+
+export async function fetchFilteredResultsById(
+  resultID: string
+) {
+  noStore();
+  try {
+    const data = await sql<GroupResult>`
+      SELECT *
+        FROM group_results
+      WHERE
+        id::text = ${resultID};
+    `;
+
+    return data.rows[0];
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch tournament couples.');
   }
 }

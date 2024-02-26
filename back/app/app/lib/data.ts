@@ -78,6 +78,19 @@ export async function fetchTournamentById(id: string) {
   }
 }
 
+export async function getTournamentGroups(tournamentID: string) {
+  try {
+    const availableGroups = await sql`SELECT group_id FROM tournament_couples as a
+      INNER JOIN group_couples as b ON a.id::text = b.couple_id
+      WHERE a.tournament_id = ${tournamentID}
+      GROUP BY group_id `;
+
+    return availableGroups.rows;
+  } catch (error) {
+    return { message: 'Database Error: Failed to Delete Couple.' };
+  }
+}
+
 export async function getUser(email: string) {
   try {
     const user = await sql`SELECT * from USERS where email=${email}`;

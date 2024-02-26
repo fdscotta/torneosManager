@@ -72,14 +72,25 @@ export default function EditCouplesForm({
                             Grupo
                         </legend>
                         <div className="relative">
-                            <input
+                            <select
                                 id="group"
                                 name="group"
-                                type="text"
-                                placeholder="Grupo"
                                 defaultValue={couple.group_id}
+                                placeholder="Seleccione una Zona"
                                 className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
-                            />
+                            >
+                                <option value="" disabled>
+                                    Seleccione una Zona
+                                </option>
+                                <option value="A">A</option>
+                                <option value="B">B</option>
+                                <option value="C">C</option>
+                                <option value="D">D</option>
+                                <option value="E">E</option>
+                                <option value="F">F</option>
+                                <option value="G">G</option>
+                                <option value="H">H</option>
+                            </select>
                         </div>
                     </div>
                 </div>

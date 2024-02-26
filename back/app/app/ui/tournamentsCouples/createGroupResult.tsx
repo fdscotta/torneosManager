@@ -2,17 +2,22 @@
 
 import Link from 'next/link';
 import { Button } from '@/app/ui/button';
-import { createCouple } from '@/app/lib/tournamentsCouplesActions';
+import { createGroupResult } from '@/app/lib/tournamentGroupResultActions';
 import { useFormState } from 'react-dom';
+import { getTournamentGroups } from '@/app/lib/data';
 
 export default function CreateForm({
-  tournamentID
+  tournamentID,
+  group_id
 }:{
-  tournamentID: string;
+  tournamentID: string,
+  group_id: string
 }) {
-    const initialState = { message: null, errors: {} };
-    const creteCoupleAction = createCouple.bind(null, tournamentID);
-    const [ state, dispatch ] = useFormState(creteCoupleAction, initialState);
+  const initialState = { message: null, errors: {} };
+  const creteGroupResultAction = createGroupResult.bind(null, tournamentID, group_id);
+  const [ state, dispatch ] = useFormState(creteGroupResultAction, initialState);
+
+  const availablesGroups = getTournamentGroups(tournamentID);
 
   return (
     <form action={dispatch}>
@@ -20,14 +25,31 @@ export default function CreateForm({
         <div className="mb-4">
             <div className="relative mt-2 rounded-md">
                 <legend className="mb-2 block text-sm font-medium">
-                    Jugador 1
+                    Grupo
+                </legend>
+                <div className="relative">
+                    <select
+                        id="group"
+                        name="group"
+                        placeholder={"Seleccione una Zona"}
+                        className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
+                    >
+                        <option value="" disabled hidden>
+                          Seleccione una Zona
+                        </option>
+{/*                         { availablesGroups && availablesGroups.map(( group ) => (
+                          <option key={group.id} value={group.id}>{group.name}</option>
+                        ))} */}
+                    </select>
+                </div>
+                <legend className="mb-2 block text-sm font-medium">
+                    Pareja 1
                 </legend>
                 <div className="relative">
                     <input
-                        id="player1"
-                        name="player1"
+                        id="couple_1"
+                        name="couple_1"
                         type="text"
-                        placeholder="Jugador 1"
                         className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
                     />
                 </div>
@@ -42,14 +64,13 @@ export default function CreateForm({
                     </div>
                 )}
                 <legend className="mb-2 block text-sm font-medium">
-                    Jugador 1
+                    Pareja 2
                 </legend>
                 <div className="relative">
                     <input
-                        id="player2"
-                        name="player2"
+                        id="couple_2"
+                        name="couple_2"
                         type="text"
-                        placeholder="Jugador 2"
                         className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
                     />
                 </div>
@@ -63,29 +84,6 @@ export default function CreateForm({
                             ))}
                     </div>
                 )}
-                <legend className="mb-2 block text-sm font-medium">
-                    Grupo
-                </legend>
-                <div className="relative">
-                  <select
-                    id="group"
-                    name="group"
-                    placeholder={"Seleccione una Zona"}
-                    className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
-                  >
-                    <option value="" disabled selected hidden>
-                      Seleccione una Zona
-                    </option>
-                    <option value="A">A</option>
-                    <option value="B">B</option>
-                    <option value="C">C</option>
-                    <option value="D">D</option>
-                    <option value="E">E</option>
-                    <option value="F">F</option>
-                    <option value="G">G</option>
-                    <option value="H">H</option>
-                  </select>
-                </div>
             </div>
         </div>
 
@@ -98,12 +96,12 @@ export default function CreateForm({
 
       <div className="mt-6 flex justify-end gap-4">
         <Link
-          href={`/dashboard/tournaments/${tournamentID}/couples`}
+          href={`/dashboard/tournaments/${tournamentID}/group-results`}
           className="flex h-10 items-center rounded-lg bg-gray-100 px-4 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-200"
         >
           Cancelar
         </Link>
-        <Button type="submit">Crear Pareja</Button>
+        <Button type="submit">Crear Resultado</Button>
       </div>
 
     </form>
