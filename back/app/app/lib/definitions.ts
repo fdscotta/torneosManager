@@ -42,6 +42,8 @@ export type GroupResult = {
   match_date: string
 };
 
-export type StringList = {
-  value: string
+export type CouplesSelect = {
+  id: string,
+  couple: string,
+  group_id: string
 }

@@ -1,6 +1,6 @@
 import { sql } from '@vercel/postgres';
 import {
-  StringList,
+  CouplesSelect,
   Tournaments,
   User,
 } from './definitions';
@@ -79,12 +79,12 @@ export async function fetchTournamentById(id: string) {
   }
 }
 
-export async function getTournamentGroups(tournamentID: string) {
+export async function getTournamentGroupsCouples(tournamentID: string) {
   try {
-    const availableGroups = await sql<StringList>`SELECT group_id FROM tournament_couples as a
-      INNER JOIN group_couples as b ON a.id::text = b.couple_id
-      WHERE a.tournament_id = ${tournamentID}
-      GROUP BY group_id `;
+    const availableGroups = await sql`SELECT a.id as id, CONCAT(a.player1, '/', a.player2) as couple, b.group_id as group_id
+    FROM tournament_couples as a
+    INNER JOIN group_couples as b ON a.id::text = b.couple_id
+    WHERE a.tournament_id = ${tournamentID}`;
 
     return availableGroups.rows;
   } catch (error) {

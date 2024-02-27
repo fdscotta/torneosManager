@@ -23,7 +23,7 @@ export default function Page({
         ]}
       />
 
-      <CreateForm tournamentID={params.id} group_id='A'/>
+      <CreateForm tournamentID={params.id}/>
     </main>
   );
 }
