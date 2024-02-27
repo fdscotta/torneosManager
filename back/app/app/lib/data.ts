@@ -1,5 +1,6 @@
 import { sql } from '@vercel/postgres';
 import {
+  StringList,
   Tournaments,
   User,
 } from './definitions';
@@ -80,20 +81,20 @@ export async function fetchTournamentById(id: string) {
 
 export async function getTournamentGroups(tournamentID: string) {
   try {
-    const availableGroups = await sql`SELECT group_id FROM tournament_couples as a
+    const availableGroups = await sql<StringList>`SELECT group_id FROM tournament_couples as a
       INNER JOIN group_couples as b ON a.id::text = b.couple_id
       WHERE a.tournament_id = ${tournamentID}
       GROUP BY group_id `;
 
     return availableGroups.rows;
   } catch (error) {
-    return { message: 'Database Error: Failed to Delete Couple.' };
+    return { message: 'Database Error: Failed to get groups.' };
   }
 }
 
 export async function getUser(email: string) {
   try {
-    const user = await sql`SELECT * from USERS where email=${email}`;
+    const user = await sql<User>`SELECT * from USERS where email=${email}`;
     return user.rows[0] as User;
   } catch (error) {
     console.error('Failed to fetch user:', error);

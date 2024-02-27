@@ -41,3 +41,7 @@ export type GroupResult = {
   set_3_c2: string,
   match_date: string
 };
+
+export type StringList = {
+  value: string
+}

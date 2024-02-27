@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { Button } from '@/app/ui/button';
 import { createGroupResult } from '@/app/lib/tournamentGroupResultActions';
 import { useFormState } from 'react-dom';
-import { getTournamentGroups } from '@/app/lib/data';
+import { SelectGroupComp } from './selectGroupComp.tsx';
 
 export default function CreateForm({
   tournamentID,
@@ -17,8 +17,6 @@ export default function CreateForm({
   const creteGroupResultAction = createGroupResult.bind(null, tournamentID, group_id);
   const [ state, dispatch ] = useFormState(creteGroupResultAction, initialState);
 
-  const availablesGroups = getTournamentGroups(tournamentID);
-
   return (
     <form action={dispatch}>
       <div className="rounded-md bg-gray-50 p-4 md:p-6">
@@ -28,19 +26,7 @@ export default function CreateForm({
                     Grupo
                 </legend>
                 <div className="relative">
-                    <select
-                        id="group"
-                        name="group"
-                        placeholder={"Seleccione una Zona"}
-                        className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
-                    >
-                        <option value="" disabled hidden>
-                          Seleccione una Zona
-                        </option>
-{/*                         { availablesGroups && availablesGroups.map(( group ) => (
-                          <option key={group.id} value={group.id}>{group.name}</option>
-                        ))} */}
-                    </select>
+                  <SelectGroupComp tournamentID={tournamentID} />
                 </div>
                 <legend className="mb-2 block text-sm font-medium">
                     Pareja 1
