@@ -48,7 +48,7 @@ export function DeleteCouple({ id }: { id: string }) {
 export function AddGroupResult({ tournamentID }: { tournamentID: string }) {
   return (
     <Link
-      href={`/dashboard/tournaments/${tournamentID}/group-result/create`}
+      href={`/dashboard/tournaments/${tournamentID}/group-results/create`}
       className="flex h-10 items-center rounded-lg bg-blue-600 px-4 text-sm font-medium text-white transition-colors hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
     >
       <span className="hidden md:block">Cargar Resultado</span>{' '}
@@ -66,7 +66,7 @@ export function UpdateGroupResult({
 }) {
   return (
     <Link
-      href={`/dashboard/tournaments/${tournamentID}/group-result/${resultID}/edit`}
+      href={`/dashboard/tournaments/${tournamentID}/group-results/${resultID}/edit`}
       className="flex h-10 items-center rounded-lg bg-blue-600 px-4 text-sm font-medium text-white transition-colors hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
     >
       <span className="hidden md:block">Actualizar Resultado</span>{' '}

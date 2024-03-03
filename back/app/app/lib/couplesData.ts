@@ -65,19 +65,17 @@ export async function fetchCoupleGroup(id: string) {
 }
 
 export async function fetchFilteredResultsLikeCouple(
-  resultID: string,
   query: string
 ) {
   noStore();
   try {
     const data = await sql<GroupResult>`
-      SELECT *
+      SELECT DISTINCT a.*
         FROM group_results as a
         INNER JOIN tournament_couples as b ON a.couple1_id = b.id::text OR a.couple2_id = b.id::text
-      WHERE
-        a.player1::text ILIKE ${`%${query}%`} OR a.player2::text ILIKE ${`%${query}%`}
     `;
 
+    console.log(data.rows)
     return data.rows;
   } catch (error) {
     console.error('Database Error:', error);

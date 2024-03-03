@@ -81,12 +81,13 @@ export async function fetchTournamentById(id: string) {
 
 export async function getTournamentGroupsCouples(tournamentID: string) {
   try {
-    const availableGroups = await sql`SELECT a.id as id, CONCAT(a.player1, '/', a.player2) as couple, b.group_id as group_id
+    const couples = await sql<CouplesSelect>`SELECT a.id as id, CONCAT(a.player1, '/', a.player2) as couple, b.group_id as group_id
     FROM tournament_couples as a
     INNER JOIN group_couples as b ON a.id::text = b.couple_id
     WHERE a.tournament_id = ${tournamentID}`;
 
-    return availableGroups.rows;
+    console.log(couples.rows);
+    return couples.rows;
   } catch (error) {
     return { message: 'Database Error: Failed to get groups.' };
   }

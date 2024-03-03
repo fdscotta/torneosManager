@@ -9,7 +9,7 @@ export default async function TournamentsGroupResultTable({
   tournamentID: string;
   query: string;
 }) {
-  const results = await fetchFilteredResultsLikeCouple(tournamentID, query);
+  const results = await fetchFilteredResultsLikeCouple(query);
 
   return (
     <>
@@ -30,6 +30,11 @@ export default async function TournamentsGroupResultTable({
                       <div className="mb-2 flex items-center">
                         <p>{result.group_id}</p>
                       </div>
+                      <div className="mb-2 flex items-center">
+                        <p>{result.set_1_c1} / {result.set_1_c2}</p>
+                        <p>{result.set_2_c1} / {result.set_2_c2}</p>
+                        <p>{result.set_3_c1} / {result.set_3_c2}</p>
+                      </div>
                     </div>
                   </div>
                   <div className="flex w-full items-center justify-between pt-4">
@@ -49,6 +54,9 @@ export default async function TournamentsGroupResultTable({
                   </th>
                   <th scope="col" className="px-3 py-5 font-medium">
                     Grupo
+                  </th>
+                  <th scope="col" className="px-3 py-5 font-medium">
+                    Resultado
                   </th>
                   <th scope="col" className="relative py-3 pl-6 pr-3">
                     <span className="sr-only">Editar</span>
@@ -72,6 +80,13 @@ export default async function TournamentsGroupResultTable({
                     <td className="whitespace-nowrap py-3 pl-6 pr-3">
                       <div className="flex items-center gap-3">
                         <p>{result.group_id}</p>
+                      </div>
+                    </td>
+                    <td className="whitespace-nowrap py-3 pl-6 pr-3">
+                      <div className="flex items-center gap-3">
+                        <p>{result.set_1_c1} / {result.set_1_c2}</p>
+                        <p>{result.set_2_c1} / {result.set_2_c2}</p>
+                        <p>{result.set_3_c1} / {result.set_3_c2}</p>
                       </div>
                     </td>
                     <td className="whitespace-nowrap py-3 pl-6 pr-3">

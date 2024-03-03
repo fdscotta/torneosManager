@@ -150,12 +150,12 @@ async function createResultadosZona (client) {
 async function main () {
   const client = await db.connect();
 
-  //await seedUsers(client);
+  await seedUsers(client);
   //await createTorneos(client);
   //await createJugadores(client);
   //await createParejasTorneo(client);
   //await createParejasZona(client);
-  await createResultadosZona(client);
+  //await createResultadosZona(client);
 
 
   await client.end();
