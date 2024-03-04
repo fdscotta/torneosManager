@@ -132,7 +132,7 @@ async function createResultadosZona (client) {
         set_1_c2 VARCHAR(255),
         set_2_c2 VARCHAR(255),
         set_3_c2 VARCHAR(255),
-        match_date DATE
+        match_date TIMESTAMP
       );
     `;
 
@@ -150,12 +150,12 @@ async function createResultadosZona (client) {
 async function main () {
   const client = await db.connect();
 
-  await seedUsers(client);
+  //await seedUsers(client);
   //await createTorneos(client);
   //await createJugadores(client);
   //await createParejasTorneo(client);
   //await createParejasZona(client);
-  //await createResultadosZona(client);
+  await createResultadosZona(client);
 
 
   await client.end();
