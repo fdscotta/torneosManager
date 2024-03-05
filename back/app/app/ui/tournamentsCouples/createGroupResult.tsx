@@ -4,15 +4,38 @@ import Link from 'next/link';
 import { Button } from '@/app/ui/button';
 import { createGroupResult } from '@/app/lib/tournamentGroupResultActions';
 import { useFormState } from 'react-dom';
+import { useEffect, useState } from 'react';
 
 export default function CreateForm({
   tournamentID
 }:{
   tournamentID: string
 }) {
+  const [ groups, setGroups ] = useState([{}]);
+  const [ selectedGroup, setSelectedGroup ] = useState('A');
+
   const initialState = { message: null, errors: {} };
-  const creteGroupResultAction = createGroupResult.bind(null, tournamentID, 'A');
+  const creteGroupResultAction = createGroupResult.bind(null, tournamentID, selectedGroup);
   const [ state, dispatch ] = useFormState(creteGroupResultAction, initialState);
+
+  useEffect(() => {
+    const pepe = fetch(`/api/groups/${tournamentID}`,{
+      method: "POST",
+    })
+    .then((res) => res.json())
+    .then((result) => setGroups(result.groups))
+    .catch(err => console.error(err));
+  }, [tournamentID])
+
+  const groupSelectionHandler = (group) => {
+    setSelectedGroup(group);
+    fetch(`/api/couples/bygroup/${tournamentID}/${group}`,{
+      method: "POST",
+    })
+    .then((res) => res.json())
+    .then((result) => console.log(result))
+    .catch(err => console.error(err));
+  }
 
   return (
     <form action={dispatch}>
@@ -37,13 +60,18 @@ export default function CreateForm({
                   Grupo
               </legend>
               <div className="relative">
-                <input
-                  id='group_id'
-                  name='group_id'
-                  type='text'
-                  defaultValue={'A'}
-                  className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
-                />
+                {groups &&
+                  <select
+                    id="group_id"
+                    name="group_id"
+                    onChange={e => groupSelectionHandler(e.target.value)}
+                  >
+                    {groups?.map((group, index) => (
+                      <option key={index} value={group?.group_id}>{group?.group_id}</option>
+                    ))}
+                    <option key="2" value="B">B</option>
+                  </select>
+                }
               </div>
               <legend className="mb-2 block text-sm font-medium">
                   Pareja 1

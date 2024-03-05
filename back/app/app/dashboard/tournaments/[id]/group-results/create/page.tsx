@@ -8,7 +8,6 @@ export default function Page({
     id: string;
   };
 }) {
-
   return (
     <main>
       <Breadcrumbs
@@ -23,7 +22,7 @@ export default function Page({
         ]}
       />
 
-      <CreateForm tournamentID={params.id}/>
+      <CreateForm tournamentID={params.id} />
     </main>
   );
 }

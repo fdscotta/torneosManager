@@ -47,3 +47,7 @@ export type CouplesSelect = {
   couple: string,
   group_id: string
 }
+
+export type GroupsSelect = {
+  group_id: string
+}
