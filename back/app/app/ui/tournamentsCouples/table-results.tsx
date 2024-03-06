@@ -11,6 +11,7 @@ export default async function TournamentsGroupResultTable({
 }) {
   const results = await fetchFilteredResultsLikeCouple(query);
 
+
   return (
     <>
       <div className="mt-6 flow-root">
@@ -25,7 +26,7 @@ export default async function TournamentsGroupResultTable({
                   <div className="flex items-center justify-between border-b pb-4">
                     <div>
                       <div className="mb-2 flex items-center">
-                        <p>{result.couple1_id} / {result.couple1_id}</p>
+                        <p>{result.couple1_id} / {result.couple2_id}</p>
                       </div>
                       <div className="mb-2 flex items-center">
                         <p>{result.group_id}</p>

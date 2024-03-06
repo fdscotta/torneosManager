@@ -147,6 +147,26 @@ async function createResultadosZona (client) {
   }
 }
 
+async function createCoupleNamesView (client) {
+  try {
+    const createTable = await client.sql`
+      CREATE OR REPLACE VIEW couple_names_view AS
+        SELECT id, CONCAT(player1, '-', player2) as couple_name
+        FROM tournament_couples;
+      );
+    `;
+
+    console.log(`Created "couple_names_view" view`);
+
+    return {
+      createTable,
+    };
+  } catch (error) {
+    console.error('Error creating couple_names_view:', error);
+    throw error;
+  }
+}
+
 async function main () {
   const client = await db.connect();
 

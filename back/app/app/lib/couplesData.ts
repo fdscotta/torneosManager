@@ -70,12 +70,15 @@ export async function fetchFilteredResultsLikeCouple(
   noStore();
   try {
     const data = await sql<GroupResult>`
-      SELECT DISTINCT a.*
+      SELECT DISTINCT a.id, a.group_id, c.couple_name as couple1_id, d.couple_name as couple2_id, a.winner,
+        a.set_1_c1, a.set_2_c1, a.set_3_c1, a.set_1_c2,
+        a.set_2_c2, a.set_3_c2, a.match_date
         FROM group_results as a
         INNER JOIN tournament_couples as b ON a.couple1_id = b.id::text OR a.couple2_id = b.id::text
+        LEFT JOIN couple_names_view as c ON a.couple1_id = c.id::text
+        LEFT JOIN couple_names_view as d ON a.couple2_id = d.id::text
     `;
 
-    console.log(data.rows)
     return data.rows;
   } catch (error) {
     console.error('Database Error:', error);
@@ -94,7 +97,6 @@ export async function fetchFilteredResultsById(
       WHERE
         id::text = ${resultID};
     `;
-
     return data.rows[0];
   } catch (error) {
     console.error('Database Error:', error);

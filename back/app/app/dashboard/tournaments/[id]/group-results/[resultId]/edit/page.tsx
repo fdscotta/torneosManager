@@ -13,11 +13,11 @@ export default async function Page({
 }: {
   params: {
     tournamentID: string,
-    resultID: string
+    resultId: string
   }
 }) {
   const [result] = await Promise.all([
-    fetchFilteredResultsById(params.resultID),
+    fetchFilteredResultsById(params.resultId),
   ]).catch(() => {
     notFound()
   });
@@ -29,7 +29,7 @@ export default async function Page({
           { label: 'Torneos', href: '/dashboard/tournaments' },
           {
             label: 'Editar Partido',
-            href: `/dashboard/tournaments/${params.tournamentID}/group-results/${params.resultID}/edit`,
+            href: `/dashboard/tournaments/${params.tournamentID}/group-results/${params.resultId}/edit`,
             active: true,
           },
         ]}

@@ -1,9 +1,18 @@
 'use server';
 
-import { z } from 'zod';
 import { sql } from '@vercel/postgres';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
+
+// This is temporary
+export type State = {
+  errors?: {
+    name?: string[];
+    image?: string[];
+    date?: string[];
+  };
+  message?: string | null;
+};
 
 export async function createGroupResult(
   tournamentID: string,
@@ -14,14 +23,14 @@ export async function createGroupResult(
 
   const couple1_id = formData.get('couple1_id');
   const couple2_id = formData.get('couple2_id');
-  const winner = formData.get('winner');
+  const winner = formData.get('winner') == null ? '' : formData.get('winner');
   const set_1_c1 = formData.get('set_1_c1');
   const set_2_c1 = formData.get('set_2_c1');
   const set_3_c1 = formData.get('set_3_c1');
   const set_1_c2 = formData.get('set_1_c2');
   const set_2_c2 = formData.get('set_2_c2');
   const set_3_c2 = formData.get('set_3_c2');
-  const match_date = formData.get('match_date');
+  const match_date = formData.get('match_date') == '' ? null : formData.get('match_date');
 
   // Insert data into the database
   try {
