@@ -42,6 +42,7 @@ export default async function TournamentsTable({
                 <div className="flex w-full items-center justify-between pt-4">
                   <div className="flex justify-end gap-2">
                     {(tournament.status === 0) && <AddCouples id={tournament.id} />}
+                    {(tournament.status === 0) && <GroupResults id={tournament.id} />}
                     <UpdateTournament id={tournament.id} />
                     <DeleteTournament id={tournament.id} />
                   </div>
