@@ -13,6 +13,7 @@ export default function EditTournamentForm({
   tournament: Tournaments;
 }) {
   const initialState = { message: null, errors: {} };
+
   const updateTournamentWithId = updateTournament.bind(null, tournament.id);
   const [state, dispatch] = useFormState(updateTournamentWithId, initialState);
 
