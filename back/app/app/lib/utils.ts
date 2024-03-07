@@ -19,6 +19,24 @@ export const formatDateToLocal = (
   return formatter.format(date);
 };
 
+export const formatDateToYYYYMMDD = (
+  dateStr: string,
+  locale: string = 'en-US',
+) => {
+  const date = new Date(dateStr);
+  const options: Intl.DateTimeFormatOptions = {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  };
+  const formatter = new Intl.DateTimeFormat(locale, options);
+  const formattedDate = formatter.format(date);
+
+  // Reformatting to YYYY-MM-DD
+  const [month, day, year] = formattedDate.split('/');
+  return `${year}-${month}-${day}`;
+};
+
 export const generatePagination = (currentPage: number, totalPages: number) => {
   // If the total number of pages is 7 or less,
   // display all pages without any ellipsis.
