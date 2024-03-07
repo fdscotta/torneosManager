@@ -7,13 +7,13 @@ export const formatCurrency = (amount: number) => {
 
 export const formatDateToLocal = (
   dateStr: string,
-  locale: string = 'en-US',
+  locale: string = 'es-ES',
 ) => {
   const date = new Date(dateStr);
   const options: Intl.DateTimeFormatOptions = {
-    day: 'numeric',
-    month: 'short',
     year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
   };
   const formatter = new Intl.DateTimeFormat(locale, options);
   return formatter.format(date);
@@ -24,17 +24,10 @@ export const formatDateToYYYYMMDD = (
   locale: string = 'en-US',
 ) => {
   const date = new Date(dateStr);
-  const options: Intl.DateTimeFormatOptions = {
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
-  };
-  const formatter = new Intl.DateTimeFormat(locale, options);
-  const formattedDate = formatter.format(date);
 
-  // Reformatting to YYYY-MM-DD
-  const [month, day, year] = formattedDate.split('/');
-  return `${year}-${month}-${day}`;
+  const isoDateString = date.toISOString();
+  const yyyyMMdd = isoDateString.slice(0, 10);
+  return yyyyMMdd;
 };
 
 export const generatePagination = (currentPage: number, totalPages: number) => {
