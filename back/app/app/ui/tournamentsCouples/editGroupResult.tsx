@@ -1,6 +1,6 @@
 'use client'
 
-import { GroupResult } from '@/app/lib/definitions';
+import { CouplesSelect, GroupResult, GroupsSelect } from '@/app/lib/definitions';
 import { updateGroupResult } from '@/app/lib/tournamentGroupResultActions';
 import { Button } from '@/app/ui/button';
 import Link from 'next/link';
@@ -14,8 +14,8 @@ export default function EditGroupResultForm({
     result: GroupResult;
     tournamentID: string;
 }) {
-    const [ groups, setGroups ] = useState([{}]);
-    const [ couples, setCouples ] = useState([{}]);
+    const [ groups, setGroups ] = useState<GroupsSelect[]>([]);
+    const [ couples, setCouples ] = useState<CouplesSelect[]>([]);
     const [ couple1, setCouple1 ] = useState('');
     const [ couple2, setCouple2 ] = useState('');
     const [ selectedGroup, setSelectedGroup ] = useState('');

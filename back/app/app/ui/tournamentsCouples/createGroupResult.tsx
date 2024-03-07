@@ -5,14 +5,15 @@ import { Button } from '@/app/ui/button';
 import { createGroupResult } from '@/app/lib/tournamentGroupResultActions';
 import { useFormState } from 'react-dom';
 import { useEffect, useState } from 'react';
+import { CouplesSelect, GroupsSelect } from '@/app/lib/definitions';
 
 export default function CreateForm({
   tournamentID
 }:{
   tournamentID: string
 }) {
-  const [ groups, setGroups ] = useState([{}]);
-  const [ couples, setCouples ] = useState([{}]);
+  const [ groups, setGroups ] = useState<GroupsSelect[]>([]);
+  const [ couples, setCouples ] = useState<CouplesSelect[]>([]);
   const [ couple1, setCouple1 ] = useState('');
   const [ couple2, setCouple2 ] = useState('');
   const [ selectedGroup, setSelectedGroup ] = useState('');

@@ -31,7 +31,7 @@ export default async function ActiveTournaments() {
                 <div className="flex items-center">
                   <Image
                     src={tournament.image}
-                    alt={`${tournament.title}'s profile picture`}
+                    alt={`${tournament.name}'s profile picture`}
                     className="mr-4 rounded-full"
                     width={32}
                     height={32}

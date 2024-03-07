@@ -27,7 +27,7 @@ export default async function TournamentsCoupleTable({
                         <p>{couple.player1} / {couple.player2}</p>
                       </div>
                       <div className="mb-2 flex items-center">
-                        <p>{couple.group}</p>
+                        <p>{couple.group_id}</p>
                       </div>
                     </div>
                   </div>

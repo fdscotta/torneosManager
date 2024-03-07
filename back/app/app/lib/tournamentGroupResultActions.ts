@@ -21,16 +21,16 @@ export async function createGroupResult(
   formData: FormData
 ) {
 
-  const couple1_id = formData.get('couple1_id');
-  const couple2_id = formData.get('couple2_id');
-  const winner = formData.get('winner') == null ? '' : formData.get('winner');
-  const set_1_c1 = formData.get('set_1_c1');
-  const set_2_c1 = formData.get('set_2_c1');
-  const set_3_c1 = formData.get('set_3_c1');
-  const set_1_c2 = formData.get('set_1_c2');
-  const set_2_c2 = formData.get('set_2_c2');
-  const set_3_c2 = formData.get('set_3_c2');
-  const match_date = formData.get('match_date') == '' ? null : formData.get('match_date');
+  const couple1_id = formData.get('couple1_id')?.toString();
+  const couple2_id = formData.get('couple2_id')?.toString();
+  const winner = formData.get('winner') == null ? '' : formData.get('winner')?.toString();
+  const set_1_c1 = formData.get('set_1_c1')?.toString();
+  const set_2_c1 = formData.get('set_2_c1')?.toString();
+  const set_3_c1 = formData.get('set_3_c1')?.toString();
+  const set_1_c2 = formData.get('set_1_c2')?.toString();
+  const set_2_c2 = formData.get('set_2_c2')?.toString();
+  const set_3_c2 = formData.get('set_3_c2')?.toString();
+  const match_date = formData.get('match_date') == '' ? null : formData.get('match_date')?.toString();
 
   // Insert data into the database
   try {
@@ -82,16 +82,16 @@ export async function updateGroupResult(
   formData: FormData,
 ) {
 
-  const couple1_id = formData.get('couple1_id');
-  const couple2_id = formData.get('couple2_id');
-  const winner = formData.get('winner');
-  const set_1_c1 = formData.get('set_1_c1');
-  const set_2_c1 = formData.get('set_2_c1');
-  const set_3_c1 = formData.get('set_3_c1');
-  const set_1_c2 = formData.get('set_1_c2');
-  const set_2_c2 = formData.get('set_2_c2');
-  const set_3_c2 = formData.get('set_3_c2');
-  const match_date = formData.get('match_date');
+  const couple1_id = formData.get('couple1_id')?.toString();
+  const couple2_id = formData.get('couple2_id')?.toString();
+  const winner = formData.get('winner')?.toString() == null ? '' : formData.get('winner')?.toString();
+  const set_1_c1 = formData.get('set_1_c1')?.toString();
+  const set_2_c1 = formData.get('set_2_c1')?.toString();
+  const set_3_c1 = formData.get('set_3_c1')?.toString();
+  const set_1_c2 = formData.get('set_1_c2')?.toString();
+  const set_2_c2 = formData.get('set_2_c2')?.toString();
+  const set_3_c2 = formData.get('set_3_c2')?.toString();
+  const match_date = formData.get('match_date')?.toString() == '' ? null : formData.get('match_date')?.toString();
 
   try {
     await sql`

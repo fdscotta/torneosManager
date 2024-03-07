@@ -93,7 +93,7 @@ export default function EditTournamentForm({
                 name="date"
                 type="date"
                 placeholder="Fecha de inicio del Torneo"
-                defaultValue={tournament.date.toISOString().substring(0,10)}
+                defaultValue={tournament.date.toString().substring(0,10)}
                 className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
                 aria-describedby="date-error"
               />

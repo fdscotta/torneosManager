@@ -78,7 +78,7 @@ export async function createTournament(prevState: State, formData: FormData) {
     date
   } = validatedFields.data;
 
-  const formatDate = date.toISOString().split('T');
+  const formatDate = date.toISOString();
 
   // Insert data into the database
   try {
@@ -140,15 +140,13 @@ export async function updateTournament(
     date
   } = validatedFields.data;
 
-  const formatDate = date.toISOString().split('T');
-
-  console.log(imagePosted)
+  const formatDate = date.toISOString();
 
   try {
     await sql`
       UPDATE tournaments SET
       name = ${name},
-      image = ${imagePosted},
+      image = ${imagePosted?.toString()},
       date = ${formatDate}
       WHERE id = ${id}
     `;
