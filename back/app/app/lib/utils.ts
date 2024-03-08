@@ -30,6 +30,17 @@ export const formatDateToYYYYMMDD = (
   return yyyyMMdd;
 };
 
+export const formatDateToYYYYMMDDHHMM = (
+  dateStr: string,
+  locale: string = 'en-US',
+) => {
+  const date = new Date(dateStr);
+
+  const isoDateString = date.toISOString();
+  const yyyyMMddHHMM = isoDateString.slice(0, 16);
+  return yyyyMMddHHMM;
+};
+
 export const generatePagination = (currentPage: number, totalPages: number) => {
   // If the total number of pages is 7 or less,
   // display all pages without any ellipsis.

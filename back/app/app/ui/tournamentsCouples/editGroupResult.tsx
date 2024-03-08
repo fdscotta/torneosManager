@@ -2,6 +2,7 @@
 
 import { CouplesSelect, GroupResult, GroupsSelect } from '@/app/lib/definitions';
 import { updateGroupResult } from '@/app/lib/tournamentGroupResultActions';
+import { formatDateToYYYYMMDDHHMM } from '@/app/lib/utils';
 import { Button } from '@/app/ui/button';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
@@ -16,34 +17,34 @@ export default function EditGroupResultForm({
 }) {
     const [ groups, setGroups ] = useState<GroupsSelect[]>([]);
     const [ couples, setCouples ] = useState<CouplesSelect[]>([]);
-    const [ couple1, setCouple1 ] = useState('');
-    const [ couple2, setCouple2 ] = useState('');
-    const [ selectedGroup, setSelectedGroup ] = useState('');
+    const [ selectedGroup, setSelectedGroup ] = useState(result.group_id  || '');
+    const [winner, setWinner] = useState(result.winner || '');
 
     const initialState = { message: null, errors: {} };
     const updateGroupResultAction = updateGroupResult.bind(null, result.id, tournamentID);
     const [ state, dispatch ] = useFormState(updateGroupResultAction, initialState);
 
-    const groupSelectionHandler = (group: string) => {
-        setSelectedGroup(group);
-        fetch(`/api/couples/bygroup/${tournamentID}/${group}`,{
-        method: "POST",
+    useEffect(() => {
+        fetch(`/api/couples/bygroup/${tournamentID}/${selectedGroup}`,{
+            method: "POST",
         })
         .then((res) => res.json())
         .then((result) => setCouples(result.couples))
         .catch(err => console.error(err));
-    }
+    }, [selectedGroup, tournamentID])
 
     useEffect(() => {
         fetch(`/api/groups/${tournamentID}`,{
-        method: "POST",
+            method: "POST",
         })
         .then((res) => res.json())
-        .then((result) => {
-        setGroups(result.groups);
-        })
+        .then((result) => setGroups(result.groups))
         .catch(err => console.error(err));
     }, [tournamentID])
+
+    const handleWinnerChange = (value: string) => {
+        setWinner(value);
+    };
 
     return (
         <form action={dispatch}>
@@ -60,6 +61,7 @@ export default function EditGroupResultForm({
                         type="datetime-local"
                         min="2024-01-01T00:00"
                         placeholder="Fecha de inicio del Torneo"
+                        defaultValue={formatDateToYYYYMMDDHHMM(result.match_date)}
                         className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
                         aria-describedby="date-error"
                     />
@@ -68,12 +70,13 @@ export default function EditGroupResultForm({
                         Grupo
                     </legend>
                     <div className="relative mb-4">
-                    {groups &&
+                    {groups && groups.length > 0 &&
                         <select
                         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         id="group_id"
                         name="group_id"
-                        onChange={e => groupSelectionHandler(e.target.value)}
+                        defaultValue={result.group_id}
+                        onChange={e => setSelectedGroup(e.target.value)}
                         onInvalid={e => (e.target as HTMLInputElement).setCustomValidity('Seleccione un Grupo')}
                         onInput={e => (e.target as HTMLInputElement).setCustomValidity('')}
                         required
@@ -89,12 +92,12 @@ export default function EditGroupResultForm({
                         Pareja 1
                     </legend>
                     <div className="relative mb-4">
-                    {couples &&
+                    {couples && couples.length > 0 &&
                         <select
                         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         id="couple1_id"
                         name="couple1_id"
-                        onChange={e => setCouple1(e.target.options[e.target.selectedIndex].text)}
+                        defaultValue={result.couple1_id}
                         onInvalid={e => (e.target as HTMLInputElement).setCustomValidity('Seleccione una Pareja')}
                         onInput={e => (e.target as HTMLInputElement).setCustomValidity('')}
                         required
@@ -110,12 +113,12 @@ export default function EditGroupResultForm({
                         Pareja 2
                     </legend>
                     <div className="relative mb-4">
-                    {couples &&
+                    {couples && couples.length > 0 &&
                         <select
                         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         id="couple2_id"
                         name="couple2_id"
-                        onChange={e => setCouple2(e.target.options[e.target.selectedIndex].text)}
+                        defaultValue={result.couple2_id}
                         onInvalid={e => (e.target as HTMLInputElement).setCustomValidity('Seleccione una Pareja')}
                         onInput={e => (e.target as HTMLInputElement).setCustomValidity('')}
                         required
@@ -136,7 +139,7 @@ export default function EditGroupResultForm({
                         id='set_1_c1'
                         name='set_1_c1'
                         type='text'
-                        defaultValue={'6'}
+                        defaultValue={result.set_1_c1}
                         className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light flex-grow"
                         />
                     </div>
@@ -145,7 +148,7 @@ export default function EditGroupResultForm({
                         id='set_1_c2'
                         name='set_1_c2'
                         type='text'
-                        defaultValue={'1'}
+                        defaultValue={result.set_1_c2}
                         className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light flex-grow"
                         />
                     </div>
@@ -159,7 +162,7 @@ export default function EditGroupResultForm({
                         id='set_2_c1'
                         name='set_2_c1'
                         type='text'
-                        defaultValue={'2'}
+                        defaultValue={result.set_2_c1}
                         className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
                         />
                     </div>
@@ -168,7 +171,7 @@ export default function EditGroupResultForm({
                         id='set_2_c2'
                         name='set_2_c2'
                         type='text'
-                        defaultValue={'6'}
+                        defaultValue={result.set_2_c2}
                         className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
                         />
                     </div>
@@ -182,7 +185,7 @@ export default function EditGroupResultForm({
                         id='set_3_c1'
                         name='set_3_c1'
                         type='text'
-                        defaultValue={'4'}
+                        defaultValue={result.set_3_c1}
                         className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
                         />
                     </div>
@@ -191,7 +194,7 @@ export default function EditGroupResultForm({
                         id='set_3_c2'
                         name='set_3_c2'
                         type='text'
-                        defaultValue={'6'}
+                        defaultValue={result.set_3_c2}
                         className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
                         />
                     </div>
@@ -199,24 +202,42 @@ export default function EditGroupResultForm({
                     <legend className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                         Ganador
                     </legend>
-                    <ul className="grid w-full gap-3 md:grid-cols-2">
-                        <li>
-                            <input type="radio" id="couple_1" name="winner" value="couple_1" className="hidden peer" />
-                            <label htmlFor="couple_1" className="inline-flex items-center justify-between w-full p-2.5  text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 dark:peer-checked:text-blue-500 peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">
-                                <div className="block">
-                                    <div className="w-full text-sm font-semibold">{couple1}</div>
-                                </div>
-                            </label>
-                        </li>
-                        <li>
-                            <input type="radio" id="couple_2" name="winner" value="couple_2" className="hidden peer" />
-                            <label htmlFor="couple_2" className="inline-flex items-center justify-between w-full p-2.5 text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 dark:peer-checked:text-blue-500 peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">
-                                <div className="block">
-                                    <div className="w-full text-sm font-semibold">{couple2}</div>
-                                </div>
-                            </label>
-                        </li>
-                    </ul>
+                    {result &&
+                        <ul className="grid w-full gap-3 md:grid-cols-2">
+                            <li>
+                                <input
+                                    type="radio"
+                                    id="couple_1"
+                                    name="winner"
+                                    value="couple_1"
+                                    className="hidden peer"
+                                    checked={winner === 'couple_1'}
+                                    onChange={() => handleWinnerChange('couple_1')}
+                                />
+                                <label htmlFor="couple_1" className="inline-flex items-center justify-between w-full p-2.5  text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 dark:peer-checked:text-blue-500 peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">
+                                    <div className="block">
+                                        <div className="w-full text-sm font-semibold">P1</div>
+                                    </div>
+                                </label>
+                            </li>
+                            <li>
+                                <input
+                                    type="radio"
+                                    id="couple_2"
+                                    name="winner"
+                                    value="couple_2"
+                                    className="hidden peer"
+                                    checked={winner === 'couple_2'}
+                                    onChange={() => handleWinnerChange('couple_2')}
+                                />
+                                <label htmlFor="couple_2" className="inline-flex items-center justify-between w-full p-2.5 text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 dark:peer-checked:text-blue-500 peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">
+                                    <div className="block">
+                                        <div className="w-full text-sm font-semibold">P2</div>
+                                    </div>
+                                </label>
+                            </li>
+                        </ul>
+                    }
                 </div>
             </div>
 

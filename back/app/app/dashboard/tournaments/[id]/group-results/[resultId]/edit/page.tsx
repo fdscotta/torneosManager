@@ -12,7 +12,7 @@ export default async function Page({
   params
 }: {
   params: {
-    tournamentID: string,
+    id: string,
     resultId: string
   }
 }) {
@@ -29,12 +29,12 @@ export default async function Page({
           { label: 'Torneos', href: '/dashboard/tournaments' },
           {
             label: 'Editar Partido',
-            href: `/dashboard/tournaments/${params.tournamentID}/group-results/${params.resultId}/edit`,
+            href: `/dashboard/tournaments/${params.id}/group-results/${params.resultId}/edit`,
             active: true,
           },
         ]}
       />
-      <Form result={result} tournamentID={params.tournamentID} />
+      <Form result={result} tournamentID={params.id} />
     </main>
   );
 }
