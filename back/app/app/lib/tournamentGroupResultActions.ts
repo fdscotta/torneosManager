@@ -91,20 +91,23 @@ export async function updateGroupResult(
   const set_1_c2 = formData.get('set_1_c2')?.toString();
   const set_2_c2 = formData.get('set_2_c2')?.toString();
   const set_3_c2 = formData.get('set_3_c2')?.toString();
+  const group_id = formData.get('group_id')?.toString();
   const match_date = formData.get('match_date')?.toString() == '' ? null : formData.get('match_date')?.toString();
 
   try {
     await sql`
       UPDATE group_results SET
-        couple1_id = ${couple1_id}
-        couple2_id = ${couple2_id}
-        winner = ${winner}
-        set_1_c1 = ${set_1_c1}
-        set_2_c1 = ${set_2_c1}
-        set_3_c1 = ${set_3_c1}
-        set_1_c2 = ${set_1_c2}
-        set_2_c2 = ${set_2_c2}
-        set_3_c2 = ${set_3_c2}
+        couple1_id = ${couple1_id},
+        couple2_id = ${couple2_id},
+        winner = ${winner},
+        set_1_c1 = ${set_1_c1},
+        set_2_c1 = ${set_2_c1},
+        set_3_c1 = ${set_3_c1},
+        set_1_c2 = ${set_1_c2},
+        set_2_c2 = ${set_2_c2},
+        set_3_c2 = ${set_3_c2},
+        match_date = ${match_date},
+        group_id = ${group_id}
       WHERE id = ${resultID}
     `;
   } catch (error) {
