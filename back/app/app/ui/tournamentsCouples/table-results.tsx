@@ -9,7 +9,7 @@ export default async function TournamentsGroupResultTable({
   tournamentID: string;
   query: string;
 }) {
-  const results = await fetchFilteredResultsLikeCouple(query);
+  const results = await fetchFilteredResultsLikeCouple(query, tournamentID);
 
 
   return (

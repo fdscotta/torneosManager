@@ -65,7 +65,8 @@ export async function fetchCoupleGroup(id: string) {
 }
 
 export async function fetchFilteredResultsLikeCouple(
-  query: string
+  query: string,
+  tournamentID: string
 ) {
   noStore();
   try {
@@ -77,6 +78,8 @@ export async function fetchFilteredResultsLikeCouple(
         INNER JOIN tournament_couples as b ON a.couple1_id = b.id::text OR a.couple2_id = b.id::text
         LEFT JOIN couple_names_view as c ON a.couple1_id = c.id::text
         LEFT JOIN couple_names_view as d ON a.couple2_id = d.id::text
+        WHERE (c.couple_name::text ILIKE ${`%${query}%`} OR c.couple_name::text ILIKE ${`%${query}%`})
+        AND b.tournament_id = ${tournamentID}
     `;
 
     return data.rows;

@@ -134,7 +134,6 @@ export default function CreateForm({
                     id='set_1_c1'
                     name='set_1_c1'
                     type='text'
-                    defaultValue={'6'}
                     className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light flex-grow"
                   />
                 </div>
@@ -143,7 +142,6 @@ export default function CreateForm({
                     id='set_1_c2'
                     name='set_1_c2'
                     type='text'
-                    defaultValue={'1'}
                     className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light flex-grow"
                   />
                 </div>
@@ -157,7 +155,6 @@ export default function CreateForm({
                     id='set_2_c1'
                     name='set_2_c1'
                     type='text'
-                    defaultValue={'2'}
                     className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
                   />
                 </div>
@@ -166,7 +163,6 @@ export default function CreateForm({
                     id='set_2_c2'
                     name='set_2_c2'
                     type='text'
-                    defaultValue={'6'}
                     className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
                   />
                 </div>
@@ -180,7 +176,6 @@ export default function CreateForm({
                     id='set_3_c1'
                     name='set_3_c1'
                     type='text'
-                    defaultValue={'4'}
                     className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
                   />
                 </div>
@@ -189,7 +184,6 @@ export default function CreateForm({
                     id='set_3_c2'
                     name='set_3_c2'
                     type='text'
-                    defaultValue={'6'}
                     className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
                   />
                 </div>
