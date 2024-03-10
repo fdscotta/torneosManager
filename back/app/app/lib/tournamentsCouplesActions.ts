@@ -99,7 +99,6 @@ export async function createCouple(
     return { message: JSON.stringify(error) };
   }
 
-  // Revalidate the cache for the vinyls page and redirect the user.
   revalidatePath(`/dashboard/tournaments/${tournamentID}/couples`);
   redirect(`/dashboard/tournaments/${tournamentID}/couples`);
 }

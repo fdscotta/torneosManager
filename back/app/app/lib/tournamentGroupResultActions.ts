@@ -70,7 +70,6 @@ export async function createGroupResult(
     };
   }
 
-  // Revalidate the cache for the vinyls page and redirect the user.
   revalidatePath(`/dashboard/tournaments/${tournamentID}/group-results`);
   redirect(`/dashboard/tournaments/${tournamentID}/group-results`);
 }

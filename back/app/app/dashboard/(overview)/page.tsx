@@ -1,4 +1,3 @@
-// add import for vinyls list for user
 import { Suspense } from 'react';
 
 import ActiveTournaments from '@/app/ui/dashboard/active-tournaments';
