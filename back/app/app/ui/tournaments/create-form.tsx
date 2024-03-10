@@ -11,8 +11,8 @@ export default function FormTournament() {
 
   return (
     <form action={dispatch}>
-      <div className="rounded-md bg-gray-50 p-4 md:p-6">
-        <div className="mb-4">
+      <div className="rounded-md dark:bg-slate-800 p-4 md:p-6">
+        <div className="mb-4 text-white">
           <div className="relative mt-2 rounded-md">
             <legend className="mb-2 block text-sm font-medium">
               Imagen
@@ -45,8 +45,7 @@ export default function FormTournament() {
                 id="name"
                 name="name"
                 type="text"
-                placeholder="Nombre del Torneo"
-                className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
+                className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500 dark:bg-slate-800"
                 aria-describedby="name-error"
               />
             </div>
@@ -69,7 +68,7 @@ export default function FormTournament() {
                 name="date"
                 type="date"
                 placeholder="Fecha de inicio del Torneo"
-                className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
+                className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500 dark:bg-slate-800"
                 aria-describedby="date-error"
               />
             </div>

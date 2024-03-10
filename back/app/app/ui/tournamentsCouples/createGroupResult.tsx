@@ -45,7 +45,7 @@ export default function CreateForm({
 
   return (
     <form action={dispatch} className='max-w-sm mx-auto'>
-      <div className="rounded-md bg-gray-50 p-4 md:p-6">
+      <div className="rounded-md dark:bg-slate-800 p-4 md:p-6">
         <div className="mb-4">
           <div className="relative mt-2 rounded-md">
               <legend className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">

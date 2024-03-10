@@ -20,15 +20,15 @@ export default function EditTournamentForm({
 
   return (
     <form action={dispatch}>
-      <div className="rounded-md bg-gray-50 p-4 md:p-6">
-        <div className="mb-4">
+      <div className="rounded-md dark:bg-slate-800 p-4 md:p-6">
+        <div className="mb-4 text-white">
           <div className="relative mt-2 rounded-md">
             <legend className="mb-2 block text-sm font-medium">
               Imagen
             </legend>
             <div className="relative">
               {tournament.image &&
-                <div className="flex h-48 w-full flex-row bg-white p-4 items-center">
+                <div className="flex h-48 w-full flex-row dark:bg-slate-800 p-4 items-center">
                   <Image
                     src={tournament.image}
                     width={150}
@@ -72,7 +72,7 @@ export default function EditTournamentForm({
                 type="text"
                 placeholder="Nombre del Torneo"
                 defaultValue={tournament.name}
-                className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
+                className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500 dark:bg-slate-800"
                 aria-describedby="name-error"
               />
             </div>
@@ -96,7 +96,7 @@ export default function EditTournamentForm({
                 type="date"
                 placeholder="Fecha de inicio del Torneo"
                 defaultValue={formatDateToYYYYMMDD(tournament.date)}
-                className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
+                className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500 dark:bg-slate-800"
                 aria-describedby="date-error"
               />
             </div>

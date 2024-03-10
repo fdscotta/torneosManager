@@ -36,7 +36,7 @@ export default async function TournamentsCoupleTable({
                 </div>
               ))}
             </div>
-            <table className="hidden min-w-full text-gray-900 md:table">
+            <table className="hidden min-w-full dark:bg-slate-800 md:table text-white">
               <thead className="rounded-lg text-left text-sm font-normal">
                 <tr>
                   <th scope="col" className="px-4 py-5 font-medium sm:pl-6">
@@ -53,7 +53,7 @@ export default async function TournamentsCoupleTable({
                   </th>
                 </tr>
               </thead>
-              <tbody className="bg-white">
+              <tbody className="dark:bg-slate-800 text-white">
                 {couples?.map((couple) => (
                   <tr
                   key={couple.id}

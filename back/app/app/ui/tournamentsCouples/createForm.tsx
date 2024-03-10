@@ -16,9 +16,9 @@ export default function CreateForm({
 
   return (
     <form action={dispatch}>
-      <div className="rounded-md bg-gray-50 p-4 md:p-6">
+      <div className="rounded-md dark:bg-slate-800 p-4 md:p-6">
         <div className="mb-4">
-            <div className="relative mt-2 rounded-md">
+            <div className="relative mt-2 rounded-md text-white">
                 <legend className="mb-2 block text-sm font-medium">
                     Jugador 1
                 </legend>
@@ -27,8 +27,7 @@ export default function CreateForm({
                         id="player1"
                         name="player1"
                         type="text"
-                        placeholder="Jugador 1"
-                        className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
+                        className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500 dark:bg-slate-800"
                     />
                 </div>
                 {state && state.errors?.player1 && (
@@ -49,8 +48,7 @@ export default function CreateForm({
                         id="player2"
                         name="player2"
                         type="text"
-                        placeholder="Jugador 2"
-                        className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
+                        className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500 dark:bg-slate-800"
                     />
                 </div>
                 {state && state.errors?.player2 && (
@@ -71,7 +69,7 @@ export default function CreateForm({
                     id="group"
                     name="group"
                     placeholder={"Seleccione una Zona"}
-                    className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
+                    className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500 dark:bg-slate-800"
                   >
                     <option value="" disabled selected hidden>
                       Seleccione una Zona
