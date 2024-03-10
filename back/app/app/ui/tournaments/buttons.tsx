@@ -2,11 +2,12 @@ import {
   PencilIcon,
   PlusIcon,
   TrashIcon,
-  PlusCircleIcon,
+  XMarkIcon,
+  PresentationChartBarIcon,
   UserGroupIcon
 } from '@heroicons/react/24/outline';
 import Link from 'next/link';
-import { deleteTournament } from '@/app/lib/tournamentsActions';
+import { closeTournament, deleteTournament } from '@/app/lib/tournamentsActions';
 
 export function CreateTournament() {
   return (
@@ -28,7 +29,7 @@ export function AddCouples({ id }: { id: string }) {
       data-toggle='tooltip'
       title="My New Title"
     >
-      <PlusCircleIcon className="w-5" />
+      <UserGroupIcon className="w-5" />
     </Link>
   );
 }
@@ -41,7 +42,7 @@ export function GroupResults({ id }: { id: string }) {
       data-toggle='tooltip'
       title="My New Title"
     >
-      <UserGroupIcon className="w-5" />
+      <PresentationChartBarIcon className="w-5" />
     </Link>
   );
 }
@@ -67,6 +68,21 @@ export function DeleteTournament({ id }: { id: string }) {
       >
         <span className="sr-only">Delete</span>
         <TrashIcon className="w-5" />
+      </button>
+    </form>
+  );
+}
+
+export function CloseTournament({ id }: { id: string }) {
+  const closeTournamentWithId = closeTournament.bind(null, id);
+
+  return (
+    <form action={closeTournamentWithId}>
+      <button
+        className="flex h-10 items-center rounded-lg bg-blue-600 px-4 text-sm font-medium text-white transition-colors hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+      >
+        <span className="sr-only">Cerrar Torneo</span>
+        <XMarkIcon className="w-5" />
       </button>
     </form>
   );

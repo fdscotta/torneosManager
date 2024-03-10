@@ -14,28 +14,24 @@ export default async function TournamentsCoupleTable({
     <>
       <div className="mt-6 flow-root">
         <div className="inline-block min-w-full align-middle">
-          <div className="rounded-lg bg-gray-50 p-2 md:pt-0">
+          <div className="rounded-lg dark:bg-slate-800 p-2 md:pt-0">
             <div className="md:hidden">
               {couples?.map((couple) => (
                 <div
                 key={couple.id}
-                className="mb-2 w-full rounded-md bg-white p-4"
+                className="mb-2 w-full rounded-md dark:bg-slate-800 p-4"
                 >
-                  <div className="flex items-center justify-between border-b pb-4">
-                    <div>
-                      <div className="mb-2 flex items-center">
-                        <p>{couple.player1} / {couple.player2}</p>
-                      </div>
-                      <div className="mb-2 flex items-center">
-                        <p>{couple.group_id}</p>
-                      </div>
+                  <div className="flex items-center justify-between border-b pb-4 text-white">
+                    <div className="mb-2 w-full">
+                      <span>{couple.player1} / {couple.player2}</span>
+                      <span className='float-right'>Grupo: {couple.group_id}</span>
                     </div>
                   </div>
-                  <div className="flex w-full items-center justify-between pt-4">
-                    <div className="flex justify-end gap-2">
+                  <div className="flex w-full flex-row justify-end space-x-2 pt-4">
+
                       <UpdateCouple tournamentID={tournamentID} coupleID={couple.id} />
                       <DeleteCouple id={couple.id} />
-                    </div>
+
                   </div>
                 </div>
               ))}

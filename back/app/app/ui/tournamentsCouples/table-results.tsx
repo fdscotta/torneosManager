@@ -16,26 +16,24 @@ export default async function TournamentsGroupResultTable({
     <>
       <div className="mt-6 flow-root">
         <div className="inline-block min-w-full align-middle">
-          <div className="rounded-lg bg-gray-50 p-2 md:pt-0">
+          <div className="rounded-lg dark:bg-slate-800 p-2 md:pt-0">
             <div className="md:hidden">
               {results?.map((result) => (
                 <div
                 key={result.id}
-                className="mb-2 w-full rounded-md bg-white p-4"
+                className="mb-2 w-full rounded-md dark:bg-slate-800 p-4"
                 >
-                  <div className="flex items-center justify-between border-b pb-4">
-                    <div>
-                      <div className="mb-2 flex items-center">
-                        <p>{result.couple1_id} / {result.couple2_id}</p>
-                      </div>
-                      <div className="mb-2 flex items-center">
-                        <p>{result.group_id}</p>
-                      </div>
-                      <div className="mb-2 flex items-center">
-                        <p>{result.set_1_c1} / {result.set_1_c2}</p>
-                        <p>{result.set_2_c1} / {result.set_2_c2}</p>
-                        <p>{result.set_3_c1} / {result.set_3_c2}</p>
-                      </div>
+                  <div className="flex items-center justify-between pb-4 text-white">
+                    <div className="mb-2 w-full">
+                      <span>{result.couple1_id} / {result.couple2_id}</span>
+                      <span className='float-right'>Grupo: {result.group_id}</span>
+                    </div>
+                  </div>
+                  <div className="flex items-center justify-between border-b pb-4 text-white">
+                    <div className="mb-2 flex items-center space-x-6">
+                      <p>1er Set: {result.set_1_c1} / {result.set_1_c2}</p>
+                      <p>2do Set: {result.set_2_c1} / {result.set_2_c2}</p>
+                      <p>3er Set: {result.set_3_c1} / {result.set_3_c2}</p>
                     </div>
                   </div>
                   <div className="flex w-full items-center justify-between pt-4">

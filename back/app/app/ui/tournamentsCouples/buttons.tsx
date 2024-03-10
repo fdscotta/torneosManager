@@ -25,7 +25,7 @@ export function UpdateCouple({
   return (
     <Link
       href={`/dashboard/tournaments/${tournamentID}/couples/${coupleID}/edit`}
-      className="rounded-md border p-2 hover:bg-gray-100"
+      className="flex h-10 items-center rounded-lg bg-blue-600 px-4 text-sm font-medium text-white transition-colors hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
     >
       <PencilIcon className="w-5" />
     </Link>
@@ -37,7 +37,9 @@ export function DeleteCouple({ id }: { id: string }) {
 
   return (
     <form action={deleteCoupleWithId}>
-      <button className="rounded-md border p-2 hover:bg-gray-100">
+      <button
+        className="flex h-10 items-center rounded-lg bg-blue-600 px-4 text-sm font-medium text-white transition-colors hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+      >
         <span className="sr-only">Borrar</span>
         <TrashIcon className="w-5" />
       </button>
@@ -67,7 +69,7 @@ export function UpdateGroupResult({
   return (
     <Link
       href={`/dashboard/tournaments/${tournamentID}/group-results/${resultID}/edit`}
-      className="rounded-md border p-2 hover:bg-gray-100"
+      className="flex h-10 items-center rounded-lg bg-blue-600 px-4 text-sm font-medium text-white transition-colors hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
     >
       <PencilIcon className="w-5" />
     </Link>
@@ -79,7 +81,9 @@ export function DeleteGroupResult({ resultID }: { resultID: string }) {
 
   return (
     <form action={deleteResultWithId}>
-      <button className="rounded-md border p-2 hover:bg-gray-100">
+      <button
+        className="flex h-10 items-center rounded-lg bg-blue-600 px-4 text-sm font-medium text-white transition-colors hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+      >
         <span className="sr-only">Borrar</span>
         <TrashIcon className="w-5" />
       </button>

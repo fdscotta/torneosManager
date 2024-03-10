@@ -105,7 +105,7 @@ export async function createTournament(prevState: State, formData: FormData) {
     };
   }
 
-  // Revalidate the cache for the vinyls page and redirect the user.
+  // Revalidate the cache for the Tournaments page and redirect the user.
   revalidatePath('/dashboard/tournaments');
   redirect('/dashboard/tournaments');
 }
@@ -166,6 +166,20 @@ export async function deleteTournament(id: string) {
     revalidatePath('/dashboard/tournaments');
     return { message: 'Borrar Torneo' };
   } catch (error) {
-    return { message: 'Database Error: Failed to Delete Vinyl.' };
+    return { message: 'Database Error: Failed to Delete Tournament.' };
+  }
+}
+
+export async function closeTournament(id: string) {
+  // throw new Error('Failed to Delete Tournament');
+
+  try {
+    await sql`UPDATE tournaments SET
+      status  = 1
+      WHERE id = ${id}`;
+    revalidatePath('/dashboard/tournaments');
+    return { message: 'Torneo Cerrado' };
+  } catch (error) {
+    return { message: 'Database Error: Failed to Update Tournament.' };
   }
 }
