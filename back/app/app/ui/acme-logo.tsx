@@ -1,5 +1,5 @@
 import Image from "next/image";
-import logo from "@/app/torneosLogo.png";
+import logo from "@/app/logoNuevo2.png";
 
 export default function AcmeLogo() {
   return (
@@ -7,7 +7,7 @@ export default function AcmeLogo() {
       <Image
         src={logo}
         alt="Tournaments Logo"
-        width={150}
+        width={200}
         height={150}
       />
     </div>
