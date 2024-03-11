@@ -34,6 +34,7 @@ export const formatDateToYYYYMMDDHHMM = (
   dateStr: string,
   locale: string = 'en-US',
 ) => {
+  if (dateStr == null) return  '';
   const date = new Date(dateStr);
 
   const isoDateString = date.toISOString();

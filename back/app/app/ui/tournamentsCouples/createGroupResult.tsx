@@ -196,7 +196,7 @@ export default function CreateForm({
                       <input type="radio" id="couple_1" name="winner" value="couple_1" className="hidden peer" />
                       <label htmlFor="couple_1" className="inline-flex items-center justify-between w-full p-2.5  text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 dark:peer-checked:text-blue-500 peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">
                           <div className="block">
-                              <div className="w-full text-sm font-semibold">{couple1}</div>
+                              <div className="w-full text-sm font-semibold">P1</div>
                           </div>
                       </label>
                   </li>
@@ -204,7 +204,7 @@ export default function CreateForm({
                       <input type="radio" id="couple_2" name="winner" value="couple_2" className="hidden peer" />
                       <label htmlFor="couple_2" className="inline-flex items-center justify-between w-full p-2.5 text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 dark:peer-checked:text-blue-500 peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">
                           <div className="block">
-                              <div className="w-full text-sm font-semibold">{couple2}</div>
+                              <div className="w-full text-sm font-semibold">P2</div>
                           </div>
                       </label>
                   </li>
