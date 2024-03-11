@@ -1,9 +1,9 @@
 import Image from "next/image";
-import logo from "@/app/logoNuevo2.png";
+import logo from "@/app/logoNuevo.png";
 
 export default function AcmeLogo() {
   return (
-    <div>
+    <div className="flex justify-center items-center">
       <Image
         src={logo}
         alt="Tournaments Logo"
