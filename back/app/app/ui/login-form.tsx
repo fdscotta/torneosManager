@@ -12,7 +12,7 @@ import { Button } from './button';
 import { useFormState, useFormStatus } from 'react-dom';
 
 export default function LoginForm() {
-  const [code, action] = useFormState(authenticate, undefined);
+  const [errorMessage, action] = useFormState(authenticate, undefined);
 
   return (
     <form action={action} className="space-y-3">
@@ -30,7 +30,7 @@ export default function LoginForm() {
             </label>
             <div className="relative">
               <input
-                className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500 dark:bg-slate-800"
+                className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500 dark:bg-slate-800 text-white"
                 id="email"
                 type="text"
                 name="email"
@@ -44,7 +44,7 @@ export default function LoginForm() {
               className="mb-3 mt-5 block text-xs font-medium text-gray-900 text-white"
               htmlFor="password"
             >
-              Password
+              Contraseña
             </label>
             <div className="relative">
               <input
@@ -60,13 +60,15 @@ export default function LoginForm() {
           </div>
         </div>
         <LoginButton />
-        <div className="flex h-8 items-end space-x-1">
-          {code === 'CredentialsSignin' && (
+        <div
+          className="flex h-8 items-end space-x-1"
+          aria-live="polite"
+          aria-atomic="true"
+        >
+          {errorMessage && (
             <>
               <ExclamationCircleIcon className="h-5 w-5 text-red-500" />
-              <p aria-live="polite" className="text-sm text-red-500">
-                Invalid credentials
-              </p>
+              <p className="text-sm text-red-500">{errorMessage}</p>
             </>
           )}
         </div>
