@@ -34,10 +34,10 @@ export default async function TournamentsGroupResultTable({
                       { (result.set_1_c1 != '' && result.set_1_c2 != '') &&
                         <p>1er Set: {result.set_1_c1} / {result.set_1_c2}</p>
                       }
-                      { (result.set_2_c1 == '' && result.set_2_c2 != '') &&
+                      { (result.set_2_c1 != '' && result.set_2_c2 != '') &&
                         <p>2do Set: {result.set_2_c1} / {result.set_2_c2}</p>
                       }
-                      { (result.set_3_c1 == '' && result.set_3_c2 != '') &&
+                      { (result.set_3_c1 != '' && result.set_3_c2 != '') &&
                         <p>3er Set: {result.set_3_c1} / {result.set_3_c2}</p>
                       }
                     </div>
