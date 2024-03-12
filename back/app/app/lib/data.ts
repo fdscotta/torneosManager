@@ -37,7 +37,7 @@ export async function fetchFilteredTournaments(
       SELECT *
       FROM tournaments
       WHERE
-        name::text ILIKE ${`%${query}%`}
+        name::text LIKE ${`%${query}%`}
       LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
     `;
 
