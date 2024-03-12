@@ -1,4 +1,4 @@
-import { getCouplesByGroup } from "@/app/lib/data";
+import { getCouplesByGroup } from "@/app/lib/apiFunctions";
 import { NextResponse } from "next/server";
 
 export async function POST( request: Request, context: any) {

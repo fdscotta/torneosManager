@@ -17,7 +17,7 @@ export async function fetchFilteredCouples(
         LEFT JOIN group_couples c ON a.id::text = c.couple_id
       WHERE
         b.id::text= ${tournamentID}
-        AND (a.player1::text LIKE ${`%${query}%`} OR a.player2::text LIKE ${`%${query}%`})
+        AND (lower(a.player1::text) LIKE lower(${`%${query}%`}) OR lower(a.player2::text) LIKE lower(${`%${query}%`}))
     `;
 
     return data.rows;
@@ -78,7 +78,7 @@ export async function fetchFilteredResultsLikeCouple(
         INNER JOIN tournament_couples as b ON a.couple1_id = b.id::text OR a.couple2_id = b.id::text
         LEFT JOIN couple_names_view as c ON a.couple1_id = c.id::text
         LEFT JOIN couple_names_view as d ON a.couple2_id = d.id::text
-        WHERE (c.couple_name::text LIKE ${`%${query}%`} OR d.couple_name::text LIKE ${`%${query}%`})
+        WHERE (lower(c.couple_name::text) LIKE lower(${`%${query}%`}) OR lower(d.couple_name::text) LIKE lower(${`%${query}%`}))
         AND b.tournament_id = ${tournamentID}
     `;
 

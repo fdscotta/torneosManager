@@ -167,6 +167,82 @@ async function createCoupleNamesView (client) {
   }
 }
 
+async function createGroupTableResultsView (client) {
+  try {
+    const createTable = await client.sql`
+      CREATE OR REPLACE VIEW tournament_results_view AS
+      SELECT
+          b.id AS couple_id,
+          CONCAT(b.player1, '-', b.player2) AS couple_names,
+          SUM(
+              CASE WHEN a.couple1_id = b.id::text THEN
+                  CASE WHEN a.set_1_c1 > a.set_1_c2 THEN 1 ELSE 0 END +
+                  CASE WHEN a.set_2_c1 > a.set_2_c2 THEN 1 ELSE 0 END +
+                  CASE WHEN a.set_3_c1 > a.set_3_c2 THEN 1 ELSE 0 END
+              ELSE
+                  CASE WHEN a.set_1_c2 > a.set_1_c1 THEN 1 ELSE 0 END +
+                  CASE WHEN a.set_2_c2 > a.set_2_c1 THEN 1 ELSE 0 END +
+                  CASE WHEN a.set_3_c2 > a.set_3_c1 THEN 1 ELSE 0 END
+              END
+          ) -
+          SUM(
+              CASE WHEN a.couple1_id = b.id::text THEN
+                  CASE WHEN a.set_1_c1 < a.set_1_c2 THEN 1 ELSE 0 END +
+                  CASE WHEN a.set_2_c1 < a.set_2_c2 THEN 1 ELSE 0 END +
+                  CASE WHEN a.set_3_c1 < a.set_3_c2 THEN 1 ELSE 0 END
+              ELSE
+                  CASE WHEN a.set_1_c2 < a.set_1_c1 THEN 1 ELSE 0 END +
+                  CASE WHEN a.set_2_c2 < a.set_2_c1 THEN 1 ELSE 0 END +
+                  CASE WHEN a.set_3_c2 < a.set_3_c1 THEN 1 ELSE 0 END
+              END
+          ) AS sets_total,
+          (SUM(
+              CASE WHEN a.couple1_id = b.id::text THEN COALESCE(NULLIF(a.set_1_c1, ''), '0')::integer ELSE COALESCE(NULLIF(a.set_1_c2, ''), '0')::integer END +
+              COALESCE(NULLIF(a.set_2_c1, ''), '0')::integer +
+              COALESCE(NULLIF(a.set_3_c1, ''), '0')::integer
+          ) -
+          SUM(
+              CASE WHEN a.couple1_id = b.id::text THEN COALESCE(NULLIF(a.set_1_c2, ''), '0')::integer ELSE COALESCE(NULLIF(a.set_1_c1, ''), '0')::integer END +
+              COALESCE(NULLIF(a.set_2_c2, ''), '0')::integer +
+              COALESCE(NULLIF(a.set_3_c2, ''), '0')::integer
+          )) AS total_games,
+          SUM(
+              CASE WHEN a.couple1_id = b.id::text THEN COALESCE(NULLIF(a.set_1_c1, ''), '0')::integer ELSE COALESCE(NULLIF(a.set_1_c2, ''), '0')::integer END +
+              COALESCE(NULLIF(a.set_2_c1, ''), '0')::integer +
+              COALESCE(NULLIF(a.set_3_c1, ''), '0')::integer
+          ) AS games_positive,
+          SUM(
+              CASE WHEN a.couple1_id = b.id::text AND a.winner = 'couple_1' THEN 1
+                  WHEN a.couple2_id = b.id::text AND a.winner = 'couple_2' THEN 1 ELSE 0 END
+          ) AS wins,
+          b.tournament_id,
+          a.group_id
+      FROM
+          group_results AS a
+      INNER JOIN
+          tournament_couples AS b ON a.couple1_id = b.id::text OR a.couple2_id = b.id::text
+      GROUP BY
+          b.id,
+          b.player1,
+          b.player2,
+          a.group_id
+      ORDER BY
+          sets_total DESC,
+          total_games DESC,
+          games_positive DESC;
+    `;
+
+    console.log(`Created "createGroupTableResultsView" view`);
+
+    return {
+      createTable,
+    };
+  } catch (error) {
+    console.error('Error creating createGroupTableResultsView:', error);
+    throw error;
+  }
+}
+
 async function main () {
   const client = await db.connect();
 
@@ -175,7 +251,8 @@ async function main () {
   //await createJugadores(client);
   //await createParejasTorneo(client);
   //await createParejasZona(client);
-  await createResultadosZona(client);
+  //await createResultadosZona(client);
+  await createGroupTableResultsView(client);
 
 
   await client.end();

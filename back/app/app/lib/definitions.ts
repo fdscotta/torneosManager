@@ -42,6 +42,16 @@ export type GroupResult = {
   match_date: string
 };
 
+export type GroupResultsTable = {
+  id: string,
+  group_id: string,
+  couple: string,
+  sets_total: string,
+  total_games: string,
+  games_positive: string,
+  wins: string,
+};
+
 export type CouplesSelect = {
   id: string,
   couple: string,
