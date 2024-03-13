@@ -52,7 +52,6 @@ export async function getResultsByGroups(
         tournament_id = ${tournament_id}
         AND group_id = ${group_id};
     `;
-    console.log(data)
     return data.rows;
   } catch (error) {
     console.error('Database Error:', error);

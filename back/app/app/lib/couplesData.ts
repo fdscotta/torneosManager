@@ -18,6 +18,7 @@ export async function fetchFilteredCouples(
       WHERE
         b.id::text= ${tournamentID}
         AND (lower(a.player1::text) LIKE lower(${`%${query}%`}) OR lower(a.player2::text) LIKE lower(${`%${query}%`}))
+      ORDER BY c.group_id
     `;
 
     return data.rows;
@@ -66,8 +67,13 @@ export async function fetchCoupleGroup(id: string) {
 
 export async function fetchFilteredResultsLikeCouple(
   query: string,
-  tournamentID: string
+  tournamentID: string,
+  filter: string
 ) {
+  if (filter === 'g') {
+    filter = '';
+  }
+  console.log(filter)
   noStore();
   try {
     const data = await sql<GroupResult>`
@@ -80,9 +86,10 @@ export async function fetchFilteredResultsLikeCouple(
         LEFT JOIN couple_names_view as d ON a.couple2_id = d.id::text
         WHERE (lower(c.couple_name::text) LIKE lower(${`%${query}%`}) OR lower(d.couple_name::text) LIKE lower(${`%${query}%`}))
         AND b.tournament_id = ${tournamentID}
+        AND lower(a.group_id) LIKE lower(${`%${filter}%`})
+        ORDER BY a.group_id
     `;
 
-    console.log(data.rows);
     return data.rows;
   } catch (error) {
     console.error('Database Error:', error);
