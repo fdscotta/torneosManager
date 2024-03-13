@@ -7,6 +7,11 @@ back/app/node_modules
 back/app/.pnp
 back/app/.pnp.js
 
+front/app/node_modules
+front/app/.pnp
+front/app/.pnp.js
+front/app/.astro
+
 # testing
 back/app/coverage
 
@@ -14,11 +19,16 @@ back/app/coverage
 back/app/.next/
 back/app/out/
 
+front/app/.next/
+front/app/out/
+
 # production
 back/app/build
+front/app/build
 
 # misc
 back/app/.DS_Store
+front/app/.DS_Store
 *.pem
 
 # debug
@@ -26,15 +36,27 @@ back/app/npm-debug.log*
 back/app/yarn-debug.log*
 back/app/yarn-error.log*
 
+front/app/npm-debug.log*
+front/app/yarn-debug.log*
+front/app/yarn-error.log*
+
 # local env files
 back/app/.env*.local
 back/app/.env
 
+front/app/.env*.local
+front/app/.env
+
 # vercel
 back/app/.vercel
+front/app/.vercel
 
 # typescript
 *.tsbuildinfo
 back/app/next-env.d.ts
 back/app/.nvmrc
 back/app/.eslintrc.json
+
+front/app/next-env.d.ts
+front/app/.nvmrc
+front/app/.eslintrc.json
