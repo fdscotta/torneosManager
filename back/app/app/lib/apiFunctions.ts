@@ -1,7 +1,7 @@
 import { sql } from '@vercel/postgres';
 import {
   CouplesSelect,
-  GroupResult,
+  GroupResultsTable,
   GroupsSelect,
 } from './definitions';
 import { unstable_noStore as noStore } from 'next/cache';
