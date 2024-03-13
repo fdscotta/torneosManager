@@ -6,13 +6,20 @@ import GitHubCorner from "./github-corner.astro";
 const widths = [450, 800];
 const sizes = "(min-width: 640px) 42vw, 67vw";
 
-const data = await fetch('https://torneos-manager.vercel.app/api/groups/results-by-group/2aad57a7-4b63-4271-9983-fe9e990b167e/A',
+const groupA = await fetch('https://torneos-manager.vercel.app/api/groups/results-by-group/2aad57a7-4b63-4271-9983-fe9e990b167e/A',
 {
   method: 'POST'
 }).then((response) =>
   response.json()
 );
-console.log(data)
+
+const groupB = await fetch('https://torneos-manager.vercel.app/api/groups/results-by-group/2aad57a7-4b63-4271-9983-fe9e990b167e/B',
+{
+  method: 'POST'
+}).then((response) =>
+  response.json()
+);
+
 ---
 
 <section class="relative h-full bg-black">
@@ -22,6 +29,7 @@ console.log(data)
     <HeroImage />
   </div>
   <div class="relative grid h-screen content-center">
+    <h3>Grupo A</h3>
     <table class="styled-table">
         <thead>
             <tr>
@@ -34,7 +42,32 @@ console.log(data)
         </thead>
         <tbody>
           {
-            data?.groupsResults?.map((item) => (
+            groupA?.groupsResults?.map((item) => (
+              <tr>
+                <td>{item.couple_names}</td>
+                <td>{item.sets_total}</td>
+                <td>{item.total_games}</td>
+                <td>{item.games_positive}</td>
+                <td>{item.wins}</td>
+              </tr>
+            ))
+          }
+        </tbody>
+    </table>
+    <h3>Grupo B</h3>
+    <table class="styled-table">
+        <thead>
+            <tr>
+                <th>Pareja</th>
+                <th>Sets Totales</th>
+                <th>Games</th>
+                <th>Games Ganados</th>
+                <th>Partidos Ganados</th>
+            </tr>
+        </thead>
+        <tbody>
+          {
+            groupB?.groupsResults?.map((item) => (
               <tr>
                 <td>{item.couple_names}</td>
                 <td>{item.sets_total}</td>
