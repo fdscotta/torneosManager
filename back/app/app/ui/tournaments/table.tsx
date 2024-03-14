@@ -40,11 +40,11 @@ export default async function TournamentsTable({
                   <TournamentStatus status={tournament.status} />
                 </div>
                 <div className="flex w-full flex-row justify-end space-x-2 pt-4">
-                    {(tournament.status === 0) && <AddCouples id={tournament.id} />}
-                    {(tournament.status === 0) && <GroupResults id={tournament.id} />}
-                    {(tournament.status === 0) && <UpdateTournament id={tournament.id} />}
-                    {(tournament.status === 0) && <CloseTournament id={tournament.id} />}
-                    {(tournament.status === 1) && <DeleteTournament id={tournament.id} />}
+                  {(tournament.status === 0) && <AddCouples id={tournament.id} />}
+                  {(tournament.status === 0) && <GroupResults id={tournament.id} />}
+                  {(tournament.status === 0) && <UpdateTournament id={tournament.id} />}
+                  {(tournament.status === 0) && <CloseTournament id={tournament.id} />}
+                  {(tournament.status === 1) && <DeleteTournament id={tournament.id} />}
                 </div>
               </div>
             ))}
@@ -60,6 +60,8 @@ export default async function TournamentsTable({
                 </th>
                 <th scope="col" className="px-3 py-5 font-medium text-white">
                   Status
+                </th>
+                <th scope="col" className="px-3 py-5 font-medium text-white">
                 </th>
               </tr>
             </thead>
