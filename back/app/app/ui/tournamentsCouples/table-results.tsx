@@ -4,12 +4,14 @@ import { fetchFilteredResultsLikeCouple } from '@/app/lib/couplesData';
 
 export default async function TournamentsGroupResultTable({
   tournamentID,
-  query
+  query,
+  filter
 }: {
   tournamentID: string;
   query: string;
+  filter: string;
 }) {
-  const results = await fetchFilteredResultsLikeCouple(query, tournamentID);
+  const results = await fetchFilteredResultsLikeCouple(query, tournamentID, filter);
 
 
   return (
@@ -20,8 +22,8 @@ export default async function TournamentsGroupResultTable({
             <div className="md:hidden">
               {results?.map((result) => (
                 <div
-                key={result.id}
-                className="mb-2 w-full rounded-md dark:bg-slate-800 p-4"
+                  key={result.id}
+                  className="mb-2 w-full rounded-md dark:bg-slate-800 p-4"
                 >
                   <div className="flex items-center justify-between pb-4 text-white">
                     <div className="mb-2 w-full">
@@ -31,13 +33,13 @@ export default async function TournamentsGroupResultTable({
                   </div>
                   <div className="flex items-center justify-between border-b pb-4 text-white">
                     <div className="mb-2 flex items-center space-x-6">
-                      { (result.set_1_c1 != '' && result.set_1_c2 != '') &&
+                      {(result.set_1_c1 != '' && result.set_1_c2 != '') &&
                         <p>1er Set: {result.set_1_c1} / {result.set_1_c2}</p>
                       }
-                      { (result.set_2_c1 != '' && result.set_2_c2 != '') &&
+                      {(result.set_2_c1 != '' && result.set_2_c2 != '') &&
                         <p>2do Set: {result.set_2_c1} / {result.set_2_c2}</p>
                       }
-                      { (result.set_3_c1 != '' && result.set_3_c2 != '') &&
+                      {(result.set_3_c1 != '' && result.set_3_c2 != '') &&
                         <p>3er Set: {result.set_3_c1} / {result.set_3_c2}</p>
                       }
                     </div>
@@ -74,8 +76,8 @@ export default async function TournamentsGroupResultTable({
               <tbody className="dark:bg-slate-800 text-white">
                 {results?.map((result) => (
                   <tr
-                  key={result.id}
-                  className="w-full border-b py-3 text-sm last-of-type:border-none [&:first-child>td:first-child]:rounded-tl-lg [&:first-child>td:last-child]:rounded-tr-lg [&:last-child>td:first-child]:rounded-bl-lg [&:last-child>td:last-child]:rounded-br-lg"
+                    key={result.id}
+                    className="w-full border-b py-3 text-sm last-of-type:border-none [&:first-child>td:first-child]:rounded-tl-lg [&:first-child>td:last-child]:rounded-tr-lg [&:last-child>td:first-child]:rounded-bl-lg [&:last-child>td:last-child]:rounded-br-lg"
                   >
                     <td className="whitespace-nowrap py-3 pl-6 pr-3">
                       <div className="flex items-center gap-3">
@@ -89,13 +91,13 @@ export default async function TournamentsGroupResultTable({
                     </td>
                     <td className="whitespace-nowrap py-3 pl-6 pr-3">
                       <div className="flex items-center gap-3">
-                        { (result.set_1_c1 != '' && result.set_1_c2 != '') &&
+                        {(result.set_1_c1 != '' && result.set_1_c2 != '') &&
                           <p>{result.set_1_c1} / {result.set_1_c2}</p>
                         }
-                        { (result.set_2_c1 != '' && result.set_2_c2 != '') &&
+                        {(result.set_2_c1 != '' && result.set_2_c2 != '') &&
                           <p>{result.set_2_c1} / {result.set_2_c2}</p>
                         }
-                        { (result.set_3_c1 != '' && result.set_3_c2 != '') &&
+                        {(result.set_3_c1 != '' && result.set_3_c2 != '') &&
                           <p>{result.set_3_c1} / {result.set_3_c2}</p>
                         }
                       </div>

@@ -5,28 +5,30 @@ import { AddGroupResult } from '@/app/ui/tournamentsCouples/buttons';
 import { Suspense } from 'react';
 import { TournamentTableSkeleton } from '@/app/ui/skeletons';
 import Table from '@/app/ui/tournamentsCouples/table-results';
+import Filters from '@/app/ui/tournamentsCouples/resultsFilters';
 
 export const metadata: Metadata = {
   title: 'Resultados por Zona',
 };
 
 export default async function Page({
-    params,
-    searchParams
+  params,
+  searchParams
 }: {
   params: {
     id: string;
   };
   searchParams?: {
     query?: string;
-    page?: string;
+    filter?: string;
   };
 }) {
   const query = searchParams?.query || '';
+  const filter = searchParams?.filter || 'g';
 
   return (
     <div className="w-full">
-        <Breadcrumbs
+      <Breadcrumbs
         breadcrumbs={[
           { label: 'Torneos', href: `/dashboard/tournaments` },
           {
@@ -38,10 +40,11 @@ export default async function Page({
       />
       <div className="mt-4 flex items-center justify-between gap-2 md:mt-8">
         <Search placeholder="Buscar Resultado..." />
-        <AddGroupResult tournamentID={params.id}/>
+        <AddGroupResult tournamentID={params.id} />
       </div>
-      <Suspense key={query} fallback={<TournamentTableSkeleton />}>
-        <Table tournamentID={params.id} query={query}/>
+      <Filters filterValue={filter} />
+      <Suspense key={JSON.stringify(searchParams)} fallback={<TournamentTableSkeleton />}>
+        <Table tournamentID={params.id} query={query} filter={filter} />
       </Suspense>
     </div>
   );

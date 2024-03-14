@@ -3,9 +3,9 @@ version: '3'
 services:
     app:
         image: node:latest
-        command: npm run dev -- --host
+        command: npm run dev
         ports:
-            - '4321:4321'
+            - '3001:3001'
         user: node
         volumes:
             - ./app:/app
