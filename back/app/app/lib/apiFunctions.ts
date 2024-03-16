@@ -6,44 +6,105 @@ import {
 } from './definitions';
 import { unstable_noStore as noStore } from 'next/cache';
 
-export async function getCouplesByGroup(
+export async function getCouplesByGroups(
   tournamentID: string,
   group_id: string
   ) {
   noStore();
   try {
-    if (
-      group_id !== '8' &&
-      group_id !== '4' &&
-      group_id !== '2' &&
-      group_id !== '1'
-      ) {
-        const couples = await sql<CouplesSelect>`SELECT a.id as id, CONCAT(a.player1, '/', a.player2) as couple, b.group_id as group_id
-        FROM tournament_couples as a
-        INNER JOIN group_couples as b ON a.id::text = b.couple_id
-        WHERE a.tournament_id = ${tournamentID}
-        AND b.group_id = ${group_id}`;
+    const couples = await sql<CouplesSelect>`SELECT a.id as id, CONCAT(a.player1, '/', a.player2) as couple, b.group_id as group_id
+    FROM tournament_couples as a
+    INNER JOIN group_couples as b ON a.id::text = b.couple_id
+    WHERE a.tournament_id = ${tournamentID}
+    AND b.group_id = ${group_id}`;
 
-        return couples.rows;
-      } else {
-        const couples = await sql<CouplesSelect>`
-        WITH RankedResults AS (
-            SELECT *,
-                  ROW_NUMBER() OVER (PARTITION BY group_id ORDER BY group_id ASC, sets_total DESC, total_games DESC, games_positive DESC) AS row_num
-            FROM tournament_results_view
-        )
-        SELECT couple_id as id, CONCAT(group_id,'-',row_num,' ',couple_names) as couple, group_id
-        FROM RankedResults
-        WHERE row_num <= 4
-        AND tournament_id = ${tournamentID}
-        ORDER BY
-            group_id ASC,
-            sets_total DESC,
-            total_games DESC,
-            games_positive DESC`;
+    return couples.rows;
 
-        return couples.rows;
-      }
+  } catch (error) {
+    return { message: 'Database Error: Failed to get couples.' };
+  }
+}
+
+export async function getCouplesBy8vos(
+  tournamentID: string,
+  ) {
+  noStore();
+  try {
+    const couples = await sql<CouplesSelect>`
+    WITH RankedResults AS (
+        SELECT *,
+              ROW_NUMBER() OVER (PARTITION BY group_id ORDER BY group_id ASC, sets_total DESC, total_games DESC, games_positive DESC) AS row_num
+        FROM tournament_results_view
+    )
+    SELECT couple_id as id, CONCAT(group_id,'-',row_num,' ',couple_names) as couple, group_id
+    FROM RankedResults
+    WHERE row_num <= 4
+    AND tournament_id = ${tournamentID}
+    AND group_id NOT IN ('8','4','2','1')
+    ORDER BY
+        group_id ASC,
+        sets_total DESC,
+        total_games DESC,
+        games_positive DESC`;
+
+        console.log(couples.rows)
+    return couples.rows;
+  } catch (error) {
+    return { message: 'Database Error: Failed to get couples.' };
+  }
+}
+
+export async function getCouplesBy4tos(
+  tournamentID: string,
+  group_id: string
+  ) {
+  noStore();
+  try {
+    const couples = await sql<CouplesSelect>`SELECT a.id as id, CONCAT(a.player1, '/', a.player2) as couple, b.group_id as group_id
+    FROM tournament_couples as a
+    INNER JOIN group_couples as b ON a.id::text = b.couple_id
+    WHERE a.tournament_id = ${tournamentID}
+    AND b.group_id = ${group_id}`;
+
+    return couples.rows;
+
+  } catch (error) {
+    return { message: 'Database Error: Failed to get couples.' };
+  }
+}
+
+export async function getCouplesBySemis(
+  tournamentID: string,
+  group_id: string
+  ) {
+  noStore();
+  try {
+    const couples = await sql<CouplesSelect>`SELECT a.id as id, CONCAT(a.player1, '/', a.player2) as couple, b.group_id as group_id
+    FROM tournament_couples as a
+    INNER JOIN group_couples as b ON a.id::text = b.couple_id
+    WHERE a.tournament_id = ${tournamentID}
+    AND b.group_id = ${group_id}`;
+
+    return couples.rows;
+
+  } catch (error) {
+    return { message: 'Database Error: Failed to get couples.' };
+  }
+}
+
+export async function getCouplesByFinal(
+  tournamentID: string,
+  group_id: string
+  ) {
+  noStore();
+  try {
+    const couples = await sql<CouplesSelect>`SELECT a.id as id, CONCAT(a.player1, '/', a.player2) as couple, b.group_id as group_id
+    FROM tournament_couples as a
+    INNER JOIN group_couples as b ON a.id::text = b.couple_id
+    WHERE a.tournament_id = ${tournamentID}
+    AND b.group_id = ${group_id}`;
+
+    return couples.rows;
 
   } catch (error) {
     return { message: 'Database Error: Failed to get couples.' };

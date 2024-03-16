@@ -10,7 +10,10 @@ export type Tournaments = {
   name: string,
   image: string,
   status: number,
-  date: string
+  date: string,
+  type: string,
+  param_q_per_group: string,
+  param_couple_per_group: string
 };
 
 export type Couple = {

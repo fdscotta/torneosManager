@@ -22,7 +22,21 @@ export default function CreateForm({
 
   const groupSelectionHandler = (group: string) => {
     setSelectedGroup(group);
-    fetch(`/api/couples/bygroup/${tournamentID}/${group}`, {
+    let apiUrl = `/api/couples/bygroup/${tournamentID}/${group}`;
+    if (group === '8') {
+      apiUrl = `/api/couples/by8vos/${tournamentID}`;
+    }
+    if (group === '4') {
+      apiUrl = `/api/couples/by4tos/${tournamentID}/${group}`;
+    }
+    if (group === '2') {
+      apiUrl = `/api/couples/bySemis/${tournamentID}/${group}`;
+    }
+    if (group === '1') {
+      apiUrl = `/api/couples/byFinal/${tournamentID}/${group}`;
+    }
+
+    fetch(apiUrl, {
       method: "POST",
     })
       .then((res) => res.json())
