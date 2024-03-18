@@ -100,13 +100,14 @@ export async function createTournament(prevState: State, formData: FormData) {
         0,
         ${t_type},
         ${formatDate},
-        ${imagePosted},
+        ${imagePosted},m
         ${param_q_per_group},
         ${param_couple_per_group}
       )
     `;
 
-    tournamentID = result.rows[0].id;
+    const tournamentID = result.rows[0].id;
+    declareRounds(qualificationRound, tournamentID);
   } catch (error) {
     return {
       message: error + "Database Error: Error al crear torneo.",
@@ -139,7 +140,6 @@ export async function updateTournament(
   });
 
   // If form validation fails, return errors early. Otherwise, continue.
-  console.log(validatedFields);
   if (!validatedFields.success) {
     return {
       errors: validatedFields.error.flatten().fieldErrors,
