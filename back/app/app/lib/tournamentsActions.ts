@@ -5,7 +5,11 @@ import { sql } from "@vercel/postgres";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { updateImageCloud } from "./cloudinary";
-const { qualificationRound } = require("../configurationData.js");
+import { getTournament } from "./apiFunctions";
+const {
+  qualificationRoundLeague,
+  qualificationRoundTournament,
+} = require("../configurationData.js");
 
 const ACCEPTED_IMAGE_TYPES = [
   "image/jpeg",
@@ -31,7 +35,7 @@ const FormSchema = z.object({
     }),
   }),
   t_type: z.string(),
-  param_couple_per_group: z.string(),
+
   param_q_per_group: z.string(),
 });
 
@@ -49,7 +53,6 @@ export type State = {
     date?: string[];
     type?: string[];
     param_q_per_group?: string[];
-    param_couple_per_group?: string[];
   };
   message?: string | null;
 };
@@ -61,7 +64,6 @@ export async function createTournament(prevState: State, formData: FormData) {
     image: formData.get("image"),
     date: formData.get("date"),
     param_q_per_group: formData.get("param_q_per_group"),
-    param_couple_per_group: formData.get("param_couple_per_group"),
     t_type: formData.get("t_type"),
   });
 
@@ -79,8 +81,7 @@ export async function createTournament(prevState: State, formData: FormData) {
     imagePosted = await updateImageCloud(file);
   }
 
-  const { name, date, param_q_per_group, param_couple_per_group, t_type } =
-    validatedFields.data;
+  const { name, date, param_q_per_group, t_type } = validatedFields.data;
 
   const formatDate = date.toISOString();
 
@@ -92,8 +93,7 @@ export async function createTournament(prevState: State, formData: FormData) {
         type,
         date,
         image,
-        param_q_per_group,
-        param_couple_per_group
+        param_q_per_group
       )
       VALUES (
         ${name},
@@ -101,13 +101,12 @@ export async function createTournament(prevState: State, formData: FormData) {
         ${t_type},
         ${formatDate},
         ${imagePosted},m
-        ${param_q_per_group},
-        ${param_couple_per_group}
+        ${param_q_per_group}
       )
     `;
 
     const tournamentID = result.rows[0].id;
-    declareRounds(qualificationRound, tournamentID);
+    declareRounds(tournamentID);
   } catch (error) {
     return {
       message: error + "Database Error: Error al crear torneo.",
@@ -135,7 +134,6 @@ export async function updateTournament(
     image: formData.get("image"),
     date: formData.get("date"),
     param_q_per_group: formData.get("param_q_per_group"),
-    param_couple_per_group: formData.get("param_couple_per_group"),
     t_type: formData.get("t_type"),
   });
 
@@ -147,8 +145,7 @@ export async function updateTournament(
     };
   }
 
-  const { name, date, param_q_per_group, param_couple_per_group, t_type } =
-    validatedFields.data;
+  const { name, date, param_q_per_group, t_type } = validatedFields.data;
 
   const formatDate = date.toISOString();
 
@@ -159,7 +156,6 @@ export async function updateTournament(
       image = ${imagePosted?.toString()},
       date = ${formatDate},
       param_q_per_group = ${param_q_per_group},
-      param_couple_per_group = ${param_couple_per_group},
       type = ${t_type}
       WHERE id = ${id}
     `;
@@ -199,7 +195,7 @@ export async function closeTournament(id: string) {
 
 //  declareRounds(qualificationRound, tournamentID);
 
-export async function declareRounds(dataRef: any, tournamentID: string) {
+export async function declareRounds(tournamentID: string) {
   let row = {
     group_id: "",
     couple1_id: "",
@@ -214,7 +210,17 @@ export async function declareRounds(dataRef: any, tournamentID: string) {
     rel_to: "",
     tournament_id: "",
   };
-  dataRef.forEach(
+
+  const tournament = await getTournament(tournamentID);
+  let dataRef = null;
+
+  if (tournament.type == "torneo") {
+    dataRef = qualificationRoundTournament;
+  } else {
+    dataRef = qualificationRoundLeague;
+  }
+
+  /*   dataRef.forEach(
     (item: {
       round: string;
       rel_from_1: string;
@@ -228,7 +234,7 @@ export async function declareRounds(dataRef: any, tournamentID: string) {
       row.tournament_id = tournamentID;
       insertRound(row, tournamentID);
     }
-  );
+  ); */
 }
 
 export async function insertRound(round: any, tournamentID: string) {

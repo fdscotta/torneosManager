@@ -1,33 +1,32 @@
-import { sql } from '@vercel/postgres';
+import { sql } from "@vercel/postgres";
 import {
   CouplesSelect,
   GroupResultsTable,
   GroupsSelect,
-} from './definitions';
-import { unstable_noStore as noStore } from 'next/cache';
+  Tournaments,
+} from "./definitions";
+import { unstable_noStore as noStore } from "next/cache";
 
 export async function getCouplesByGroups(
   tournamentID: string,
   group_id: string
-  ) {
+) {
   noStore();
   try {
-    const couples = await sql<CouplesSelect>`SELECT a.id as id, CONCAT(a.player1, '/', a.player2) as couple, b.group_id as group_id
+    const couples =
+      await sql<CouplesSelect>`SELECT a.id as id, CONCAT(a.player1, '/', a.player2) as couple, b.group_id as group_id
     FROM tournament_couples as a
     INNER JOIN group_couples as b ON a.id::text = b.couple_id
     WHERE a.tournament_id = ${tournamentID}
     AND b.group_id = ${group_id}`;
 
     return couples.rows;
-
   } catch (error) {
-    return { message: 'Database Error: Failed to get couples.' };
+    return { message: "Database Error: Failed to get couples." };
   }
 }
 
-export async function getCouplesBy8vos(
-  tournamentID: string,
-  ) {
+export async function getCouplesBy8vos(tournamentID: string) {
   noStore();
   try {
     const couples = await sql<CouplesSelect>`
@@ -47,82 +46,78 @@ export async function getCouplesBy8vos(
         total_games DESC,
         games_positive DESC`;
 
-        console.log(couples.rows)
+    console.log(couples.rows);
     return couples.rows;
   } catch (error) {
-    return { message: 'Database Error: Failed to get couples.' };
+    return { message: "Database Error: Failed to get couples." };
   }
 }
 
-export async function getCouplesBy4tos(
-  tournamentID: string,
-  group_id: string
-  ) {
+export async function getCouplesBy4tos(tournamentID: string, group_id: string) {
   noStore();
   try {
-    const couples = await sql<CouplesSelect>`SELECT a.id as id, CONCAT(a.player1, '/', a.player2) as couple, b.group_id as group_id
+    const couples =
+      await sql<CouplesSelect>`SELECT a.id as id, CONCAT(a.player1, '/', a.player2) as couple, b.group_id as group_id
     FROM tournament_couples as a
     INNER JOIN group_couples as b ON a.id::text = b.couple_id
     WHERE a.tournament_id = ${tournamentID}
     AND b.group_id = ${group_id}`;
 
     return couples.rows;
-
   } catch (error) {
-    return { message: 'Database Error: Failed to get couples.' };
+    return { message: "Database Error: Failed to get couples." };
   }
 }
 
 export async function getCouplesBySemis(
   tournamentID: string,
   group_id: string
-  ) {
+) {
   noStore();
   try {
-    const couples = await sql<CouplesSelect>`SELECT a.id as id, CONCAT(a.player1, '/', a.player2) as couple, b.group_id as group_id
+    const couples =
+      await sql<CouplesSelect>`SELECT a.id as id, CONCAT(a.player1, '/', a.player2) as couple, b.group_id as group_id
     FROM tournament_couples as a
     INNER JOIN group_couples as b ON a.id::text = b.couple_id
     WHERE a.tournament_id = ${tournamentID}
     AND b.group_id = ${group_id}`;
 
     return couples.rows;
-
   } catch (error) {
-    return { message: 'Database Error: Failed to get couples.' };
+    return { message: "Database Error: Failed to get couples." };
   }
 }
 
 export async function getCouplesByFinal(
   tournamentID: string,
   group_id: string
-  ) {
+) {
   noStore();
   try {
-    const couples = await sql<CouplesSelect>`SELECT a.id as id, CONCAT(a.player1, '/', a.player2) as couple, b.group_id as group_id
+    const couples =
+      await sql<CouplesSelect>`SELECT a.id as id, CONCAT(a.player1, '/', a.player2) as couple, b.group_id as group_id
     FROM tournament_couples as a
     INNER JOIN group_couples as b ON a.id::text = b.couple_id
     WHERE a.tournament_id = ${tournamentID}
     AND b.group_id = ${group_id}`;
 
     return couples.rows;
-
   } catch (error) {
-    return { message: 'Database Error: Failed to get couples.' };
+    return { message: "Database Error: Failed to get couples." };
   }
 }
 
-export async function getGroupsByTournament(
-  tournamentID: string
-  ) {
+export async function getGroupsByTournament(tournamentID: string) {
   noStore();
   try {
-    const couples = await sql<GroupsSelect>`SELECT DISTINCT a.group_id FROM group_couples as a
+    const couples =
+      await sql<GroupsSelect>`SELECT DISTINCT a.group_id FROM group_couples as a
     INNER JOIN tournament_couples as b ON b.id::text = a.couple_id
     WHERE b.tournament_id = ${tournamentID}`;
 
     return couples.rows;
   } catch (error) {
-    return { message: 'Database Error: Failed to get groups.' };
+    return { message: "Database Error: Failed to get groups." };
   }
 }
 
@@ -141,7 +136,38 @@ export async function getResultsByGroups(
     `;
     return data.rows;
   } catch (error) {
-    console.error('Database Error:', error);
-    throw new Error('Failed to fetch tournament group results.');
+    console.error("Database Error:", error);
+    throw new Error("Failed to fetch tournament group results.");
+  }
+}
+
+export async function getTournament(tournament_id: string) {
+  noStore();
+  try {
+    const data = await sql<Tournaments>`
+      SELECT *
+        FROM tournaments
+        WHERE
+        id = ${tournament_id};
+    `;
+    return data.rows[0];
+  } catch (error) {
+    console.error("Database Error:", error);
+    throw new Error("Failed to fetch tournament group results.");
+  }
+}
+
+export async function getTournamentAmountCouples(tournament_id: string) {
+  noStore();
+  try {
+    const data = await sql`
+      SELECT COUNT(*) as count
+      FROM tournament_couples
+      WHERE tournament_id = ${tournament_id};
+    `;
+    return data.rows[0].count;
+  } catch (error) {
+    console.error("Database Error:", error);
+    throw new Error("Failed to fetch getTournamentAmountCouples.");
   }
 }

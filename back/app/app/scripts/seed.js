@@ -58,7 +58,6 @@ async function createTorneos (client) {
         image VARCHAR(255) NOT NULL,
         date DATE NOT NULL,
         tournament_type VARCHAR,
-        param_couple_per_group VARCHAR,
         param_q_per_group VARCHAR;
       );
     `;

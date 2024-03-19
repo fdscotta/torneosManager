@@ -3,8 +3,13 @@
 import { sql } from "@vercel/postgres";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { getGroupsByTournament, getResultsByGroups } from "./apiFunctions";
-import { GroupResultsTable } from "./definitions";
+import {
+  getGroupsByTournament,
+  getResultsByGroups,
+  getTournament,
+  getTournamentAmountCouples,
+} from "./apiFunctions";
+import { GroupResultsTable, GroupsSelect } from "./definitions";
 
 // This is temporary
 export type State = {
@@ -140,14 +145,56 @@ export async function deleteGroupResult(id: string) {
 
 export async function updateQRounds(tournamentID: string) {
   const groups = await getGroupsByTournament(tournamentID);
+  const qAmount = (await getTournament(tournamentID)).param_q_per_group;
+  const pAmount: number = await getTournamentAmountCouples(tournamentID);
 
-  groups.forEach(async (group_id: string) => {
-    const resutlsByGroups = await getResultsByGroups(
-      tournamentID,
-      group_id?.group_id
-    );
-    resutlsByGroups.forEach(async (couple: GroupResultsTable, index) => {
-      console.log(couple.group_id + (index + 1));
-    });
-  });
+  let totalResults: GroupResultsTable[] = [];
+  let qCouples: GroupResultsTable[] = [];
+
+  await Promise.all(
+    groups.map(async (item: GroupsSelect) => {
+      const resultsByGroups = await getResultsByGroups(
+        tournamentID,
+        item.group_id
+      );
+
+      qCouples = resultsByGroups.slice(0, parseInt(qAmount));
+
+      qCouples.forEach((couple: GroupResultsTable, index: number) => {
+        couple.id = couple.group_id + (index + 1).toString();
+        totalResults.push(couple);
+      });
+    })
+  );
+
+  switch (pAmount) {
+    case 6:
+    case 7:
+    case 8:
+      break;
+    case 9:
+    case 10:
+    case 11:
+      break;
+    case 12:
+    case 13:
+    case 14:
+      break;
+    case 15:
+    case 16:
+    case 17:
+      break;
+    case 18:
+    case 19:
+    case 20:
+      break;
+    case 21:
+    case 22:
+    case 23:
+      break;
+    case 24:
+    case 25:
+    case 26:
+      break;
+  }
 }

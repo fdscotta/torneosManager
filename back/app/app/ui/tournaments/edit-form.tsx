@@ -145,22 +145,6 @@ export default function EditTournamentForm({
                 </li>
               </ul>
             </div>
-
-            <div className="relative mt-2 rounded-md">
-              <legend className="mb-2 block text-sm font-medium">
-                Parejas por Grupo
-              </legend>
-              <div className="relative">
-                <input
-                  id="param_couple_per_group"
-                  name="param_couple_per_group"
-                  type="number"
-                  defaultValue={tournament.param_couple_per_group}
-                  className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500 dark:bg-slate-800"
-                  aria-describedby="param_couple_per_group-error"
-                />
-              </div>
-            </div>
             <div className="relative mt-2 rounded-md">
               <legend className="mb-2 block text-sm font-medium">
                 Clasificados por Grupo
