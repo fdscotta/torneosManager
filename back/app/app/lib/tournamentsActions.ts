@@ -5,11 +5,6 @@ import { sql } from "@vercel/postgres";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { updateImageCloud } from "./cloudinary";
-import { getTournament } from "./apiFunctions";
-const {
-  qualificationRoundLeague,
-  qualificationRoundTournament,
-} = require("../configurationData.js");
 
 const ACCEPTED_IMAGE_TYPES = [
   "image/jpeg",
@@ -100,13 +95,10 @@ export async function createTournament(prevState: State, formData: FormData) {
         0,
         ${t_type},
         ${formatDate},
-        ${imagePosted},m
+        ${imagePosted},
         ${param_q_per_group}
       )
     `;
-
-    const tournamentID = result.rows[0].id;
-    declareRounds(tournamentID);
   } catch (error) {
     return {
       message: error + "Database Error: Error al crear torneo.",
@@ -193,93 +185,14 @@ export async function closeTournament(id: string) {
   }
 }
 
-//  declareRounds(qualificationRound, tournamentID);
-
-export async function declareRounds(tournamentID: string) {
-  let row = {
-    group_id: "",
-    couple1_id: "",
-    couple2_id: "",
-    set_1_c1: "",
-    set_2_c1: "",
-    set_3_c1: "",
-    set_1_c2: "",
-    set_2_c2: "",
-    set_3_c2: "",
-    match_date: "",
-    rel_to: "",
-    tournament_id: "",
-  };
-
-  const tournament = await getTournament(tournamentID);
-  let dataRef = null;
-
-  if (tournament.type == "torneo") {
-    dataRef = qualificationRoundTournament;
-  } else {
-    dataRef = qualificationRoundLeague;
-  }
-
-  /*   dataRef.forEach(
-    (item: {
-      round: string;
-      rel_from_1: string;
-      rel_from_2: string;
-      rel_to: string;
-    }) => {
-      row.group_id = item.round;
-      row.couple1_id = item.rel_from_1;
-      row.couple2_id = item.rel_from_2;
-      row.rel_to = item.rel_to;
-      row.tournament_id = tournamentID;
-      insertRound(row, tournamentID);
-    }
-  ); */
-}
-
-export async function insertRound(round: any, tournamentID: string) {
+export async function setDrawsTournament(id: string) {
+  // throw new Error('Failed to Delete Tournament');
   try {
-    const result = await sql`
-      INSERT INTO group_results (
-        group_id,
-        couple1_id,
-        couple2_id,
-        winner,
-        set_1_c1,
-        set_2_c1,
-        set_3_c1,
-        set_1_c2,
-        set_2_c2,
-        set_3_c2,
-        match_date,
-        rel_to,
-        tournament_id,
-        rel_from_1,
-        rel_from_2
-      )
-      VALUES (
-        ${round.group_id},
-        '',
-        '',
-        '',
-        '',
-        '',
-        '',
-        '',
-        '',
-        '',
-        null,
-        ${round.rel_to},
-        ${round.tournament_id},
-        ${round.couple1_id},
-        ${round.couple2_id}
-      )
-      `;
-    console.log(result);
+    await sql`UPDATE tournaments
+      SET param_draw_set = TRUE
+      WHERE id::text =  ${id}`;
+    return { message: "Draw Set" };
   } catch (error) {
-    // If a database error occurs, return a more specific error.
-    return {
-      message: error + "Database Error: Error al crear round.",
-    };
+    return { message: "Database Error: Failed to Update Tournament." };
   }
 }

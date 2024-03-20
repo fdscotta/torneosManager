@@ -161,11 +161,13 @@ export async function getTournamentAmountCouples(tournament_id: string) {
   noStore();
   try {
     const data = await sql`
-      SELECT COUNT(*) as count
-      FROM tournament_couples
-      WHERE tournament_id = ${tournament_id};
+      SELECT a.group_id as count FROM group_couples as a
+      INNER JOIN tournament_couples as b ON b.id::text = a.couple_id
+      WHERE tournament_id = ${tournament_id}
+      GROUP BY a.group_id
+      ORDER BY a.group_id ASC;
     `;
-    return data.rows[0].count;
+    return data.rowCount;
   } catch (error) {
     console.error("Database Error:", error);
     throw new Error("Failed to fetch getTournamentAmountCouples.");

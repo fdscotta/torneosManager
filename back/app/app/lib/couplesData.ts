@@ -1,8 +1,6 @@
-import { sql } from '@vercel/postgres';
-import {
-  Couple, GroupResult
-} from './definitions';
-import { unstable_noStore as noStore } from 'next/cache';
+import { sql } from "@vercel/postgres";
+import { Couple, GroupResult } from "./definitions";
+import { unstable_noStore as noStore } from "next/cache";
 
 export async function fetchFilteredCouples(
   tournamentID: string,
@@ -23,8 +21,8 @@ export async function fetchFilteredCouples(
 
     return data.rows;
   } catch (error) {
-    console.error('Database Error:', error);
-    throw new Error('Failed to fetch tournament couples.');
+    console.error("Database Error:", error);
+    throw new Error("Failed to fetch tournament couples.");
   }
 }
 
@@ -41,8 +39,8 @@ export async function fetchCoupleById(id: string) {
 
     return couple[0];
   } catch (error) {
-    console.error('Database Error:', error);
-    throw new Error('Failed to fetch couple.');
+    console.error("Database Error:", error);
+    throw new Error("Failed to fetch couple.");
   }
 }
 
@@ -60,8 +58,8 @@ export async function fetchCoupleGroup(id: string) {
 
     return couple[0]?.group_id;
   } catch (error) {
-    console.error('Database Error:', error);
-    throw new Error('Failed to fetch couple.');
+    console.error("Database Error:", error);
+    throw new Error("Failed to fetch couple.");
   }
 }
 
@@ -70,10 +68,10 @@ export async function fetchFilteredResultsLikeCouple(
   tournamentID: string,
   filter: string
 ) {
-  if (filter === 'g') {
-    filter = '';
+  if (filter === "g") {
+    filter = "A|B";
   }
-  console.log(filter)
+  console.log(filter);
   noStore();
   try {
     const data = await sql<GroupResult>`
@@ -86,20 +84,18 @@ export async function fetchFilteredResultsLikeCouple(
         LEFT JOIN couple_names_view as d ON a.couple2_id = d.id::text
         WHERE (lower(c.couple_name::text) LIKE lower(${`%${query}%`}) OR lower(d.couple_name::text) LIKE lower(${`%${query}%`}))
         AND b.tournament_id = ${tournamentID}
-        AND lower(a.group_id) LIKE lower(${`%${filter}%`})
+        AND lower(a.group_id) ~* ${filter}
         ORDER BY a.group_id
     `;
 
     return data.rows;
   } catch (error) {
-    console.error('Database Error:', error);
-    throw new Error('Failed to fetch group results.');
+    console.error("Database Error:", error);
+    throw new Error("Failed to fetch group results.");
   }
 }
 
-export async function fetchFilteredResultsById(
-  resultID: string
-) {
+export async function fetchFilteredResultsById(resultID: string) {
   noStore();
   try {
     const data = await sql<GroupResult>`
@@ -110,7 +106,7 @@ export async function fetchFilteredResultsById(
     `;
     return data.rows[0];
   } catch (error) {
-    console.error('Database Error:', error);
-    throw new Error('Failed to fetch tournament couples.');
+    console.error("Database Error:", error);
+    throw new Error("Failed to fetch tournament couples.");
   }
 }

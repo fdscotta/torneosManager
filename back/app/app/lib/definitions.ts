@@ -13,6 +13,7 @@ export type Tournaments = {
   date: string;
   type: string;
   param_q_per_group: string;
+  param_draw_set: boolean;
 };
 
 export type Couple = {
@@ -42,16 +43,23 @@ export type GroupResult = {
   set_2_c2: string;
   set_3_c2: string;
   match_date: string;
+  rel_to: string;
+  rel_from_1: string;
+  rel_from_2: string;
+  tournament_id: string;
 };
 
 export type GroupResultsTable = {
   id: string;
+  couple_id: string;
+  couple_name: string;
   group_id: string;
   couple: string;
   sets_total: string;
   total_games: string;
   games_positive: string;
   wins: string;
+  tournament_id: string;
 };
 
 export type CouplesSelect = {

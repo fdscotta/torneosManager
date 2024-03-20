@@ -1,26 +1,26 @@
 const qualificationRoundLeague = [
     {
         round: "4",
-        rel_from_1: "81",
-        rel_from_2: "82",
+        rel_from_1: "1",
+        rel_from_2: "8",
         rel_to: "41",
     },
     {
         round: "4",
-        rel_from_1: "83",
-        rel_from_2: "84",
+        rel_from_1: "4",
+        rel_from_2: "5",
         rel_to: "42",
     },
     {
         round: "4",
-        rel_from_1: "85",
-        rel_from_2: "86",
+        rel_from_1: "3",
+        rel_from_2: "6",
         rel_to: "43",
     },
     {
         round: "4",
-        rel_from_1: "87",
-        rel_from_2: "88",
+        rel_from_1: "2",
+        rel_from_2: "7",
         rel_to: "44",
     },
     {
