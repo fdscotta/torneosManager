@@ -12,17 +12,33 @@ export async function getCouplesByGroups(
   group_id: string
 ) {
   noStore();
-  try {
-    const couples =
-      await sql<CouplesSelect>`SELECT a.id as id, CONCAT(a.player1, '/', a.player2) as couple, b.group_id as group_id
-    FROM tournament_couples as a
-    INNER JOIN group_couples as b ON a.id::text = b.couple_id
-    WHERE a.tournament_id = ${tournamentID}
-    AND b.group_id = ${group_id}`;
+  if (group_id == "8" || group_id == "4" || group_id == "2") {
+    try {
+      const couples =
+        await sql<CouplesSelect>`SELECT a.id as id, CONCAT(a.player1, '/', a.player2) as couple, b.group_id as group_id
+      FROM tournament_couples as a
+      INNER JOIN group_results as b ON a.id::text = b.couple1_id OR a.id::text = b.couple2_id
+      WHERE a.tournament_id = ${tournamentID}
+      AND b.group_id = ${group_id}
+      ORDER BY b.rel_to`;
 
-    return couples.rows;
-  } catch (error) {
-    return { message: "Database Error: Failed to get couples." };
+      return couples.rows;
+    } catch (error) {
+      return { message: "Database Error: Failed to get couples." };
+    }
+  } else {
+    try {
+      const couples =
+        await sql<CouplesSelect>`SELECT a.id as id, CONCAT(a.player1, '/', a.player2) as couple, b.group_id as group_id
+      FROM tournament_couples as a
+      INNER JOIN group_couples as b ON a.id::text = b.couple_id
+      WHERE a.tournament_id = ${tournamentID}
+      AND b.group_id = ${group_id}`;
+
+      return couples.rows;
+    } catch (error) {
+      return { message: "Database Error: Failed to get couples." };
+    }
   }
 }
 
@@ -46,7 +62,6 @@ export async function getCouplesBy8vos(tournamentID: string) {
         total_games DESC,
         games_positive DESC`;
 
-    console.log(couples.rows);
     return couples.rows;
   } catch (error) {
     return { message: "Database Error: Failed to get couples." };

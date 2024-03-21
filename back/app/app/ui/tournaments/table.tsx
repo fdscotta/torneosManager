@@ -3,6 +3,7 @@ import { UpdateTournament, CloseTournament, AddCouples, GroupResults, DeleteTour
 import TournamentStatus from '@/app/ui/tournaments/status';
 import { formatDateToLocal } from '@/app/lib/utils';
 import { fetchFilteredTournaments } from '@/app/lib/data';
+import logo from "@/app/logoNuevo.png";
 
 export default async function TournamentsTable({
   query,
@@ -27,7 +28,7 @@ export default async function TournamentsTable({
                   <div>
                     <div className="mb-2 flex items-center">
                       <Image
-                        src={tournament.image}
+                        src={tournament.image ? tournament.image : logo}
                         className="mr-2 rounded-full"
                         width={28}
                         height={28}

@@ -1,6 +1,6 @@
 "use server";
 
-import { sql } from "@vercel/postgres";
+import { QueryResult, sql } from "@vercel/postgres";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 const {
@@ -19,7 +19,12 @@ import {
   getTournament,
   getTournamentAmountCouples,
 } from "./apiFunctions";
-import { GroupResult, GroupResultsTable, GroupsSelect } from "./definitions";
+import {
+  GroupResult,
+  GroupResultsTable,
+  GroupsSelect,
+  Tournaments,
+} from "./definitions";
 import { setDrawsTournament } from "./tournamentsActions";
 
 // This is temporary
@@ -67,7 +72,8 @@ export async function createGroupResult(
         set_1_c2,
         set_2_c2,
         set_3_c2,
-        match_date
+        match_date,
+        tournament_id
       )
       VALUES (
         ${group_id},
@@ -80,7 +86,8 @@ export async function createGroupResult(
         ${set_1_c2},
         ${set_2_c2},
         ${set_3_c2},
-        ${match_date}
+        ${match_date},
+        ${tournamentID}
       )
     `;
     declareRounds(tournamentID);
@@ -132,7 +139,8 @@ export async function updateGroupResult(
         set_2_c2 = ${set_2_c2},
         set_3_c2 = ${set_3_c2},
         match_date = ${match_date},
-        group_id = ${group_id}
+        group_id = ${group_id},
+        tournament_id = ${tournamentID}
       WHERE id = ${resultID}
     `;
   } catch (error) {
@@ -278,7 +286,7 @@ export async function insertRound(round: any, tournamentID: string) {
 
 export async function updateQRounds(tournamentID: string) {
   const groups = await getGroupsByTournament(tournamentID);
-  const qAmount = (await getTournament(tournamentID)).param_q_per_group;
+  const tournament = await getTournament(tournamentID);
 
   let totalResults: GroupResultsTable[] = [];
   let qCouples: GroupResultsTable[] = [];
@@ -290,7 +298,10 @@ export async function updateQRounds(tournamentID: string) {
         item.group_id
       );
 
-      qCouples = resultsByGroups.slice(0, parseInt(qAmount));
+      qCouples = resultsByGroups.slice(
+        0,
+        parseInt(tournament.param_q_per_group)
+      );
 
       qCouples.forEach((couple: GroupResultsTable, index: number) => {
         couple.id = (index + 1).toString();
@@ -315,46 +326,135 @@ export async function updateQRounds(tournamentID: string) {
   });
 
   totalResults.forEach(async (couple: GroupResultsTable, index: number) => {
-    await updateDraw8(couple, index + 1);
+    await updateDrawFromGroups(couple, index + 1, tournament);
   });
+  await updateDraw("8", "4", tournament);
+  await updateDraw("4", "2", tournament);
 }
 
-export async function updateDraw8(couple: GroupResultsTable, position: number) {
+export async function updateDrawFromGroups(
+  couple: GroupResultsTable,
+  position: number,
+  tournament: Tournaments
+) {
   try {
-    const drawRow = await sql<GroupResult>`
-      SELECT * FROM group_results
-      WHERE rel_from_1 = ${position.toString()} or rel_from_2  = ${position.toString()}
-      AND tournament_id = ${couple.tournament_id};
-    `;
+    let drawRow: QueryResult<GroupResult>;
+    let realPosition: string;
+    if (tournament.param_q_per_group == "2") {
+      realPosition = couple.group_id + position.toString();
+    } else {
+      realPosition = couple.group_id + position.toString();
+    }
+    drawRow = await sql<GroupResult>`
+        SELECT * FROM group_results
+        WHERE rel_from_1 = ${realPosition} or rel_from_2  = ${realPosition}
+        AND tournament_id = ${couple.tournament_id};
+      `;
 
     if (drawRow.rowCount == 1) {
       const couple1_id =
-        drawRow.rows[0].rel_from_1 == position.toString()
-          ? couple.couple_id
-          : "";
+        drawRow.rows[0].rel_from_1 == realPosition ? couple.couple_id : "";
       const couple2_id =
-        drawRow.rows[0].rel_from_2 == position.toString()
-          ? couple.couple_id
-          : "";
+        drawRow.rows[0].rel_from_2 == realPosition ? couple.couple_id : "";
 
       try {
         if (couple1_id == "") {
+          console.log(`
+            UPDATE group_results SET
+              couple2_id = ${couple2_id}
+            WHERE id::text = ${drawRow.rows[0].id}
+            AND tournament_id = ${couple.tournament_id}
+          `);
           await sql`
             UPDATE group_results SET
               couple2_id = ${couple2_id}
             WHERE id::text = ${drawRow.rows[0].id}
+            AND tournament_id = ${couple.tournament_id}
           `;
         } else {
+          console.log(`
+            UPDATE group_results SET
+              couple1_id = ${couple1_id}
+            WHERE id::text = ${drawRow.rows[0].id}
+            AND tournament_id = ${couple.tournament_id}
+          `);
           await sql`
             UPDATE group_results SET
               couple1_id = ${couple1_id}
             WHERE id::text = ${drawRow.rows[0].id}
+            AND tournament_id = ${couple.tournament_id}
           `;
         }
       } catch (error) {
         return { message: JSON.stringify(error) };
       }
     }
+  } catch (error) {
+    return { message: JSON.stringify(error) };
+  }
+}
+
+export async function updateDraw(
+  roundFrom: string,
+  roundTo: string,
+  tournament: Tournaments
+) {
+  try {
+    const drawRow = await sql<GroupResult>`
+      SELECT * FROM group_results
+      WHERE group_id = ${roundFrom}
+      AND (winner IS NOT NULL AND winner <> '')
+      AND tournament_id = ${tournament.id}
+    `;
+
+    if (drawRow.rowCount == 0) return true;
+
+    const drawToRow = await sql<GroupResult>`
+      SELECT * FROM group_results
+      WHERE group_id = ${roundTo}
+      AND tournament_id = ${tournament.id}
+    `;
+
+    if (drawToRow.rowCount == 0) return true;
+
+    drawRow.rows.map(async (item: GroupResult) => {
+      let couple = "";
+      let rowID = "";
+      if (item.winner == "couple_1") {
+        couple = item.couple1_id;
+      } else {
+        couple = item.couple2_id;
+      }
+      let foundRelTo = drawToRow.rows.filter(
+        (i) => i.rel_from_1 === item.rel_to
+      );
+      if (foundRelTo.length > 0) {
+        rowID = foundRelTo[0].id;
+        try {
+          await sql`
+            UPDATE group_results SET
+              couple1_id = ${couple}
+            WHERE id::text = ${rowID}
+            AND tournament_id = ${tournament.id}
+          `;
+        } catch (error) {
+          return { message: JSON.stringify(error) };
+        }
+      } else {
+        foundRelTo = drawToRow.rows.filter((i) => i.rel_from_2 === item.rel_to);
+        rowID = foundRelTo[0].id;
+        try {
+          await sql`
+            UPDATE group_results SET
+              couple2_id = ${couple}
+            WHERE id::text = ${rowID}
+            AND tournament_id = ${tournament.id}
+          `;
+        } catch (error) {
+          return { message: JSON.stringify(error) };
+        }
+      }
+    });
   } catch (error) {
     return { message: JSON.stringify(error) };
   }

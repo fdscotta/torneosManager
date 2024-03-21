@@ -69,9 +69,8 @@ export async function fetchFilteredResultsLikeCouple(
   filter: string
 ) {
   if (filter === "g") {
-    filter = "A|B";
+    filter = "A|B|C|D|E|F|G|H";
   }
-  console.log(filter);
   noStore();
   try {
     const data = await sql<GroupResult>`

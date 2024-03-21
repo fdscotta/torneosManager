@@ -3,6 +3,8 @@ import Breadcrumbs from '@/app/ui/tournaments/breadcrumbs';
 import { fetchFilteredResultsById } from '@/app/lib/couplesData';
 import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
+import { Suspense } from 'react';
+import { ActiveTournamentsSkeleton } from '@/app/ui/skeletons';
 
 export const metadata: Metadata = {
   title: 'Editar Resultado',
@@ -34,7 +36,9 @@ export default async function Page({
           },
         ]}
       />
-      <Form result={result} tournamentID={params.id} />
+      <Suspense fallback={<ActiveTournamentsSkeleton />}>
+        <Form result={result} tournamentID={params.id} />
+      </Suspense>
     </main>
   );
 }
