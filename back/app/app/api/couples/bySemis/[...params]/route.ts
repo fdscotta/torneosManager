@@ -1,12 +1,12 @@
-import { getCouplesByGroup, getCouplesBySemis } from "@/app/lib/apiFunctions";
+import { getCouplesBySemis } from "@/app/lib/apiFunctions";
 import { NextResponse } from "next/server";
 
-export async function POST( request: Request, context: any) {
+export async function POST(request: Request, context: any) {
   const { params } = context;
 
   const couples = await getCouplesBySemis(params.params[0], params.params[1]);
 
   return NextResponse.json({
-    couples
-  })
+    couples,
+  });
 }

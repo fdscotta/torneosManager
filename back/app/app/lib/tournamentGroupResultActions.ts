@@ -285,7 +285,7 @@ export async function insertRound(round: any, tournamentID: string) {
 }
 
 export async function updateQRounds(tournamentID: string) {
-  const groups = await getGroupsByTournament(tournamentID);
+  const groups: any = await getGroupsByTournament(tournamentID);
   const tournament = await getTournament(tournamentID);
 
   let totalResults: GroupResultsTable[] = [];
