@@ -22,7 +22,21 @@ export default function CreateForm({
 
   const groupSelectionHandler = (group: string) => {
     setSelectedGroup(group);
-    fetch(`/api/couples/bygroup/${tournamentID}/${group}`, {
+    let apiUrl = `/api/couples/bygroup/${tournamentID}/${group}`;
+    if (group === '8') {
+      apiUrl = `/api/couples/by8vos/${tournamentID}`;
+    }
+    if (group === '4') {
+      apiUrl = `/api/couples/by4tos/${tournamentID}/${group}`;
+    }
+    if (group === '2') {
+      apiUrl = `/api/couples/bySemis/${tournamentID}/${group}`;
+    }
+    if (group === '1') {
+      apiUrl = `/api/couples/byFinal/${tournamentID}/${group}`;
+    }
+
+    fetch(apiUrl, {
       method: "POST",
     })
       .then((res) => res.json())
@@ -74,28 +88,16 @@ export default function CreateForm({
                   onInput={e => (e.target as HTMLInputElement).setCustomValidity('')}
                   required
                 >
-                  <option value="">Seleccione un grupo</option>
+                  <option value="">Seleccione un Fase</option>
+                  <option value="8">8vos</option>
+                  <option value="4">4tos</option>
+                  <option value="2">Semis</option>
+                  <option value="1">Final</option>
                   {groups?.map((group, index) => (
                     <option key={index} value={group?.group_id}>{group?.group_id}</option>
                   ))}
                 </select>
               }
-              <div className="relative">
-                <select
-                  id="group"
-                  name="group"
-                  placeholder={"Seleccione una Zona"}
-                  className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500 dark:bg-slate-800"
-                >
-                  <option value="" disabled selected hidden>
-                    Seleccione una Fase
-                  </option>
-                  <option value="8">8vos</option>
-                  <option value="4">4tos</option>
-                  <option value="2">Semis</option>
-                  <option value="1">Final</option>
-                </select>
-              </div>
             </div>
             <legend className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
               Pareja 1

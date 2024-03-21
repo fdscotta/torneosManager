@@ -18,8 +18,8 @@ export default async function TournamentsCoupleTable({
             <div className="md:hidden">
               {couples?.map((couple) => (
                 <div
-                key={couple.id}
-                className="mb-2 w-full rounded-md dark:bg-slate-800 p-4"
+                  key={couple.id}
+                  className="mb-2 w-full rounded-md dark:bg-slate-800 p-4"
                 >
                   <div className="flex items-center justify-between border-b pb-4 text-white">
                     <div className="mb-2 w-full">
@@ -29,8 +29,8 @@ export default async function TournamentsCoupleTable({
                   </div>
                   <div className="flex w-full flex-row justify-end space-x-2 pt-4">
 
-                      <UpdateCouple tournamentID={tournamentID} coupleID={couple.id} />
-                      <DeleteCouple id={couple.id} />
+                    <UpdateCouple tournamentID={tournamentID} coupleID={couple.id} />
+                    <DeleteCouple id={couple.id} />
 
                   </div>
                 </div>
@@ -43,21 +43,17 @@ export default async function TournamentsCoupleTable({
                     Pareja
                   </th>
                   <th scope="col" className="px-3 py-5 font-medium">
-                    Grupo
+                    Fase
                   </th>
                   <th scope="col" className="relative py-3 pl-6 pr-3">
-                    <span className="sr-only">Editar</span>
-                  </th>
-                  <th scope="col" className="relative py-3 pl-6 pr-3">
-                    <span className="sr-only">Borrar</span>
                   </th>
                 </tr>
               </thead>
               <tbody className="dark:bg-slate-800 text-white">
                 {couples?.map((couple) => (
                   <tr
-                  key={couple.id}
-                  className="w-full border-b py-3 text-sm last-of-type:border-none [&:first-child>td:first-child]:rounded-tl-lg [&:first-child>td:last-child]:rounded-tr-lg [&:last-child>td:first-child]:rounded-bl-lg [&:last-child>td:last-child]:rounded-br-lg"
+                    key={couple.id}
+                    className="w-full border-b py-3 text-sm last-of-type:border-none [&:first-child>td:first-child]:rounded-tl-lg [&:first-child>td:last-child]:rounded-tr-lg [&:last-child>td:first-child]:rounded-bl-lg [&:last-child>td:last-child]:rounded-br-lg"
                   >
                     <td className="whitespace-nowrap py-3 pl-6 pr-3">
                       <div className="flex items-center gap-3">

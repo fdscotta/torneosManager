@@ -3,6 +3,7 @@ import { UpdateTournament, CloseTournament, AddCouples, GroupResults, DeleteTour
 import TournamentStatus from '@/app/ui/tournaments/status';
 import { formatDateToLocal } from '@/app/lib/utils';
 import { fetchFilteredTournaments } from '@/app/lib/data';
+import logo from "@/app/logoNuevo.png";
 
 export default async function TournamentsTable({
   query,
@@ -27,7 +28,7 @@ export default async function TournamentsTable({
                   <div>
                     <div className="mb-2 flex items-center">
                       <Image
-                        src={tournament.image}
+                        src={tournament.image ? tournament.image : logo}
                         className="mr-2 rounded-full"
                         width={28}
                         height={28}
@@ -40,11 +41,11 @@ export default async function TournamentsTable({
                   <TournamentStatus status={tournament.status} />
                 </div>
                 <div className="flex w-full flex-row justify-end space-x-2 pt-4">
-                    {(tournament.status === 0) && <AddCouples id={tournament.id} />}
-                    {(tournament.status === 0) && <GroupResults id={tournament.id} />}
-                    {(tournament.status === 0) && <UpdateTournament id={tournament.id} />}
-                    {(tournament.status === 0) && <CloseTournament id={tournament.id} />}
-                    {(tournament.status === 1) && <DeleteTournament id={tournament.id} />}
+                  {(tournament.status === 0) && <AddCouples id={tournament.id} />}
+                  {(tournament.status === 0) && <GroupResults id={tournament.id} />}
+                  {(tournament.status === 0) && <UpdateTournament id={tournament.id} />}
+                  {(tournament.status === 0) && <CloseTournament id={tournament.id} />}
+                  {(tournament.status === 1) && <DeleteTournament id={tournament.id} />}
                 </div>
               </div>
             ))}
@@ -60,6 +61,8 @@ export default async function TournamentsTable({
                 </th>
                 <th scope="col" className="px-3 py-5 font-medium text-white">
                   Status
+                </th>
+                <th scope="col" className="px-3 py-5 font-medium text-white">
                 </th>
               </tr>
             </thead>

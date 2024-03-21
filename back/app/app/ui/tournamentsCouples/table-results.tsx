@@ -60,16 +60,12 @@ export default async function TournamentsGroupResultTable({
                     Pareja
                   </th>
                   <th scope="col" className="px-3 py-5 font-medium">
-                    Grupo
+                    Fase
                   </th>
                   <th scope="col" className="px-3 py-5 font-medium">
                     Resultado
                   </th>
                   <th scope="col" className="relative py-3 pl-6 pr-3">
-                    <span className="sr-only">Editar</span>
-                  </th>
-                  <th scope="col" className="relative py-3 pl-6 pr-3">
-                    <span className="sr-only">Borrar</span>
                   </th>
                 </tr>
               </thead>

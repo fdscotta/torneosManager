@@ -25,7 +25,7 @@ export function ActiveTournamentsSkeleton() {
     >
       <div className="mb-4 h-8 w-36 rounded-md bg-gray-100" />
       <div className="flex grow flex-col justify-between rounded-xl bg-gray-100 p-4">
-        <div className="bg-white px-6">
+        <div className="dark:bg-slate-800 px-6">
           <TournamentSkeleton />
           <TournamentSkeleton />
           <TournamentSkeleton />
@@ -99,7 +99,7 @@ export function TableRowSkeleton() {
 
 export function TournamentsMobileSkeleton() {
   return (
-    <div className="mb-2 w-full rounded-md bg-white p-4">
+    <div className="mb-2 w-full rounded-md dark:bg-slate-800 p-4">
       <div className="flex items-center justify-between border-b border-gray-100 pb-8">
         <div className="flex items-center">
           <div className="mr-2 h-8 w-8 rounded-full bg-gray-100"></div>
@@ -125,7 +125,7 @@ export function TournamentTableSkeleton() {
   return (
     <div className="mt-6 flow-root">
       <div className="inline-block min-w-full align-middle">
-        <div className="rounded-lg bg-gray-50 p-2 md:pt-0">
+        <div className="rounded-lg dark:bg-slate-800 p-2 md:pt-0">
           <div className="md:hidden">
             <TournamentsMobileSkeleton />
             <TournamentsMobileSkeleton />
@@ -148,7 +148,7 @@ export function TournamentTableSkeleton() {
                 </th>
               </tr>
             </thead>
-            <tbody className="bg-white">
+            <tbody className="dark:bg-slate-800">
               <TableRowSkeleton />
               <TableRowSkeleton />
               <TableRowSkeleton />

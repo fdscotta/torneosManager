@@ -56,7 +56,9 @@ async function createTorneos (client) {
         status INT NOT NULL,
         type TEXT,
         image VARCHAR(255) NOT NULL,
-        date DATE NOT NULL
+        date DATE NOT NULL,
+        tournament_type VARCHAR,
+        param_q_per_group VARCHAR;
       );
     `;
 
@@ -143,6 +145,28 @@ async function createResultadosZona (client) {
     };
   } catch (error) {
     console.error('Error creating tournaments:', error);
+    throw error;
+  }
+}
+
+async function createQualifiers (client) {
+  try {
+    await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
+    const createTable = await client.sql`
+      CREATE TABLE IF NOT EXISTS qualifiers (
+        id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+        couple_id VARCHAR(255) NOT NULL,
+        rel_from VARCHAR(255),
+        rel_to VARCHAR(255),
+        winner VARCHAR(255)
+      );
+    `;
+
+    return {
+      createTable,
+    };
+  } catch (error) {
+    console.error('Error creating qualifiers table:', error);
     throw error;
   }
 }
@@ -252,8 +276,8 @@ async function main () {
   //await createParejasTorneo(client);
   //await createParejasZona(client);
   //await createResultadosZona(client);
-  await createGroupTableResultsView(client);
-
+  //await createGroupTableResultsView(client);
+  //await createQualifiers(client);
 
   await client.end();
 }
