@@ -71,3 +71,20 @@ export type CouplesSelect = {
 export type GroupsSelect = {
   group_id: string;
 };
+
+export type CuartosResutls = {
+  id: string;
+  group_id: string;
+  couple1_name: string;
+  couple2_name: string;
+  set_1_c1: string;
+  set_2_c1: string;
+  set_3_c1: string;
+  set_1_c2: string;
+  set_2_c2: string;
+  set_3_c2: string;
+  winner: string;
+  rel_to: string;
+  rel_from_1: string;
+  rel_from_2: string;
+};

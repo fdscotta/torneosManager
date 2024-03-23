@@ -1,6 +1,7 @@
 import { sql } from "@vercel/postgres";
 import {
   CouplesSelect,
+  CuartosResutls,
   GroupResultsTable,
   GroupsSelect,
   Tournaments,
@@ -71,12 +72,26 @@ export async function getCouplesBy8vos(tournamentID: string) {
 export async function getCouplesBy4tos(tournamentID: string, group_id: string) {
   noStore();
   try {
-    const couples =
-      await sql<CouplesSelect>`SELECT a.id as id, CONCAT(a.player1, '/', a.player2) as couple, b.group_id as group_id
-    FROM tournament_couples as a
-    INNER JOIN group_couples as b ON a.id::text = b.couple_id
+    const couples = await sql`SELECT
+      a.id,
+      a.group_id,
+      c.couple_name as couple1_id,
+      d.couple_name as couple2_id,
+      a.set_1_c1,
+      a.set_1_c2,
+      a.set_2_c1,
+      a.set_2_c2,
+      a.set_3_c1,
+      a.set_3_c2,
+      a.winner,
+      a.rel_to,
+      a.rel_from_1,
+      a.rel_from_2
+    FROM group_results as a
+    LEFT JOIN couple_names_view as c ON a.couple1_id = c.id::text
+    LEFT JOIN couple_names_view as d ON a.couple2_id = d.id::text
     WHERE a.tournament_id = ${tournamentID}
-    AND b.group_id = ${group_id}`;
+    AND a.group_id = ${group_id}`;
 
     return couples.rows;
   } catch (error) {
