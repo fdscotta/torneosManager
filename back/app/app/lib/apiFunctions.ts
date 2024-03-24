@@ -46,22 +46,27 @@ export async function getCouplesByGroups(
 export async function getCouplesBy8vos(tournamentID: string) {
   noStore();
   try {
-    const couples = await sql<CouplesSelect>`
-    WITH RankedResults AS (
-        SELECT *,
-              ROW_NUMBER() OVER (PARTITION BY group_id ORDER BY group_id ASC, sets_total DESC, total_games DESC, games_positive DESC) AS row_num
-        FROM tournament_results_view
-    )
-    SELECT couple_id as id, CONCAT(group_id,'-',row_num,' ',couple_names) as couple, group_id
-    FROM RankedResults
-    WHERE row_num <= 4
-    AND tournament_id = ${tournamentID}
-    AND group_id NOT IN ('8','4','2','1')
-    ORDER BY
-        group_id ASC,
-        sets_total DESC,
-        total_games DESC,
-        games_positive DESC`;
+    const couples = await sql`SELECT
+        a.id,
+        a.group_id,
+        c.couple_name as couple1_id,
+        d.couple_name as couple2_id,
+        a.set_1_c1,
+        a.set_1_c2,
+        a.set_2_c1,
+        a.set_2_c2,
+        a.set_3_c1,
+        a.set_3_c2,
+        a.winner,
+        a.rel_to,
+        a.rel_from_1,
+        a.rel_from_2
+      FROM group_results as a
+      LEFT JOIN couple_names_view as c ON a.couple1_id = c.id::text
+      LEFT JOIN couple_names_view as d ON a.couple2_id = d.id::text
+      WHERE a.tournament_id = ${tournamentID}
+      AND a.group_id = '8'
+      ORDER BY a.rel_to`;
 
     return couples.rows;
   } catch (error) {
@@ -69,7 +74,7 @@ export async function getCouplesBy8vos(tournamentID: string) {
   }
 }
 
-export async function getCouplesBy4tos(tournamentID: string, group_id: string) {
+export async function getCouplesBy4tos(tournamentID: string) {
   noStore();
   try {
     const couples = await sql`SELECT
@@ -91,7 +96,8 @@ export async function getCouplesBy4tos(tournamentID: string, group_id: string) {
     LEFT JOIN couple_names_view as c ON a.couple1_id = c.id::text
     LEFT JOIN couple_names_view as d ON a.couple2_id = d.id::text
     WHERE a.tournament_id = ${tournamentID}
-    AND a.group_id = ${group_id}`;
+    AND a.group_id = '4'
+    ORDER BY a.rel_to`;
 
     return couples.rows;
   } catch (error) {
@@ -99,37 +105,60 @@ export async function getCouplesBy4tos(tournamentID: string, group_id: string) {
   }
 }
 
-export async function getCouplesBySemis(
-  tournamentID: string,
-  group_id: string
-) {
+export async function getCouplesBySemis(tournamentID: string) {
   noStore();
   try {
-    const couples =
-      await sql<CouplesSelect>`SELECT a.id as id, CONCAT(a.player1, '/', a.player2) as couple, b.group_id as group_id
-    FROM tournament_couples as a
-    INNER JOIN group_couples as b ON a.id::text = b.couple_id
-    WHERE a.tournament_id = ${tournamentID}
-    AND b.group_id = ${group_id}`;
-
+    const couples = await sql`SELECT
+        a.id,
+        a.group_id,
+        c.couple_name as couple1_id,
+        d.couple_name as couple2_id,
+        a.set_1_c1,
+        a.set_1_c2,
+        a.set_2_c1,
+        a.set_2_c2,
+        a.set_3_c1,
+        a.set_3_c2,
+        a.winner,
+        a.rel_to,
+        a.rel_from_1,
+        a.rel_from_2
+      FROM group_results as a
+      LEFT JOIN couple_names_view as c ON a.couple1_id = c.id::text
+      LEFT JOIN couple_names_view as d ON a.couple2_id = d.id::text
+      WHERE a.tournament_id = ${tournamentID}
+      AND a.group_id = '2'
+      ORDER BY a.rel_to`;
     return couples.rows;
   } catch (error) {
     return { message: "Database Error: Failed to get couples." };
   }
 }
 
-export async function getCouplesByFinal(
-  tournamentID: string,
-  group_id: string
-) {
+export async function getCouplesByFinal(tournamentID: string) {
   noStore();
   try {
-    const couples =
-      await sql<CouplesSelect>`SELECT a.id as id, CONCAT(a.player1, '/', a.player2) as couple, b.group_id as group_id
-    FROM tournament_couples as a
-    INNER JOIN group_couples as b ON a.id::text = b.couple_id
-    WHERE a.tournament_id = ${tournamentID}
-    AND b.group_id = ${group_id}`;
+    const couples = await sql`SELECT
+        a.id,
+        a.group_id,
+        c.couple_name as couple1_id,
+        d.couple_name as couple2_id,
+        a.set_1_c1,
+        a.set_1_c2,
+        a.set_2_c1,
+        a.set_2_c2,
+        a.set_3_c1,
+        a.set_3_c2,
+        a.winner,
+        a.rel_to,
+        a.rel_from_1,
+        a.rel_from_2
+      FROM group_results as a
+      LEFT JOIN couple_names_view as c ON a.couple1_id = c.id::text
+      LEFT JOIN couple_names_view as d ON a.couple2_id = d.id::text
+      WHERE a.tournament_id = ${tournamentID}
+      AND a.group_id = '1'
+      AND a.winner <> ''`;
 
     return couples.rows;
   } catch (error) {

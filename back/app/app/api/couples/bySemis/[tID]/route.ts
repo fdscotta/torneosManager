@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 export async function POST(request: Request, context: any) {
   const { params } = context;
 
-  const couples = await getCouplesBySemis(params.params[0], params.params[1]);
+  const couples = await getCouplesBySemis(params.tID);
 
   return NextResponse.json({
     couples,

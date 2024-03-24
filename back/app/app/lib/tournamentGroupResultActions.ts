@@ -328,8 +328,8 @@ export async function updateQRounds(tournamentID: string) {
   totalResults.forEach(async (couple: GroupResultsTable, index: number) => {
     await updateDrawFromGroups(couple, index + 1, tournament);
   });
-  await updateDraw("8", "4", tournament);
-  await updateDraw("4", "2", tournament);
+  /* await updateDraw("8", "4", tournament);
+  await updateDraw("4", "2", tournament); */
 }
 
 export async function updateDrawFromGroups(
@@ -341,16 +341,20 @@ export async function updateDrawFromGroups(
     let drawRow: QueryResult<GroupResult>;
     let realPosition: string;
     if (tournament.param_q_per_group == "2") {
-      realPosition = couple.group_id + position.toString();
+      realPosition = couple.group_id + couple.id;
     } else {
-      realPosition = couple.group_id + position.toString();
+      realPosition = position.toString();
     }
     drawRow = await sql<GroupResult>`
         SELECT * FROM group_results
         WHERE rel_from_1 = ${realPosition} or rel_from_2  = ${realPosition}
-        AND tournament_id = ${couple.tournament_id};
-      `;
-
+        AND tournament_id = ${tournament.id}`;
+    console.log(`
+        SELECT * FROM group_results
+        WHERE rel_from_1 = ${realPosition} or rel_from_2  = ${realPosition}
+        AND tournament_id = ${tournament.id}`);
+    console.log(couple);
+    console.log(drawRow.rowCount);
     if (drawRow.rowCount == 1) {
       const couple1_id =
         drawRow.rows[0].rel_from_1 == realPosition ? couple.couple_id : "";

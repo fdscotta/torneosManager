@@ -1,0 +1,90 @@
+---
+import Versus from "./versus.astro";
+
+const { round } = Astro.props;
+
+let matches: any;
+switch (round) {
+  case "8":
+    matches = await fetch(
+      "https://torneos-manager.vercel.app/api/couples/by8vos/2aad57a7-4b63-4271-9983-fe9e990b167e",
+      {
+        method: "POST",
+      }
+    ).then((response) => response.json());
+    break;
+
+  case "4":
+    matches = await fetch(
+      "https://torneos-manager.vercel.app/api/couples/by4tos/2aad57a7-4b63-4271-9983-fe9e990b167e",
+      {
+        method: "POST",
+      }
+    ).then((response) => response.json());
+    break;
+
+  case "2":
+    matches = await fetch(
+      "https://torneos-manager.vercel.app/api/couples/bySemis/2aad57a7-4b63-4271-9983-fe9e990b167e",
+      {
+        method: "POST",
+      }
+    ).then((response) => response.json());
+    break;
+
+  case "1":
+    matches = await fetch(
+      "https://torneos-manager.vercel.app/api/couples/byFinal/2aad57a7-4b63-4271-9983-fe9e990b167e",
+      {
+        method: "POST",
+      }
+    ).then((response) => response.json());
+    break;
+
+  default:
+    break;
+}
+---
+
+{
+  matches?.couples?.length > 0 && (
+    <div class="accordion-item aos-init aos-animate" data-aos="fade-up">
+      <h2 class="accordion-header" id={`ppanelsStayOpen-heading-0-${round}`}>
+        <button
+          class="accordion-button collapsed"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target={`#ppanelsStayOpen-collapse-0-${round}`}
+          aria-expanded="false"
+          aria-controls={`ppanelsStayOpen-collapse-0-${round}`}
+        >
+          {round == "8" && "Octavos"}
+          {round == "4" && "Cuartos"}
+          {round == "2" && "Semis"}
+          {round == "1" && "Final"}
+          <img
+            loading="lazy"
+            src="/src/assets/img/icons/arrow-accordion.svg"
+            width="36"
+            height="36"
+            alt="arrow"
+          />
+        </button>
+      </h2>
+      <div
+        id={`ppanelsStayOpen-collapse-0-${round}`}
+        class="accordion-collapse collapse"
+        aria-labelledby={`ppanelsStayOpen-heading-0-${round}`}
+        style=""
+      >
+        <div class="accordion-body">
+          {matches?.couples?.map((item: any) => (
+            <>
+              <Versus item={item} />
+            </>
+          ))}
+        </div>
+      </div>
+    </div>
+  )
+}
