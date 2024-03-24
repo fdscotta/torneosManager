@@ -1,10 +1,10 @@
-import { getCouplesBy4tos } from "@/app/lib/apiFunctions";
+import { getCouplesByFinal } from "@/app/lib/apiFunctions";
 import { NextResponse } from "next/server";
 
 export async function POST(request: Request, context: any) {
   const { params } = context;
 
-  const couples = await getCouplesBy4tos(params.params[0], params.params[1]);
+  const couples = await getCouplesByFinal(params.tID);
 
   return NextResponse.json({
     couples,

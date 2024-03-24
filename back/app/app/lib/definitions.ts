@@ -52,7 +52,7 @@ export type GroupResult = {
 export type GroupResultsTable = {
   id: string;
   couple_id: string;
-  couple_name: string;
+  couple_names: string;
   group_id: string;
   couple: string;
   sets_total: string;
