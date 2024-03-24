@@ -61,7 +61,6 @@ export async function getCouplesBy8vos(tournamentID: string) {
         a.rel_to,
         a.rel_from_1,
         a.rel_from_2,
-        a.couple_pic,
         e.couple_pic as couple1_pic,
         f.couple_pic as couple2_pic
       FROM group_results as a
@@ -97,7 +96,6 @@ export async function getCouplesBy4tos(tournamentID: string) {
       a.rel_to,
       a.rel_from_1,
       a.rel_from_2,
-      a.couple_pic,
       e.couple_pic as couple1_pic,
       f.couple_pic as couple2_pic
     FROM group_results as a
@@ -133,7 +131,6 @@ export async function getCouplesBySemis(tournamentID: string) {
         a.rel_to,
         a.rel_from_1,
         a.rel_from_2,
-        a.couple_pic,
         e.couple_pic as couple1_pic,
         f.couple_pic as couple2_pic
       FROM group_results as a
@@ -168,7 +165,6 @@ export async function getCouplesByFinal(tournamentID: string) {
         a.rel_to,
         a.rel_from_1,
         a.rel_from_2,
-        a.couple_pic,
         e.couple_pic as couple1_pic,
         f.couple_pic as couple2_pic
       FROM group_results as a
