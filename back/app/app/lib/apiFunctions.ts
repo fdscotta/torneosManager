@@ -67,7 +67,7 @@ export async function getCouplesBy8vos(tournamentID: string) {
       LEFT JOIN couple_names_view as c ON a.couple1_id = c.id::text
       LEFT JOIN couple_names_view as d ON a.couple2_id = d.id::text
       LEFT JOIN tournament_couples e ON a.couple1_id = e.id::text
-      LEFT JOIN tournament_couples f ON a.couple2_id = e.id::text
+      LEFT JOIN tournament_couples f ON a.couple2_id = f.id::text
       WHERE a.tournament_id = ${tournamentID}
       AND a.group_id = '8'
       ORDER BY a.rel_to`;
@@ -102,7 +102,7 @@ export async function getCouplesBy4tos(tournamentID: string) {
     LEFT JOIN couple_names_view as c ON a.couple1_id = c.id::text
     LEFT JOIN couple_names_view as d ON a.couple2_id = d.id::text
     LEFT JOIN tournament_couples e ON a.couple1_id = e.id::text
-    LEFT JOIN tournament_couples f ON a.couple2_id = e.id::text
+    LEFT JOIN tournament_couples f ON a.couple2_id = f.id::text
     WHERE a.tournament_id = ${tournamentID}
     AND a.group_id = '4'
     ORDER BY a.rel_to`;
@@ -137,7 +137,7 @@ export async function getCouplesBySemis(tournamentID: string) {
       LEFT JOIN couple_names_view as c ON a.couple1_id = c.id::text
       LEFT JOIN couple_names_view as d ON a.couple2_id = d.id::text
       LEFT JOIN tournament_couples e ON a.couple1_id = e.id::text
-      LEFT JOIN tournament_couples f ON a.couple2_id = e.id::text
+      LEFT JOIN tournament_couples f ON a.couple2_id = f.id::text
       WHERE a.tournament_id = ${tournamentID}
       AND a.group_id = '2'
       ORDER BY a.rel_to`;
@@ -171,7 +171,7 @@ export async function getCouplesByFinal(tournamentID: string) {
       LEFT JOIN couple_names_view as c ON a.couple1_id = c.id::text
       LEFT JOIN couple_names_view as d ON a.couple2_id = d.id::text
       LEFT JOIN tournament_couples e ON a.couple1_id = e.id::text
-      LEFT JOIN tournament_couples f ON a.couple2_id = e.id::text
+      LEFT JOIN tournament_couples f ON a.couple2_id = f.id::text
       WHERE a.tournament_id = ${tournamentID}
       AND a.group_id = '1'
       AND a.winner <> ''`;
