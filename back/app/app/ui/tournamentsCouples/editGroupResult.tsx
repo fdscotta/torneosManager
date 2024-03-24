@@ -258,7 +258,7 @@ export default function EditGroupResultForm({
                 >
                     Cancelar
                 </Link>
-                <Button type="submit">Crear</Button>
+                <Button type="submit">Actualizar</Button>
             </div>
         </form>
     );

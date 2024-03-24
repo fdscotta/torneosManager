@@ -22,6 +22,7 @@ export type Couple = {
   player2: string;
   tournament_id: string;
   group_id: string;
+  couple_pic: string;
 };
 
 export type TournamentGroup = {

@@ -5,6 +5,7 @@ import { updateCouple } from '@/app/lib/tournamentsCouplesActions';
 import { Button } from '@/app/ui/button';
 import Link from 'next/link';
 import { useFormState } from 'react-dom';
+import Image from 'next/image';
 
 export default function EditCouplesForm({
     couple,
@@ -15,7 +16,7 @@ export default function EditCouplesForm({
 }) {
     const initialState = { message: null, errors: {} };
     const updateCoupleAction = updateCouple.bind(null, couple.id, tournamentID);
-    const [ state, dispatch ] = useFormState(updateCoupleAction, initialState);
+    const [state, dispatch] = useFormState(updateCoupleAction, initialState);
 
     return (
         <form action={dispatch}>
@@ -39,9 +40,9 @@ export default function EditCouplesForm({
                             <div id="status-error" aria-live="polite" aria-atomic="true">
                                 {state.errors?.player1 &&
                                     state.errors.player1.map((error: string) => (
-                                    <p className="mt-2 text-sm text-red-500" key={error}>
-                                        {error}
-                                    </p>
+                                        <p className="mt-2 text-sm text-red-500" key={error}>
+                                            {error}
+                                        </p>
                                     ))}
                             </div>
                         )}
@@ -62,9 +63,9 @@ export default function EditCouplesForm({
                             <div id="status-error" aria-live="polite" aria-atomic="true">
                                 {state.errors?.player2 &&
                                     state.errors.player2.map((error: string) => (
-                                    <p className="mt-2 text-sm text-red-500" key={error}>
-                                        {error}
-                                    </p>
+                                        <p className="mt-2 text-sm text-red-500" key={error}>
+                                            {error}
+                                        </p>
                                     ))}
                             </div>
                         )}
@@ -92,22 +93,50 @@ export default function EditCouplesForm({
                                 <option value="H">H</option>
                             </select>
                         </div>
+                        <legend className="m-2 block text-sm font-medium">
+                            Foto
+                        </legend>
+                        {couple.couple_pic && (
+                            <div className="flex h-48 w-full flex-row dark:bg-slate-800 p-4 items-center">
+                                <Image
+                                    src={couple.couple_pic}
+                                    width={150}
+                                    height={150}
+                                    alt={couple.couple_pic}
+                                />
+                            </div>
+                        )}
+                        <input
+                            id="couple_pic"
+                            name="couple_pic"
+                            type="file"
+                            accept="image/*"
+                            placeholder="Foto sin Fondo"
+                            className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
+                            aria-describedby="image-error"
+                        />
+                        <input
+                            id="currentImage"
+                            name="currentImage"
+                            type="hidden"
+                            value={couple.couple_pic}
+                        />
                     </div>
                 </div>
-            {state && state.message ? (
-            <div aria-live="polite" className="my-2 text-sm text-red-500">
-                <p>{state.message}</p>
-            </div>
-            ) : null}
+                {state && state.message ? (
+                    <div aria-live="polite" className="my-2 text-sm text-red-500">
+                        <p>{state.message}</p>
+                    </div>
+                ) : null}
             </div>
             <div className="mt-6 flex justify-end gap-4">
                 <Link
                     href={`/dashboard/tournaments/${tournamentID}/couples`}
                     className="flex h-10 items-center rounded-lg bg-gray-100 px-4 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-200"
                 >
-                Cancelar
+                    Cancelar
                 </Link>
-                <Button type="submit">Crear</Button>
+                <Button type="submit">Actualizar</Button>
             </div>
         </form>
     );
