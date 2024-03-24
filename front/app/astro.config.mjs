@@ -5,4 +5,5 @@ import { defineConfig } from "astro/config";
 export default defineConfig({
   site: "https://astro-moon-landing.netlify.app/",
   integrations: [icon()],
+  output: 'server'
 });
