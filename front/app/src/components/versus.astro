@@ -1,4 +1,9 @@
 ---
+import Agustin from "~/assets/img/agustin.png";
+import Arturo from "~/assets/img/arturo.png";
+import Micke from "~/assets/img/micke.png";
+import Sanyo from "~/assets/img/sanyo.png";
+import NoImage from "~/assets/img/icons/no-image-big.svg";
 const { item } = Astro.props;
 ---
 
@@ -11,13 +16,13 @@ const { item } = Astro.props;
       <picture>
         <img
           loading="lazy"
-          data-src="/src/assets/img/arturo.PNG"
-          src="/src/assets/img/arturo.PNG"
+          data-src={Arturo}
+          src={Arturo.src}
           class="img-fluid"
           height="250"
           width="310"
           style="margin-left: -100px"
-          onerror="this.src = 'assets/img/icons/no-image-big.svg'"
+          onerror="this.src = `${NoImage}`"
           alt="imagen"
           title=""
         />
@@ -25,13 +30,13 @@ const { item } = Astro.props;
       <picture>
         <img
           loading="lazy"
-          data-src="/src/assets/img/agustin.PNG"
-          src="/src/assets/img/agustin.PNG"
+          data-src={Agustin}
+          src={Agustin.src}
           class="img-fluid"
           height="250"
           width="310"
           style="position: absolute; margin-left: -50px"
-          onerror="this.src = 'https://worldpadeltour.com/assets/themes/worldpadeltour.com/img/icons/no-image-big.svg'"
+          onerror="this.src = `${NoImage}`"
           alt="imagen"
           title=""
         />
@@ -72,13 +77,13 @@ const { item } = Astro.props;
       <picture>
         <img
           loading="lazy"
-          data-src="/src/assets/img/sanyo.PNG"
-          src="/src/assets/img/sanyo.PNG"
+          data-src={Sanyo}
+          src={Sanyo.src}
           class="img-fluid"
           height="250"
           width="310"
           style="margin-left: -100px"
-          onerror="this.src = 'assets/img/icons/no-image-big.svg'"
+          onerror="this.src = `${NoImage}`"
           alt="imagen"
           title=""
         />
@@ -86,13 +91,13 @@ const { item } = Astro.props;
       <picture>
         <img
           loading="lazy"
-          data-src="/src/assets/img/micke.PNG"
-          src="/src/assets/img/micke.PNG"
+          data-src={Micke}
+          src={Micke.src}
           class="img-fluid"
           height="250"
           width="310"
           style="position: absolute; margin-left: -50px"
-          onerror="this.src = 'https://worldpadeltour.com/assets/themes/worldpadeltour.com/img/icons/no-image-big.svg'"
+          onerror="this.src = `${NoImage}`"
           alt="imagen"
           title=""
         />
