@@ -14,8 +14,8 @@ console.log(item);
       <picture>
         <img
           loading="lazy"
-          data-src={(item.couple1_pic = "" ? item.couple1_pic : NoImage.src)}
-          src={(item.couple1_pic = "" ? item.couple1_pic : NoImage.src)}
+          data-src={item.couple1_pic == null ? NoImage.src : item.couple1_pic}
+          src={item.couple1_pic == null ? NoImage.src : item.couple1_pic}
           class="img-fluid"
           height="250"
           width="310"
@@ -59,8 +59,8 @@ console.log(item);
       <picture>
         <img
           loading="lazy"
-          data-src={item.couple2_pic == "" ? item.couple2_pic : NoImage.src}
-          src={item.couple2_pic == "" ? item.couple2_pic : NoImage.src}
+          data-src={item.couple2_pic == null ? NoImage.src : item.couple2_pic}
+          src={item.couple2_pic == null ? NoImage.src : item.couple2_pic}
           class="img-fluid"
           height="250"
           width="310"

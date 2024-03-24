@@ -66,6 +66,25 @@ export async function createGroupResult(
     winner = "couple_2";
   }
 
+  if (
+    Number(set_1_c1) +
+      Number(set_2_c1) +
+      Number(set_3_c1) +
+      Number(set_1_c2) +
+      Number(set_2_c2) +
+      Number(set_3_c2) ==
+      0 ||
+    Number(set_1_c1) +
+      Number(set_2_c1) +
+      Number(set_3_c1) +
+      Number(set_1_c2) +
+      Number(set_2_c2) +
+      Number(set_3_c2) <
+      12
+  ) {
+    winner = "";
+  }
+
   // Insert data into the database
   try {
     const result = await sql`
@@ -135,7 +154,6 @@ export async function updateGroupResult(
   } else {
     winner = "couple_2";
   }
-
   if (
     Number(set_1_c1) +
       Number(set_2_c1) +
@@ -428,7 +446,16 @@ export async function updateDraw(
       AND tournament_id = ${tournament.id}
     `;
 
-    if (drawRow.rowCount == 0) return true;
+    if (drawRow.rowCount == 0) {
+      await sql`
+        UPDATE group_results SET
+          couple1_id = '',
+          couple2_id = ''
+        WHERE group_id = '2'
+        AND tournament_id = ${tournament.id}
+      `;
+      return true;
+    }
 
     const drawToRow = await sql<GroupResult>`
       SELECT * FROM group_results
