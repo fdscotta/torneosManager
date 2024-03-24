@@ -1,5 +1,6 @@
 ---
 import Versus from "./versus.astro";
+import Arrow from "public/assets/img/icons/arrow-accordion.svg";
 const { round } = Astro.props;
 
 let matches: any;
@@ -63,7 +64,7 @@ switch (round) {
           {round == "1" && "Final"}
           <img
             loading="lazy"
-            src="/src/assets/img/icons/arrow-accordion.svg"
+            src={Arrow.src}
             width="36"
             height="36"
             alt="arrow"
