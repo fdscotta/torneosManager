@@ -60,7 +60,8 @@ export async function getCouplesBy8vos(tournamentID: string) {
         a.winner,
         a.rel_to,
         a.rel_from_1,
-        a.rel_from_2
+        a.rel_from_2,
+        a.couple_pic
       FROM group_results as a
       LEFT JOIN couple_names_view as c ON a.couple1_id = c.id::text
       LEFT JOIN couple_names_view as d ON a.couple2_id = d.id::text
@@ -91,7 +92,8 @@ export async function getCouplesBy4tos(tournamentID: string) {
       a.winner,
       a.rel_to,
       a.rel_from_1,
-      a.rel_from_2
+      a.rel_from_2,
+      a.couple_pic
     FROM group_results as a
     LEFT JOIN couple_names_view as c ON a.couple1_id = c.id::text
     LEFT JOIN couple_names_view as d ON a.couple2_id = d.id::text
@@ -122,7 +124,8 @@ export async function getCouplesBySemis(tournamentID: string) {
         a.winner,
         a.rel_to,
         a.rel_from_1,
-        a.rel_from_2
+        a.rel_from_2,
+        a.couple_pic
       FROM group_results as a
       LEFT JOIN couple_names_view as c ON a.couple1_id = c.id::text
       LEFT JOIN couple_names_view as d ON a.couple2_id = d.id::text
@@ -152,7 +155,8 @@ export async function getCouplesByFinal(tournamentID: string) {
         a.winner,
         a.rel_to,
         a.rel_from_1,
-        a.rel_from_2
+        a.rel_from_2,
+        a.couple_pic
       FROM group_results as a
       LEFT JOIN couple_names_view as c ON a.couple1_id = c.id::text
       LEFT JOIN couple_names_view as d ON a.couple2_id = d.id::text

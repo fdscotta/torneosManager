@@ -202,7 +202,7 @@ export default function CreateForm({
                 />
               </div>
             </div>
-            <legend className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+            {/*             <legend className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
               Ganador
             </legend>
             <ul className="grid w-full gap-3 md:grid-cols-2">
@@ -222,7 +222,7 @@ export default function CreateForm({
                   </div>
                 </label>
               </li>
-            </ul>
+            </ul> */}
           </div>
         </div>
 

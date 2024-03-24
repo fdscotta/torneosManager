@@ -45,8 +45,6 @@ export async function createGroupResult(
 ) {
   const couple1_id = formData.get("couple1_id")?.toString();
   const couple2_id = formData.get("couple2_id")?.toString();
-  const winner =
-    formData.get("winner") == null ? "" : formData.get("winner")?.toString();
   const set_1_c1 = formData.get("set_1_c1")?.toString();
   const set_2_c1 = formData.get("set_2_c1")?.toString();
   const set_3_c1 = formData.get("set_3_c1")?.toString();
@@ -57,6 +55,16 @@ export async function createGroupResult(
     formData.get("match_date") == ""
       ? null
       : formData.get("match_date")?.toString();
+  let winner = "";
+
+  if (
+    Number(set_1_c1) + Number(set_2_c1) + Number(set_3_c1) >
+    Number(set_1_c2) + Number(set_2_c2) + Number(set_3_c2)
+  ) {
+    winner = "couple_1";
+  } else {
+    winner = "couple_2";
+  }
 
   // Insert data into the database
   try {
@@ -110,17 +118,24 @@ export async function updateGroupResult(
 ) {
   const couple1_id = formData.get("couple1_id")?.toString();
   const couple2_id = formData.get("couple2_id")?.toString();
-  const winner =
-    formData.get("winner")?.toString() == null
-      ? ""
-      : formData.get("winner")?.toString();
-  const set_1_c1 = formData.get("set_1_c1")?.toString();
-  const set_2_c1 = formData.get("set_2_c1")?.toString();
-  const set_3_c1 = formData.get("set_3_c1")?.toString();
-  const set_1_c2 = formData.get("set_1_c2")?.toString();
-  const set_2_c2 = formData.get("set_2_c2")?.toString();
-  const set_3_c2 = formData.get("set_3_c2")?.toString();
-  const group_id = formData.get("group_id")?.toString();
+  let winner = "";
+  const set_1_c1 = formData.get("set_1_c1")?.toString() || "";
+  const set_2_c1 = formData.get("set_2_c1")?.toString() || "";
+  const set_3_c1 = formData.get("set_3_c1")?.toString() || "";
+  const set_1_c2 = formData.get("set_1_c2")?.toString() || "";
+  const set_2_c2 = formData.get("set_2_c2")?.toString() || "";
+  const set_3_c2 = formData.get("set_3_c2")?.toString() || "";
+  const group_id = formData.get("group_id")?.toString() || "";
+
+  if (
+    Number(set_1_c1) + Number(set_2_c1) + Number(set_3_c1) >
+    Number(set_1_c2) + Number(set_2_c2) + Number(set_3_c2)
+  ) {
+    winner = "couple_1";
+  } else {
+    winner = "couple_2";
+  }
+
   const match_date =
     formData.get("match_date")?.toString() == ""
       ? null
@@ -328,8 +343,8 @@ export async function updateQRounds(tournamentID: string) {
   totalResults.forEach(async (couple: GroupResultsTable, index: number) => {
     await updateDrawFromGroups(couple, index + 1, tournament);
   });
-  /* await updateDraw("8", "4", tournament);
-  await updateDraw("4", "2", tournament); */
+  await updateDraw("8", "4", tournament);
+  await updateDraw("4", "2", tournament);
 }
 
 export async function updateDrawFromGroups(
@@ -349,12 +364,7 @@ export async function updateDrawFromGroups(
         SELECT * FROM group_results
         WHERE rel_from_1 = ${realPosition} or rel_from_2  = ${realPosition}
         AND tournament_id = ${tournament.id}`;
-    console.log(`
-        SELECT * FROM group_results
-        WHERE rel_from_1 = ${realPosition} or rel_from_2  = ${realPosition}
-        AND tournament_id = ${tournament.id}`);
-    console.log(couple);
-    console.log(drawRow.rowCount);
+
     if (drawRow.rowCount == 1) {
       const couple1_id =
         drawRow.rows[0].rel_from_1 == realPosition ? couple.couple_id : "";
@@ -363,12 +373,6 @@ export async function updateDrawFromGroups(
 
       try {
         if (couple1_id == "") {
-          console.log(`
-            UPDATE group_results SET
-              couple2_id = ${couple2_id}
-            WHERE id::text = ${drawRow.rows[0].id}
-            AND tournament_id = ${couple.tournament_id}
-          `);
           await sql`
             UPDATE group_results SET
               couple2_id = ${couple2_id}
@@ -376,12 +380,6 @@ export async function updateDrawFromGroups(
             AND tournament_id = ${couple.tournament_id}
           `;
         } else {
-          console.log(`
-            UPDATE group_results SET
-              couple1_id = ${couple1_id}
-            WHERE id::text = ${drawRow.rows[0].id}
-            AND tournament_id = ${couple.tournament_id}
-          `);
           await sql`
             UPDATE group_results SET
               couple1_id = ${couple1_id}

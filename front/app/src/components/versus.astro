@@ -1,10 +1,8 @@
 ---
-import Agustin from "public/assets/img/agustin.png";
-import Arturo from "public/assets/img/arturo.png";
-import Micke from "public/assets/img/micke.png";
-import Sanyo from "public/assets/img/sanyo.png";
 import NoImage from "public/assets/img/icons/no-image-big.svg";
 const { item } = Astro.props;
+
+console.log(item);
 ---
 
 <div class="row justify-content-center">
@@ -16,27 +14,11 @@ const { item } = Astro.props;
       <picture>
         <img
           loading="lazy"
-          data-src={Arturo}
-          src={Arturo.src}
+          data-src={(item.couple1_pic = "" ? item.couple1_pic : NoImage.src)}
+          src={(item.couple1_pic = "" ? item.couple1_pic : NoImage.src)}
           class="img-fluid"
           height="250"
           width="310"
-          style="margin-left: -100px"
-          onerror="this.src = `${NoImage}`"
-          alt="imagen"
-          title=""
-        />
-      </picture>
-      <picture>
-        <img
-          loading="lazy"
-          data-src={Agustin}
-          src={Agustin.src}
-          class="img-fluid"
-          height="250"
-          width="310"
-          style="position: absolute; margin-left: -50px"
-          onerror="this.src = `${NoImage}`"
           alt="imagen"
           title=""
         />
@@ -77,27 +59,11 @@ const { item } = Astro.props;
       <picture>
         <img
           loading="lazy"
-          data-src={Sanyo}
-          src={Sanyo.src}
+          data-src={item.couple2_pic == "" ? item.couple2_pic : NoImage.src}
+          src={item.couple2_pic == "" ? item.couple2_pic : NoImage.src}
           class="img-fluid"
           height="250"
           width="310"
-          style="margin-left: -100px"
-          onerror="this.src = `${NoImage}`"
-          alt="imagen"
-          title=""
-        />
-      </picture>
-      <picture>
-        <img
-          loading="lazy"
-          data-src={Micke}
-          src={Micke.src}
-          class="img-fluid"
-          height="250"
-          width="310"
-          style="position: absolute; margin-left: -50px"
-          onerror="this.src = `${NoImage}`"
           alt="imagen"
           title=""
         />

@@ -185,7 +185,7 @@ export default function EditTournamentForm({
         >
           Cancel
         </Link>
-        <Button type="submit">Editar</Button>
+        <Button type="submit">Actualizar</Button>
       </div>
     </form>
   );
