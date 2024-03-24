@@ -136,6 +136,25 @@ export async function updateGroupResult(
     winner = "couple_2";
   }
 
+  if (
+    Number(set_1_c1) +
+      Number(set_2_c1) +
+      Number(set_3_c1) +
+      Number(set_1_c2) +
+      Number(set_2_c2) +
+      Number(set_3_c2) ==
+      0 ||
+    Number(set_1_c1) +
+      Number(set_2_c1) +
+      Number(set_3_c1) +
+      Number(set_1_c2) +
+      Number(set_2_c2) +
+      Number(set_3_c2) <
+      12
+  ) {
+    winner = "";
+  }
+
   const match_date =
     formData.get("match_date")?.toString() == ""
       ? null
