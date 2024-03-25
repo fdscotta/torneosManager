@@ -47,6 +47,13 @@ body {
   height: auto;
 }
 
+.group_couple {
+  font-size: 14px;
+  line-height: 14px;
+  font-family: "Sohne Breit";
+  color: #e0e721;
+}
+
 @media (min-width: 1200px) {
   .d-ranking.d-tournaments-calendar
     .b-top
