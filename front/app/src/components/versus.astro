@@ -13,6 +13,7 @@ console.log(item);
       <p class="group_couple_position">{item.rel_from_1}</p>
       <picture>
         <img
+          decoding="async"
           loading="lazy"
           data-src={item.couple1_pic == null ? NoImage.src : item.couple1_pic}
           src={item.couple1_pic == null ? NoImage.src : item.couple1_pic}
@@ -61,6 +62,7 @@ console.log(item);
       </p>
       <picture>
         <img
+          decoding="async"
           loading="lazy"
           data-src={item.couple2_pic == null ? NoImage.src : item.couple2_pic}
           src={item.couple2_pic == null ? NoImage.src : item.couple2_pic}
