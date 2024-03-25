@@ -31,22 +31,22 @@ const tournament = await fetch(
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     <link rel="stylesheet" href="/assets/css/dev-styles.css" />
 
-    <title>Liga +10</title>
+    <title>{tournament.name}</title>
 
     <meta name="robots" content="index, follow" />
-    <meta name="description" content="Liga +10" />
+    <meta name="description" content={tournament.name} />
 
     <!-- OpenGraph -->
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="torneos-manager.vercel.app" />
-    <meta property="og:title" content="Liga +10" />
+    <meta property="og:title" content={tournament.name} />
     <meta
       property="og:url"
       content={`https://torneos-manager.vercel.app/trounaments/${slug}`}
     />
 
     <meta property="og:image" content={tournament.image} />
-    <meta property="og:description" content="Liga +10" />
+    <meta property="og:description" content={tournament.name} />
 
     <!-- TwitterCard -->
     <meta name="twitter:card" content="summary_large_image" />
@@ -54,8 +54,8 @@ const tournament = await fetch(
       name="twitter:url"
       content={`https://torneos-manager.vercel.app/trounaments/${slug}`}
     />
-    <meta name="twitter:title" content="Liga +10" />
-    <meta name="twitter:text:description" content="Liga +10" />
+    <meta name="twitter:title" content={tournament.name} />
+    <meta name="twitter:text:description" content={tournament.name} />
     <meta name="twitter:image:src" content={tournament.image} />
   </head>
 
@@ -67,7 +67,7 @@ const tournament = await fetch(
           <div class="container d-nne b-fixed-title-tournament">
             <div class="row">
               <div class="b-title">
-                <h1 class="title">Liga +10</h1>
+                <h1 class="title">{tournament.name}</h1>
               </div>
             </div>
           </div>
