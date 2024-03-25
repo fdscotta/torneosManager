@@ -22,6 +22,16 @@
   font-style: normal;
   font-display: swap;
 }
+/*@font-face {
+  font-family: 'Richard Hamilton Italic';
+  src: url('../fonts/Richard Hamilton Italic.otf') format('opentype'),
+  url('../fonts/Richard Hamilton Italic.woff2') format('woff2'),
+  url('../fonts/Richard Hamilton Italic.woff') format('woff'),
+  url('../fonts/Richard Hamilton Italic.ttf') format('truetype');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}*/
 .icons {
   width: 30px;
   height: 30px;
@@ -43,10 +53,72 @@
   transition: all 0.5s ease-in-out;
   /* Non-prefixed version, currently supported by Chrome, Opera and Firefox */
 }
+.icons.ico-tv {
+  -webkit-mask-image: url("../img/icons/tv.svg");
+}
+.icons.ico-instagram {
+  -webkit-mask-image: url("../img/icons/instagram.svg");
+}
+.icons.ico-facebook {
+  -webkit-mask-image: url("../img/icons/facebook.svg");
+}
+.icons.ico-tiktok {
+  -webkit-mask-image: url("../img/icons/tiktok.svg");
+}
+.icons.ico-twitter {
+  -webkit-mask-image: url("../img/icons/twitter.svg");
+}
+.icons.ico-youtube {
+  -webkit-mask-image: url("../img/icons/youtube.svg");
+}
+.icons.ico-twitch {
+  -webkit-mask-image: url("../img/icons/twitch.svg");
+}
+.icons.ico-linkedin {
+  -webkit-mask-image: url("../img/icons/linkedin.svg");
+}
+.icons.ico-telegram {
+  -webkit-mask-image: url("../img/icons/telegram.svg");
+}
 .icons.ico-back {
   -webkit-mask-image: url("../img/icons/arrow-back.svg");
 }
-
+.icons.ico-ticket {
+  -webkit-mask-image: url("../img/icons/ticket.svg");
+}
+.icons.ico-arrow-right-btn {
+  -webkit-mask-image: url("../img/icons/arrow-right-btn.svg");
+}
+.icons.ico-share {
+  -webkit-mask-image: url("../img/icons/share.svg");
+}
+.icons.ico-twitter-no-border {
+  -webkit-mask-image: url("../img/icons/twitter-no-border.svg");
+}
+.icons.ico-facebook-no-border {
+  -webkit-mask-image: url("../img/icons/facebook-no-border.svg");
+}
+.icons.ico-mail-no-border {
+  -webkit-mask-image: url("../img/icons/mail-no-border.svg");
+}
+.icons.ico-copy {
+  -webkit-mask-image: url("../img/icons/copy.svg");
+}
+.icons.ico-map {
+  -webkit-mask-image: url("../img/icons/map.svg");
+}
+.icons.ico-circulo-animado {
+  -webkit-mask-image: url("../img/icons/circulo-animado-2.gif");
+}
+.icons.ico-calendar {
+  -webkit-mask-image: url("../img/icons/calendar-2.svg");
+}
+.icons.ico-download {
+  -webkit-mask-image: url("../img/icons/download.svg");
+}
+.icons.ico-registration {
+  -webkit-mask-image: url("../img/icons/icon-registration.svg");
+}
 html {
   scroll-behavior: smooth;
 }
@@ -3387,6 +3459,19 @@ header.scroll-up .navbar .links li a:hover {
 .d-slider-tournament-cards .b-slider .next o:hover {
   transform: scale(1.1);
   opacity: 1;
+}
+.d-slider-tournament-cards .b-slider .prev {
+  justify-content: end;
+  right: 0;
+  cursor:
+    url("../img/icons/arrow-right.svg") 30 30,
+    auto;
+}
+.d-slider-tournament-cards .b-slider .next {
+  justify-content: start;
+  cursor:
+    url("../img/icons/arrow-left.svg") 30 30,
+    auto;
 }
 .d-slider-tournament-cards .b-slider .gallery {
   height: 560px;
@@ -6769,6 +6854,14 @@ div:not(.d-hero-bottom) + .d-tournaments:before {
   color: white;
   font-family: "Sohne";
 }
+.d-info-inscribed .b-registration-form > div form select {
+  padding: 15px 39px;
+  background-image: url("../img/icons/arrow-form.svg");
+  background-repeat: no-repeat;
+  background-position: 93% 50%;
+  -webkit-appearance: none;
+  appearance: none;
+}
 .d-info-inscribed .b-registration-form > div form select option {
   color: black;
   padding: 15px 39px;
@@ -7844,6 +7937,26 @@ div:not(.d-hero-bottom) + .d-tournaments:before {
   .d-ranking.d-tournaments-calendar .b-title-top .b-select-view a {
     width: 100%;
   }
+}
+.d-ranking.d-tournaments-calendar .b-title-top .b-filters .b-search form input {
+  font-size: 14px;
+  line-height: 14px;
+  width: max-content;
+  padding: 9px 18px;
+  padding-left: 60px;
+  color: white;
+  border: 2px solid white;
+  border-radius: 30px;
+  text-align: left;
+  text-transform: none;
+  cursor: pointer;
+  text-decoration: none;
+  background-color: transparent;
+  background-image: url("../img/icons/search.svg");
+  background-size: 20px;
+  background-position: 22px;
+  background-repeat: no-repeat;
+  max-width: 219px;
 }
 @media (max-width: 768px) {
   .d-ranking.d-tournaments-calendar
@@ -9636,6 +9749,12 @@ div:not(.d-hero-bottom) + .d-tournaments:before {
   font-family: "Sohne";
   font-size: 1.2rem;
 }
+.c-games__arena-field .c-games__arena-icon {
+  background-image: url(../images/tor-field-l.svg);
+}
+.c-games__arena-club .c-games__arena-icon {
+  background-image: url(../images/tor-club-l.svg);
+}
 .c-games__category-filter {
   margin-bottom: 3rem;
 }
@@ -9933,6 +10052,16 @@ div:not(.d-hero-bottom) + .d-tournaments:before {
   margin-right: 0.5rem;
   background-size: contain;
   background-repeat: no-repeat;
+}
+.c-vs__icon--club {
+  height: 1.6rem;
+  width: 1.6rem;
+  background-image: url(../images/tor-club.svg);
+}
+.c-vs__icon--field {
+  height: 1.6rem;
+  width: 2.4rem;
+  background-image: url(../images/tor-field.svg);
 }
 .c-vs__info-match {
   position: absolute;

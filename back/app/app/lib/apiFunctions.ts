@@ -216,19 +216,29 @@ export async function getResultsByGroups(
   }
 }
 
-export async function getTournament(tournament_id: string) {
+export async function getTournaments() {
   noStore();
   try {
     const data = await sql<Tournaments>`
       SELECT *
-        FROM tournaments
-        WHERE
-        id = ${tournament_id};
+        FROM tournaments;
     `;
     return data.rows[0];
   } catch (error) {
     console.error("Database Error:", error);
     throw new Error("Failed to fetch tournament group results.");
+  }
+}
+
+export async function getTournamentById(tournamentID: string) {
+  noStore();
+  try {
+    const couples = await sql`SELECT * FROM tournament
+    WHERE b.tournament_id = ${tournamentID}`;
+
+    return couples.rows;
+  } catch (error) {
+    return { message: "Database Error: Failed to get tournamnet." };
   }
 }
 

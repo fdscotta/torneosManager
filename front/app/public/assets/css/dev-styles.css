@@ -1,0 +1,58 @@
+body {
+  background-color: #040738;
+}
+
+.d-menu-tournament {
+  border-top-left-radius: 0px;
+  border-top-right-radius: 0px;
+  top: 0px;
+}
+
+.d-info {
+  padding-top: 30px;
+  border-top-left-radius: 0px;
+  border-top-right-radius: 0px;
+  top: 85px;
+}
+
+.d-ranking.d-tournaments-calendar
+  .b-top
+  .b-list-ranking
+  .b-player-info-points
+  .info-tournament-points
+  > div
+  p.points {
+  bottom: -45px;
+  right: auto;
+  position: sticky;
+}
+
+.d-ranking.d-tournaments-calendar
+  .b-top
+  .b-list-ranking
+  .b-player-info-points
+  .info-tournament-points
+  > div {
+  height: auto;
+}
+.d-ranking.d-tournaments-calendar .b-top .b-list-ranking .b-player-info-points {
+  margin-top: 0px;
+}
+
+.d-ranking.d-tournaments-calendar
+  .b-top
+  .b-list-ranking
+  .b-player-info-points
+  .info-tournament-points {
+  height: auto;
+}
+
+@media (min-width: 1200px) {
+  .d-ranking.d-tournaments-calendar
+    .b-top
+    .b-list-ranking
+    .b-player-info-points {
+    margin-top: 0px;
+    margin-left: 0px;
+  }
+}
