@@ -223,10 +223,10 @@ export async function getTournaments() {
       SELECT *
         FROM tournaments;
     `;
-    return data.rows[0];
+    return data.rows;
   } catch (error) {
     console.error("Database Error:", error);
-    throw new Error("Failed to fetch tournament group results.");
+    throw new Error("Failed to fetch tournament.");
   }
 }
 
