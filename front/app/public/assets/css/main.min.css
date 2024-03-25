@@ -7897,8 +7897,6 @@ div:not(.d-hero-bottom) + .d-tournaments:before {
   -o-transition: all 0.5s ease-in-out;
   /* Opera */
   transition: all 0.5s ease-in-out;
-  /* Non-prefixed version, currently supported by Chrome, Opera and Firefox */
-  height: 5821px;
   z-index: -1;
   background-position: bottom;
 }
