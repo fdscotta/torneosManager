@@ -232,7 +232,7 @@ export async function declareRounds(tournamentID: string) {
     tournament_id: "",
   };
 
-  const tournament = await getTournamentById(tournamentID);
+  const tournament: any = await getTournamentById(tournamentID);
   let dataRef = null;
 
   if (!tournament.param_draw_set) {
@@ -338,7 +338,7 @@ export async function insertRound(round: any, tournamentID: string) {
 
 export async function updateQRounds(tournamentID: string) {
   const groups: any = await getGroupsByTournament(tournamentID);
-  const tournament = await getTournamentById(tournamentID);
+  const tournament: any = await getTournamentById(tournamentID);
 
   let totalResults: GroupResultsTable[] = [];
   let qCouples: GroupResultsTable[] = [];
