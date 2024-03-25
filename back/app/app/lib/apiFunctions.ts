@@ -219,7 +219,7 @@ export async function getResultsByGroups(
 export async function getTournaments() {
   noStore();
   try {
-    const data = await sql<Tournaments>`
+    const data = await sql`
       SELECT *
         FROM tournaments;
     `;
@@ -233,7 +233,7 @@ export async function getTournaments() {
 export async function getTournamentById(tournamentID: string) {
   noStore();
   try {
-    const couples = await sql`SELECT * FROM tournament
+    const couples = await sql<Tournaments>`SELECT * FROM tournament
     WHERE b.tournament_id = ${tournamentID}`;
 
     return couples.rows;
