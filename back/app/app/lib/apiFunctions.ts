@@ -1,7 +1,6 @@
 import { sql } from "@vercel/postgres";
 import {
   CouplesSelect,
-  CuartosResutls,
   GroupResultsTable,
   GroupsSelect,
   Tournaments,
@@ -233,12 +232,13 @@ export async function getTournaments() {
 export async function getTournamentById(tournamentID: string) {
   noStore();
   try {
-    const couples = await sql<Tournaments>`SELECT * FROM tournament
-    WHERE tournament_id = ${tournamentID}`;
+    console.log(tournamentID);
+    const tournament = await sql<Tournaments>`SELECT * FROM tournaments
+    WHERE id::text = ${tournamentID}`;
 
-    return couples.rows[0];
+    return tournament.rows[0];
   } catch (error) {
-    return { message: "Database Error: Failed to get tournamnet." };
+    return { message: "Database Error: Failed to get tournament." };
   }
 }
 
