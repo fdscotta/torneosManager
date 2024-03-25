@@ -5,6 +5,27 @@ const tournaments = await fetch(
     method: "GET",
   }
 ).then((response) => response.json());
+
+const dateOptionsDay: Intl.DateTimeFormatOptions = {
+  month: "2-digit",
+  day: "2-digit",
+};
+
+const dateOptionsMonth: Intl.DateTimeFormatOptions = {
+  month: "long",
+};
+
+function getDateMonth(dateStr: string) {
+  const date = new Date(dateStr);
+  const formatter = new Intl.DateTimeFormat("es-ES", dateOptionsMonth);
+  return formatter.format(date);
+}
+
+function getDateDay(dateStr: string) {
+  const date = new Date(dateStr);
+  const formatter = new Intl.DateTimeFormat("en-US", dateOptionsDay);
+  return formatter.format(date);
+}
 ---
 
 <html lang="en-GB">
@@ -28,6 +49,12 @@ const tournaments = await fetch(
     <link rel="stylesheet" href="/assets/css/dev-styles.css" />
 
     <title>iPadel</title>
+    <style is:inline>
+      .row {
+        margin-left: 0px;
+        margin-right: 0px;
+      }
+    </style>
   </head>
 
   <body data-aos-easing="ease" data-aos-duration="1500" data-aos-delay="100">
@@ -40,8 +67,8 @@ const tournaments = await fetch(
               Torneos
             </h2>
             {
-              tournaments?.tournament?.lenght > 0 &&
-                tournaments?.tournament?.map((tournament: any) => (
+              tournaments?.tournaments?.length > 0 &&
+                tournaments?.tournaments?.map((tournament: any) => (
                   <div
                     class="row b-tournament type-masterf aos-init aos-animate"
                     data-aos="fade-up"
@@ -49,39 +76,35 @@ const tournaments = await fetch(
                     <div class="col-md-4 col-lg-3 b-num">
                       <div>
                         <p>
-                          14-17
+                          {getDateDay(tournament.date)}
                           <>
                             <br />
-                            <span>December</span>
+                            <span>{getDateMonth(tournament.date)}</span>
                           </>
                         </p>
                       </div>
                     </div>
                     <div class="col-md-8 col-lg-9 b-name">
-                      <div>
-                        <p>{tournament.name}</p>
+                      <div class="row">
+                        <div class="col-6">
+                          <p>{tournament.name}</p>
+                        </div>
+                        <div class="col-6 text-end">
+                          <picture>
+                            <img
+                              loading="lazy"
+                              data-src={tournament.image}
+                              src={tournament.image}
+                              height="100"
+                              width="100"
+                              alt={tournament.name}
+                              title={tournament.name}
+                            />
+                          </picture>
+                        </div>
                       </div>
                     </div>
-                    <a href={`tournaments/${tournament.id}`}>
-                      <picture>
-                        <source
-                          loading="lazy"
-                          data-srcset={tournament.image}
-                          srcset={tournament.image}
-                          type="image/webp"
-                        />
-                        <img
-                          loading="lazy"
-                          data-src={tournament.image}
-                          src={tournament.image}
-                          class="img-fluid"
-                          height="380"
-                          width="300"
-                          alt="imagen"
-                          title=""
-                        />
-                      </picture>
-                    </a>
+                    <a href={`tournaments/${tournament.id}`} />
                   </div>
                 ))
             }

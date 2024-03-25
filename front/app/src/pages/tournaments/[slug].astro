@@ -2,6 +2,13 @@
 import Accordion from "~/components/accordion.astro";
 import GroupTable from "~/components/groupTables.astro";
 const { slug } = Astro.params;
+
+const tournament = await fetch(
+  `https://torneos-manager.vercel.app/api/tournaments/${slug}`,
+  {
+    method: "POST",
+  }
+).then((response) => response.json());
 ---
 
 <html lang="en-GB">
@@ -31,31 +38,25 @@ const { slug } = Astro.params;
 
     <!-- OpenGraph -->
     <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="worldpadeltourdev.relevance.pro" />
+    <meta property="og:site_name" content="torneos-manager.vercel.app" />
     <meta property="og:title" content="Liga +10" />
     <meta
       property="og:url"
-      content="https://worldpadeltour.com/en/tournaments/boss-barcelona-master-final-2023/2023"
+      content={`https://torneos-manager.vercel.app/trounaments/${slug}`}
     />
 
-    <meta
-      property="og:image"
-      content="https://worldpadeltour.com/assets/themes/worldpadeltour.com/img/dynamic_torneos_cartel/ae0997ad73.PNG"
-    />
+    <meta property="og:image" content={tournament.image} />
     <meta property="og:description" content="Liga +10" />
 
     <!-- TwitterCard -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta
       name="twitter:url"
-      content="https://worldpadeltour.com/en/tournaments/boss-barcelona-master-final-2023/2023"
+      content={`https://torneos-manager.vercel.app/trounaments/${slug}`}
     />
     <meta name="twitter:title" content="Liga +10" />
     <meta name="twitter:text:description" content="Liga +10" />
-    <meta
-      name="twitter:image:src"
-      content="https://worldpadeltour.com/assets/themes/worldpadeltour.com/img/dynamic_torneos_cartel/ae0997ad73.PNG"
-    />
+    <meta name="twitter:image:src" content={tournament.image} />
   </head>
 
   <body data-aos-easing="ease" data-aos-duration="1500" data-aos-delay="100">
@@ -92,9 +93,9 @@ const { slug } = Astro.params;
     <!-- Groups -->
     <section class="d-ranking d-tournaments-calendar bg-img-race">
       <div class="col-12 container b-ranking-race b-top">
-        <div class="b-intro aos-init aos-animate" data-aos="fade-up">
+        <!-- <div class="b-intro aos-init aos-animate" data-aos="fade-up">
           <p>Puntos por grupo</p>
-        </div>
+        </div> -->
         <div class="row">
           <GroupTable groupID="A" tID={slug} />
           <GroupTable groupID="B" tID={slug} />
