@@ -2,7 +2,7 @@
 const tournaments = await fetch(
   "https://torneos-manager.vercel.app/api/tournaments",
   {
-    method: "POST",
+    method: "GET",
   }
 ).then((response) => response.json());
 ---

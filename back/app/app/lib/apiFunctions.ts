@@ -234,9 +234,9 @@ export async function getTournamentById(tournamentID: string) {
   noStore();
   try {
     const couples = await sql<Tournaments>`SELECT * FROM tournament
-    WHERE b.tournament_id = ${tournamentID}`;
+    WHERE tournament_id = ${tournamentID}`;
 
-    return couples.rows;
+    return couples.rows[0];
   } catch (error) {
     return { message: "Database Error: Failed to get tournamnet." };
   }
