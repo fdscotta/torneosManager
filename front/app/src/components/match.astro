@@ -11,14 +11,14 @@ const dateOptionsMonth: Intl.DateTimeFormatOptions = {
 
 function getDate(dateStr: string) {
   const date = new Date(dateStr);
-  const formatter = new Intl.DateTimeFormat("en-US", dateOptionsMonth);
+  const formatter = new Intl.DateTimeFormat("es-ES", dateOptionsMonth);
   return formatter.format(date);
 }
 ---
 
 <div class="row justify-content-center">
   <div class="col-12 text-center">
-    <p>{getDate(item.match_date)}</p>
+    {item.match_date != null ? <p>{getDate(item.match_date)}</p> : <p />}
   </div>
   <div class="col-6 col-lg-4 b-players order-1">
     <div>

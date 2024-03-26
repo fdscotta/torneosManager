@@ -1,5 +1,6 @@
 ---
 const { groupID, tID } = Astro.props;
+import Arrow from "public/assets/img/icons/arrow-accordion.svg";
 const group = await fetch(
   `https://torneos-manager.vercel.app/api/groups/results-by-group/${tID}/${groupID}`,
   {
@@ -15,13 +16,31 @@ const group = await fetch(
         class="col-lg-6 col-sm-12 col-md-12 b-list-ranking aos-init aos-animate"
         data-aos="fade-up"
       >
-        <div class="b-category mt-4">
-          <h2 class="title">Grupo {groupID}</h2>
-          <a
-            href={`/tournaments/group/9e5d5245-da83-4b05-845c-2502cdfb0009|${groupID}/groupMatches`}
-          >
-            <h2 class="title">Partidos</h2>
-          </a>
+        <div class="b-category mt-4 ">
+          <div class="container">
+            <div class="row">
+              <div class="col">
+                <h2 class="title">Grupo {groupID}</h2>
+              </div>
+              <div class="col text-end">
+                <a
+                  class="navbar-brand w-full position-relative d-flex float-end align-items-center"
+                  href={`/tournaments/group/9e5d5245-da83-4b05-845c-2502cdfb0009|${groupID}/groupMatches`}
+                >
+                  <h2 class="title pe-2">Partidos</h2>
+                  <img
+                    style="rotate:  -135deg;"
+                    decoding="async"
+                    loading="lazy"
+                    src={Arrow.src}
+                    width="20"
+                    height="20"
+                    alt="arrow"
+                  />
+                </a>
+              </div>
+            </div>
+          </div>
         </div>
         <div class="row">
           <div
