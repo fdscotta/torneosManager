@@ -1,0 +1,59 @@
+---
+const { item } = Astro.props;
+---
+
+<div class="row justify-content-center">
+  <div class="col-6 col-lg-4 b-players order-1">
+    <div>
+      <p class="group_couple_position">{item.rel_from_1}</p>
+      <div class="names">
+        {
+          item.couple1_id != null ? (
+            <>
+              <p>{item.couple1_id?.split("-")[0]}</p>
+              <p>{item.couple1_id?.split("-")[1]}</p>
+            </>
+          ) : (
+            <p>{item.rel_from_1}</p>
+          )
+        }
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-3 b-match-summary b-match-summary-2 order-2">
+    <div>
+      <p class="b-vs">VS</p>
+      <div class="b-results">
+        {
+          item.set_1_c1 == "" ? (
+            <p>---- / ---- / ----</p>
+          ) : (
+            <p>
+              {item.set_1_c1}-{item.set_1_c2} / {item.set_2_c1}-{item.set_2_c2}
+              {item.set_3_c1 != "" && `/${item.set_3_c1}-${item.set_3_c2}`}
+            </p>
+          )
+        }
+      </div>
+    </div>
+  </div>
+  <div class="col-6 col-lg-4 b-players order-1 order-lg-3">
+    <div>
+      <p class="group_couple_position group_couple_position_r">
+        {item.rel_from_2}
+      </p>
+      <div class="names">
+        {
+          item.couple2_id != null ? (
+            <>
+              <p>{item.couple2_id?.split("-")[0]}</p>
+              <p>{item.couple2_id?.split("-")[1]}</p>
+            </>
+          ) : (
+            <p>{item.rel_from_2}</p>
+          )
+        }
+      </div>
+    </div>
+  </div>
+</div>

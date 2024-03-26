@@ -3,6 +3,7 @@ import {
   CouplesSelect,
   GroupResultsTable,
   GroupsSelect,
+  MatchesDetails,
   Tournaments,
 } from "./definitions";
 import { unstable_noStore as noStore } from "next/cache";
@@ -208,6 +209,43 @@ export async function getResultsByGroups(
         tournament_id = ${tournament_id}
         AND group_id = ${group_id};
     `;
+    return data.rows;
+  } catch (error) {
+    console.error("Database Error:", error);
+    throw new Error("Failed to fetch tournament group results.");
+  }
+}
+
+export async function getMatchesByGroups(
+  tournament_id: string,
+  group_id: string
+) {
+  noStore();
+  try {
+    const data = await sql<MatchesDetails>`
+      SELECT
+        a.id,
+        a.group_id,
+        b.couple_name as couple1_name,
+        c.couple_name as couple2_name,
+        a.set_1_c1,
+        a.set_2_c1,
+        a.set_3_c1,
+        a.set_1_c2,
+        a.set_2_c2,
+        a.set_3_c2,
+        a.winner,
+        a.rel_to,
+        a.rel_from_1,
+        a.rel_from_2
+      FROM group_results as a
+      LEFT JOIN couple_names_view as b ON a.couple1_id = b.id::text
+      LEFT JOIN couple_names_view as c ON a.couple2_id = c.id::text
+      WHERE
+        tournament_id = ${tournament_id}
+        AND group_id = ${group_id}
+    `;
+
     return data.rows;
   } catch (error) {
     console.error("Database Error:", error);
