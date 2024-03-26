@@ -8061,7 +8061,7 @@ div:not(.d-hero-bottom) + .d-tournaments:before {
 }
 @media (max-width: 991px) {
   .d-ranking.d-tournaments-calendar .b-top .b-list-ranking .b-category .title {
-    font-size: 20px;
+    font-size: 18px;
     line-height: 20px;
   }
 }
