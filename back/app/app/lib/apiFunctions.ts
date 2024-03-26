@@ -232,7 +232,6 @@ export async function getTournaments() {
 export async function getTournamentById(tournamentID: string) {
   noStore();
   try {
-    console.log(tournamentID);
     const tournament = await sql<Tournaments>`SELECT * FROM tournaments
     WHERE id::text = ${tournamentID}`;
 
