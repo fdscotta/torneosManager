@@ -1,6 +1,3 @@
-import { sql } from "@vercel/postgres";
-import { unstable_noStore as noStore } from "next/cache";
-
 export const formatCurrency = (amount: number) => {
   return (amount / 100).toLocaleString("en-US", {
     style: "currency",

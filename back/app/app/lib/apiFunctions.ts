@@ -7,7 +7,6 @@ import {
   Tournaments,
 } from "./definitions";
 import { unstable_noStore as noStore } from "next/cache";
-import { getCoupleName } from "./utils";
 
 export async function getCouplesByGroups(
   tournamentID: string,
