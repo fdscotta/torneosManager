@@ -6367,12 +6367,14 @@ div:not(.d-hero-bottom) + .d-tournaments:before {
 .d-info:before {
   content: "";
   position: absolute;
-  background-color: #021060;
+  background-color: #040738;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
   z-index: -2;
+  border-top-right-radius: 0px;
+  border-top-left-radius: 0px;
 }
 .d-info .b-text-top {
   margin-bottom: 80px;

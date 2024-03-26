@@ -237,7 +237,8 @@ export async function getMatchesByGroups(
         a.winner,
         a.rel_to,
         a.rel_from_1,
-        a.rel_from_2
+        a.rel_from_2,
+        a.match_date
       FROM group_results as a
       LEFT JOIN couple_names_view as b ON a.couple1_id = b.id::text
       LEFT JOIN couple_names_view as c ON a.couple2_id = c.id::text

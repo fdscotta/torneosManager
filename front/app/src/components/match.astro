@@ -1,17 +1,34 @@
 ---
 const { item } = Astro.props;
+
+const dateOptionsMonth: Intl.DateTimeFormatOptions = {
+  year: "2-digit",
+  month: "2-digit",
+  day: "2-digit",
+  hour: "2-digit",
+  minute: "2-digit",
+};
+
+function getDate(dateStr: string) {
+  const date = new Date(dateStr);
+  const formatter = new Intl.DateTimeFormat("en-US", dateOptionsMonth);
+  return formatter.format(date);
+}
 ---
 
 <div class="row justify-content-center">
+  <div class="col-12 text-center">
+    <p>{getDate(item.match_date)}</p>
+  </div>
   <div class="col-6 col-lg-4 b-players order-1">
     <div>
       <p class="group_couple_position">{item.rel_from_1}</p>
       <div class="names">
         {
-          item.couple1_id != null ? (
+          item.couple1_name != null ? (
             <>
-              <p>{item.couple1_id?.split("-")[0]}</p>
-              <p>{item.couple1_id?.split("-")[1]}</p>
+              <p>{item.couple1_name?.split("-")[0]}</p>
+              <p>{item.couple1_name?.split("-")[1]}</p>
             </>
           ) : (
             <p>{item.rel_from_1}</p>
@@ -22,7 +39,6 @@ const { item } = Astro.props;
   </div>
   <div class="col-lg-3 b-match-summary b-match-summary-2 order-2">
     <div>
-      <p class="b-vs">VS</p>
       <div class="b-results">
         {
           item.set_1_c1 == "" ? (
@@ -37,6 +53,7 @@ const { item } = Astro.props;
       </div>
     </div>
   </div>
+
   <div class="col-6 col-lg-4 b-players order-1 order-lg-3">
     <div>
       <p class="group_couple_position group_couple_position_r">
@@ -44,10 +61,10 @@ const { item } = Astro.props;
       </p>
       <div class="names">
         {
-          item.couple2_id != null ? (
+          item.couple2_name != null ? (
             <>
-              <p>{item.couple2_id?.split("-")[0]}</p>
-              <p>{item.couple2_id?.split("-")[1]}</p>
+              <p>{item.couple2_name?.split("-")[0]}</p>
+              <p>{item.couple2_name?.split("-")[1]}</p>
             </>
           ) : (
             <p>{item.rel_from_2}</p>

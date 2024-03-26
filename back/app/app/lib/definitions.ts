@@ -88,4 +88,5 @@ export type MatchesDetails = {
   rel_to: string;
   rel_from_1: string;
   rel_from_2: string;
+  match_date: string;
 };
