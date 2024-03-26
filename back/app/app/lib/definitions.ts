@@ -73,7 +73,7 @@ export type GroupsSelect = {
   group_id: string;
 };
 
-export type CuartosResutls = {
+export type MatchesDetails = {
   id: string;
   group_id: string;
   couple1_name: string;
