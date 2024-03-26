@@ -221,19 +221,25 @@ async function createGroupTableResultsView (client) {
               END
           ) AS sets_total,
           (SUM(
-              CASE WHEN a.couple1_id = b.id::text THEN COALESCE(NULLIF(a.set_1_c1, ''), '0')::integer ELSE COALESCE(NULLIF(a.set_1_c2, ''), '0')::integer END +
-              COALESCE(NULLIF(a.set_2_c1, ''), '0')::integer +
+              CASE WHEN a.couple1_id = b.id::text THEN COALESCE(NULLIF(a.set_1_c1, ''), '0') ::integer + COALESCE(NULLIF(a.set_2_c1, ''), '0')::integer +
               COALESCE(NULLIF(a.set_3_c1, ''), '0')::integer
-          ) -
-          SUM(
-              CASE WHEN a.couple1_id = b.id::text THEN COALESCE(NULLIF(a.set_1_c2, ''), '0')::integer ELSE COALESCE(NULLIF(a.set_1_c1, ''), '0')::integer END +
+              ELSE COALESCE(NULLIF(a.set_1_c2, ''), '0')::integer END +
               COALESCE(NULLIF(a.set_2_c2, ''), '0')::integer +
               COALESCE(NULLIF(a.set_3_c2, ''), '0')::integer
-          )) AS total_games,
+          ) -
           SUM(
-              CASE WHEN a.couple1_id = b.id::text THEN COALESCE(NULLIF(a.set_1_c1, ''), '0')::integer ELSE COALESCE(NULLIF(a.set_1_c2, ''), '0')::integer END +
+              CASE WHEN a.couple1_id = b.id::text THEN COALESCE(NULLIF(a.set_1_c2, ''), '0')::integer + COALESCE(NULLIF(a.set_2_c2, ''), '0')::integer +
+              COALESCE(NULLIF(a.set_3_c2, ''), '0')::integer
+              ELSE COALESCE(NULLIF(a.set_1_c1, ''), '0')::integer END +
               COALESCE(NULLIF(a.set_2_c1, ''), '0')::integer +
               COALESCE(NULLIF(a.set_3_c1, ''), '0')::integer
+          )) AS total_games,
+          SUM(
+              CASE WHEN a.couple1_id = b.id::text THEN COALESCE(NULLIF(a.set_1_c1, ''), '0')::integer + COALESCE(NULLIF(a.set_2_c1, ''), '0')::integer +
+              COALESCE(NULLIF(a.set_3_c1, ''), '0')::integer
+              ELSE COALESCE(NULLIF(a.set_1_c2, ''), '0')::integer END +
+              COALESCE(NULLIF(a.set_2_c2, ''), '0')::integer +
+              COALESCE(NULLIF(a.set_3_c2, ''), '0')::integer
           ) AS games_positive,
           SUM(
               CASE WHEN a.couple1_id = b.id::text AND a.winner = 'couple_1' THEN 1
