@@ -173,8 +173,7 @@ export async function getCouplesByFinal(tournamentID: string) {
       LEFT JOIN tournament_couples e ON a.couple1_id = e.id::text
       LEFT JOIN tournament_couples f ON a.couple2_id = f.id::text
       WHERE a.tournament_id = ${tournamentID}
-      AND a.group_id = '1'
-      AND a.winner <> ''`;
+      AND a.group_id = '1'`;
 
     return couples.rows;
   } catch (error) {
