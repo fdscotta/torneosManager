@@ -382,6 +382,7 @@ export async function updateQRounds(tournamentID: string) {
   });
   await updateDraw("8", "4", tournament);
   await updateDraw("4", "2", tournament);
+  await updateDraw("2", "1", tournament);
 }
 
 export async function updateDrawFromGroups(
@@ -451,7 +452,7 @@ export async function updateDraw(
         UPDATE group_results SET
           couple1_id = '',
           couple2_id = ''
-        WHERE group_id = '2'
+        WHERE group_id = ${roundFrom}
         AND tournament_id = ${tournament.id}
       `;
       return true;

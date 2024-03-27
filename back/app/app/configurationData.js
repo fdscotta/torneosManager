@@ -35,6 +35,12 @@ const qualificationRoundLeague = [
         rel_from_2: "44",
         rel_to: "22",
     },
+    {
+        round: "1",
+        rel_from_1: "21",
+        rel_from_2: "22",
+        rel_to: "1",
+    }
 ];
 
 const qualificationRoundTournament678 = [
@@ -50,6 +56,12 @@ const qualificationRoundTournament678 = [
         rel_from_2: "B1",
         rel_to: "22",
     },
+    {
+        round: "1",
+        rel_from_1: "21",
+        rel_from_2: "22",
+        rel_to: "1",
+    }
 ];
 
 const qualificationRoundTournament91011 = [
@@ -89,6 +101,12 @@ const qualificationRoundTournament91011 = [
         rel_from_2: "44",
         rel_to: "22",
     },
+    {
+        round: "1",
+        rel_from_1: "21",
+        rel_from_2: "22",
+        rel_to: "1",
+    }
 ];
 
 const qualificationRoundTournament121314 = [
@@ -128,6 +146,12 @@ const qualificationRoundTournament121314 = [
         rel_from_2: "44",
         rel_to: "22",
     },
+    {
+        round: "1",
+        rel_from_1: "21",
+        rel_from_2: "22",
+        rel_to: "1",
+    }
 ];
 
 const qualificationRoundTournament151617 = [
@@ -215,6 +239,12 @@ const qualificationRoundTournament151617 = [
         rel_from_2: "44",
         rel_to: "22",
     },
+    {
+        round: "1",
+        rel_from_1: "21",
+        rel_from_2: "22",
+        rel_to: "1",
+    }
 ];
 
 const qualificationRoundTournament181920 = [
@@ -302,6 +332,12 @@ const qualificationRoundTournament181920 = [
         rel_from_2: "44",
         rel_to: "22",
     },
+    {
+        round: "1",
+        rel_from_1: "21",
+        rel_from_2: "22",
+        rel_to: "1",
+    }
 ];
 
 const qualificationRoundTournament212223 = [
@@ -389,6 +425,12 @@ const qualificationRoundTournament212223 = [
         rel_from_2: "44",
         rel_to: "22",
     },
+    {
+        round: "1",
+        rel_from_1: "21",
+        rel_from_2: "22",
+        rel_to: "1",
+    }
 ];
 
 const qualificationRoundTournament242526 = [
@@ -476,6 +518,12 @@ const qualificationRoundTournament242526 = [
         rel_from_2: "44",
         rel_to: "22",
     },
+    {
+        round: "1",
+        rel_from_1: "21",
+        rel_from_2: "22",
+        rel_to: "1",
+    }
 ];
 
 module.exports = {
