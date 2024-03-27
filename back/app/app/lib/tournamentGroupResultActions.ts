@@ -380,7 +380,7 @@ export async function updateQRounds(tournamentID: string) {
   totalResults.forEach(async (couple: GroupResultsTable, index: number) => {
     await updateDrawFromGroups(couple, index + 1, tournament);
   });
-  await updateDraw("8", "4", tournament);
+  //await updateDraw("8", "4", tournament);
   await updateDraw("4", "2", tournament);
   await updateDraw("2", "1", tournament);
 }
@@ -452,7 +452,7 @@ export async function updateDraw(
         UPDATE group_results SET
           couple1_id = '',
           couple2_id = ''
-        WHERE group_id = ${roundFrom}
+        WHERE group_id = ${roundTo}
         AND tournament_id = ${tournament.id}
       `;
       return true;
