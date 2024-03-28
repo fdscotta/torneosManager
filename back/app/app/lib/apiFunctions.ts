@@ -13,7 +13,12 @@ export async function getCouplesByGroups(
   group_id: string
 ) {
   noStore();
-  if (group_id == "8" || group_id == "4" || group_id == "2") {
+  if (
+    group_id == "8" ||
+    group_id == "4" ||
+    group_id == "2" ||
+    group_id == "1"
+  ) {
     try {
       const couples =
         await sql<CouplesSelect>`SELECT a.id as id, CONCAT(a.player1, '/', a.player2) as couple, b.group_id as group_id
