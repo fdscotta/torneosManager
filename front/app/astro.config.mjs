@@ -7,5 +7,7 @@ export default defineConfig({
   site: "https://astro-moon-landing.netlify.app/",
   integrations: [icon()],
   output: 'server',
-  adapter: vercel(),
+  adapter: vercel({
+    webAnalytics: { enabled: true }
+  }),
 });
