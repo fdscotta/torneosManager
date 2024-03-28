@@ -21,10 +21,12 @@ export default async function TournamentsCoupleTable({
                   key={couple.id}
                   className="mb-2 w-full rounded-md dark:bg-slate-800 p-4"
                 >
-                  <div className="flex items-center justify-between border-b pb-4 text-white">
-                    <div className="mb-2 w-full">
-                      <span>{couple.player1} / {couple.player2}</span>
-                      <span className='float-right'>Grupo: {couple.group_id}</span>
+                  <div className="flex flex-row border-b pb-4 text-white">
+                    <div className='basis-3/4'>
+                      {couple.player1} / {couple.player2}
+                    </div>
+                    <div className='basis-1/4'>
+                      {couple.group_id}
                     </div>
                   </div>
                   <div className="flex w-full flex-row justify-end space-x-2 pt-4">

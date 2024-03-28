@@ -202,27 +202,6 @@ export default function CreateForm({
                 />
               </div>
             </div>
-            {/*             <legend className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-              Ganador
-            </legend>
-            <ul className="grid w-full gap-3 md:grid-cols-2">
-              <li>
-                <input type="radio" id="couple_1" name="winner" value="couple_1" className="hidden peer" />
-                <label htmlFor="couple_1" className="inline-flex items-center justify-between w-full p-2.5  text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 dark:peer-checked:text-blue-500 peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">
-                  <div className="block">
-                    <div className="w-full text-sm font-semibold">P1</div>
-                  </div>
-                </label>
-              </li>
-              <li>
-                <input type="radio" id="couple_2" name="winner" value="couple_2" className="hidden peer" />
-                <label htmlFor="couple_2" className="inline-flex items-center justify-between w-full p-2.5 text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 dark:peer-checked:text-blue-500 peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">
-                  <div className="block">
-                    <div className="w-full text-sm font-semibold">P2</div>
-                  </div>
-                </label>
-              </li>
-            </ul> */}
           </div>
         </div>
 

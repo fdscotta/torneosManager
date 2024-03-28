@@ -25,26 +25,28 @@ export default async function TournamentsGroupResultTable({
                   key={result.id}
                   className="mb-2 w-full rounded-md dark:bg-slate-800 p-4"
                 >
-                  <div className="flex items-center justify-between pb-4 text-white">
-                    <div className="mb-2 w-full">
+                  <div className="grid items-center pb-4 text-white">
+                    <div className="g-col-12 mb-2">
+                      <span>Grupo: {result.group_id}</span>
+                    </div>
+                    <div className="g-col-12 mb-2">
                       <span>{result.couple1_id} / {result.couple2_id}</span>
-                      <span className='float-right'>Grupo: {result.group_id}</span>
                     </div>
                   </div>
                   <div className="flex items-center justify-between border-b pb-4 text-white">
                     <div className="mb-2 flex items-center space-x-6">
                       {(result.set_1_c1 != '' && result.set_1_c2 != '') &&
-                        <p>1er Set: {result.set_1_c1} / {result.set_1_c2}</p>
+                        <p>{result.set_1_c1} / {result.set_1_c2}</p>
                       }
                       {(result.set_2_c1 != '' && result.set_2_c2 != '') &&
-                        <p>2do Set: {result.set_2_c1} / {result.set_2_c2}</p>
+                        <p>{result.set_2_c1} / {result.set_2_c2}</p>
                       }
                       {(result.set_3_c1 != '' && result.set_3_c2 != '') &&
-                        <p>3er Set: {result.set_3_c1} / {result.set_3_c2}</p>
+                        <p>{result.set_3_c1} / {result.set_3_c2}</p>
                       }
                     </div>
                   </div>
-                  <div className="flex w-full items-center justify-between pt-4">
+                  <div className="flex w-full items-center justify-end pt-4">
                     <div className="flex justify-end gap-2">
                       <UpdateGroupResult tournamentID={tournamentID} resultID={result.id} />
                       <DeleteGroupResult resultID={result.id} />
