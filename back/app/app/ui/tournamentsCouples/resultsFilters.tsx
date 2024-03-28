@@ -9,7 +9,6 @@ export default function Filters({ filterValue }: { filterValue: string }) {
     const pathname = usePathname();
 
     const handleFilter = useDebouncedCallback((term) => {
-
         const params = new URLSearchParams(searchParams);
 
         if (term) {
