@@ -43,53 +43,53 @@ const qualificationRoundLeague = [
     }
 ];
 
-const qualificationRoundLeague8vos = [
+const qualificationRoundLeague242526 = [
     {
         round: "8",
         rel_from_1: "1",
-        rel_from_2: "16",
+        rel_from_2: "10",
         rel_to: "81",
     },
     {
         round: "8",
-        rel_from_1: "8",
-        rel_from_2: "9",
+        rel_from_1: "15",
+        rel_from_2: "8",
         rel_to: "82",
     },
     {
         round: "8",
-        rel_from_1: "6",
-        rel_from_2: "11",
+        rel_from_1: "5",
+        rel_from_2: "14",
         rel_to: "83",
     },
     {
         round: "8",
-        rel_from_1: "4",
-        rel_from_2: "13",
+        rel_from_1: "11",
+        rel_from_2: "4",
         rel_to: "84",
     },
     {
         round: "8",
         rel_from_1: "3",
-        rel_from_2: "14",
+        rel_from_2: "12",
         rel_to: "85",
     },
     {
         round: "8",
-        rel_from_1: "7",
-        rel_from_2: "10",
+        rel_from_1: "13",
+        rel_from_2: "6",
         rel_to: "86",
     },
     {
         round: "8",
-        rel_from_1: "5",
-        rel_from_2: "12",
+        rel_from_1: "7",
+        rel_from_2: "16",
         rel_to: "87",
     },
     {
         round: "8",
-        rel_from_1: "2",
-        rel_from_2: "15",
+        rel_from_1: "9",
+        rel_from_2: "2",
         rel_to: "88",
     },
     {
@@ -621,6 +621,7 @@ const qualificationRoundTournament242526 = [
 
 module.exports = {
     qualificationRoundLeague,
+    qualificationRoundLeague242526,
     qualificationRoundTournament678,
     qualificationRoundTournament91011,
     qualificationRoundTournament121314,

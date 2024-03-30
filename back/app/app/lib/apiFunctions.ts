@@ -285,7 +285,7 @@ export async function getTournamentById(tournamentID: string) {
   }
 }
 
-export async function getTournamentAmountCouples(tournament_id: string) {
+export async function getTournamentAmountGroups(tournament_id: string) {
   noStore();
   try {
     const data = await sql`
@@ -298,6 +298,6 @@ export async function getTournamentAmountCouples(tournament_id: string) {
     return data.rowCount;
   } catch (error) {
     console.error("Database Error:", error);
-    throw new Error("Failed to fetch getTournamentAmountCouples.");
+    throw new Error("Failed to fetch getTournamentAmountGroups.");
   }
 }
