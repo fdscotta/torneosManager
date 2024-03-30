@@ -5,18 +5,19 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 const {
   qualificationRoundLeague,
+  qualificationRoundLeague242526,
   qualificationRoundTournament678,
   qualificationRoundTournament91011,
   qualificationRoundTournament121314,
-  qualificationRoundTournament141516,
-  qualificationRoundTournament171819,
-  qualificationRoundTournament202122,
-  qualificationRoundTournament232426,
+  qualificationRoundTournament151617,
+  qualificationRoundTournament181920,
+  qualificationRoundTournament212223,
+  qualificationRoundTournament242526,
 } = require("../configurationData.js");
 import {
   getGroupsByTournament,
   getResultsByGroups,
-  getTournamentAmountCouples,
+  getTournamentAmountGroups,
   getTournamentById,
 } from "./apiFunctions";
 import {
@@ -236,11 +237,11 @@ export async function declareRounds(tournamentID: string) {
   let dataRef = null;
 
   if (!tournament.param_draw_set) {
+    const gAmount: number = await getTournamentAmountGroups(tournamentID);
     if (
       tournament.type == "torneo" ||
       (tournament.type == "liga" && tournament.param_q_per_group == "2")
     ) {
-      const gAmount: number = await getTournamentAmountCouples(tournamentID);
       switch (gAmount) {
         case 2:
           dataRef = qualificationRoundTournament678;
@@ -252,20 +253,28 @@ export async function declareRounds(tournamentID: string) {
           dataRef = qualificationRoundTournament121314;
           break;
         case 5:
-          dataRef = qualificationRoundTournament141516;
+          dataRef = qualificationRoundTournament151617;
           break;
         case 6:
-          dataRef = qualificationRoundTournament171819;
+          dataRef = qualificationRoundTournament181920;
           break;
         case 7:
-          dataRef = qualificationRoundTournament202122;
+          dataRef = qualificationRoundTournament212223;
           break;
         case 8:
-          dataRef = qualificationRoundTournament232426;
+          dataRef = qualificationRoundTournament242526;
           break;
       }
     } else {
-      dataRef = qualificationRoundLeague;
+      const cAmount = tournament.param_q_per_group * gAmount;
+      switch (cAmount) {
+        case 8:
+          dataRef = qualificationRoundLeague;
+          break;
+        case 16:
+          dataRef = qualificationRoundLeague242526;
+          break;
+      }
     }
     await Promise.all(
       dataRef.map(
@@ -338,6 +347,7 @@ export async function insertRound(round: any, tournamentID: string) {
 
 export async function updateQRounds(tournamentID: string) {
   const groups: any = await getGroupsByTournament(tournamentID);
+  const cAmount: any = await getGroupsByTournament(tournamentID);
   const tournament: any = await getTournamentById(tournamentID);
 
   let totalResults: GroupResultsTable[] = [];
@@ -381,7 +391,9 @@ export async function updateQRounds(tournamentID: string) {
     await updateDrawFromGroups(couple, index + 1, tournament);
   });
 
-  //await updateDraw("8", "4", tournament);
+  if (cAmount > 8) {
+    await updateDraw("8", "4", tournament);
+  }
   await updateDraw("4", "2", tournament);
   await updateDraw("2", "1", tournament);
 }
