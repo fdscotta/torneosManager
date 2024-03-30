@@ -264,7 +264,8 @@ export async function getTournaments() {
   try {
     const data = await sql`
       SELECT *
-        FROM tournaments;
+        FROM tournaments
+      ORDER BY date DESC;
     `;
     return data.rows;
   } catch (error) {

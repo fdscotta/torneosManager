@@ -64,50 +64,102 @@ function getDateDay(dateStr: string) {
         <div class="row">
           <div class="col-12">
             <h2 class="title-2 aos-init aos-animate" data-aos="fade-up">
-              Torneos
+              Torneos Activos
             </h2>
             {
               tournaments?.tournaments?.length > 0 &&
-                tournaments?.tournaments?.map((tournament: any) => (
-                  <div
-                    class="row b-tournament type-masterf aos-init aos-animate"
-                    data-aos="fade-up"
-                  >
-                    <div class="col-md-4 col-lg-3 b-num">
-                      <div>
-                        <p>
-                          {getDateDay(tournament.date)}
-                          <>
-                            <br />
-                            <span>{getDateMonth(tournament.date)}</span>
-                          </>
-                        </p>
-                      </div>
-                    </div>
-                    <div class="col-md-8 col-lg-9 b-name">
-                      <div class="row">
-                        <div class="col-6">
-                          <p>{tournament.name}</p>
+                tournaments?.tournaments?.map(
+                  (tournament: any) =>
+                    tournament.status == 0 && (
+                      <div
+                        class="row b-tournament type-masterf aos-init aos-animate"
+                        data-aos="fade-up"
+                      >
+                        <div class="col-md-4 col-lg-3 b-num">
+                          <div>
+                            <p>
+                              {getDateDay(tournament.date)}
+                              <>
+                                <br />
+                                <span>{getDateMonth(tournament.date)}</span>
+                              </>
+                            </p>
+                          </div>
                         </div>
-                        <div class="col-6 text-end">
-                          <picture>
-                            <img
-                              decoding="async"
-                              loading="lazy"
-                              data-src={tournament.image}
-                              src={tournament.image}
-                              height="100"
-                              width="100"
-                              alt={tournament.name}
-                              title={tournament.name}
-                            />
-                          </picture>
+                        <div class="col-md-8 col-lg-9 b-name">
+                          <div class="row">
+                            <div class="col-6">
+                              <p>{tournament.name}</p>
+                            </div>
+                            <div class="col-6 text-end">
+                              <picture>
+                                <img
+                                  decoding="async"
+                                  loading="lazy"
+                                  data-src={tournament.image}
+                                  src={tournament.image}
+                                  height="100"
+                                  width="100"
+                                  alt={tournament.name}
+                                  title={tournament.name}
+                                />
+                              </picture>
+                            </div>
+                          </div>
                         </div>
+                        <a href={`tournaments/${tournament.id}`} />
                       </div>
-                    </div>
-                    <a href={`tournaments/${tournament.id}`} />
-                  </div>
-                ))
+                    )
+                )
+            }
+            <h2 class="title-2 aos-init aos-animate my-4" data-aos="fade-up">
+              Torneos Finalizados
+            </h2>
+            {
+              tournaments?.tournaments?.length > 0 &&
+                tournaments?.tournaments?.map(
+                  (tournament: any) =>
+                    tournament.status == 1 && (
+                      <div
+                        class="row b-tournament type-masterf aos-init aos-animate"
+                        data-aos="fade-up"
+                      >
+                        <div class="col-md-4 col-lg-3 b-num">
+                          <div>
+                            <p>
+                              {getDateDay(tournament.date)}
+                              <>
+                                <br />
+                                <span>{getDateMonth(tournament.date)}</span>
+                              </>
+                            </p>
+                          </div>
+                        </div>
+                        <div class="col-md-8 col-lg-9 b-name">
+                          <div class="row">
+                            <div class="col-6">
+                              <p>{tournament.name}</p>
+                            </div>
+                            <div class="col-6 text-end">
+                              <picture>
+                                <img
+                                  decoding="async"
+                                  loading="lazy"
+                                  data-src={tournament.image}
+                                  src={tournament.image}
+                                  height="100"
+                                  width="100"
+                                  alt={tournament.name}
+                                  title={tournament.name}
+                                />
+                              </picture>
+                            </div>
+                          </div>
+                        </div>
+                        <a href={`tournaments/${tournament.id}`} />
+                      </div>
+                    )
+                )
             }
           </div>
         </div>

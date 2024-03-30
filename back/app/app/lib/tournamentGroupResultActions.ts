@@ -199,6 +199,7 @@ export async function updateGroupResult(
   } catch (error) {
     return { message: JSON.stringify(error) };
   }
+
   declareRounds(tournamentID);
 
   revalidatePath(`/dashboard/tournaments/${tournamentID}/group-results`);
