@@ -10,6 +10,7 @@ body {
 
 .d-info {
   padding-top: 30px;
+  padding-bottom: 0px;
   border-top-left-radius: 0px;
   border-top-right-radius: 0px;
   top: 85px;

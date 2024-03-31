@@ -11,8 +11,8 @@ export const metadata: Metadata = {
 };
 
 export default async function Page({
-    params,
-    searchParams
+  params,
+  searchParams
 }: {
   params: {
     id: string;
@@ -26,7 +26,7 @@ export default async function Page({
 
   return (
     <div className="w-full">
-        <Breadcrumbs
+      <Breadcrumbs
         breadcrumbs={[
           { label: 'Torneos', href: '/dashboard/tournaments' },
           {
@@ -38,10 +38,10 @@ export default async function Page({
       />
       <div className="mt-4 flex items-center justify-between gap-2 md:mt-8">
         <Search placeholder="Buscar Pareja..." />
-        <CreateCouple tournamentID={params.id}/>
+        <CreateCouple tournamentID={params.id} />
       </div>
       <Suspense key={query} fallback={<TournamentTableSkeleton />}>
-        <Table tournamentID={params.id} query={query}/>
+        <Table tournamentID={params.id} query={query} />
       </Suspense>
     </div>
   );

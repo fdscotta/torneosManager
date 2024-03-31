@@ -1,4 +1,5 @@
 ---
+import SiteLayout from "~/layouts/siteLayout.astro";
 const tournaments = await fetch(
   "https://torneos-manager.vercel.app/api/tournaments",
   {
@@ -28,169 +29,117 @@ function getDateDay(dateStr: string) {
 }
 ---
 
-<html lang="en-GB">
-  <head>
-    <meta charset="utf-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, shrink-to-fit=no"
-    />
-    <meta name="application-name" content=" " />
-    <meta name="msapplication-TileColor" content="#FFFFFF" />
-
-    <!-- CSS -->
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css"
-    />
-    <link rel="stylesheet" href="/assets/css/main.min.css?1.0.2" />
-    <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
-    <link rel="stylesheet" href="/assets/css/dev-styles.css" />
-
-    <title>iPadel</title>
-    <style is:inline>
-      .row {
-        margin-left: 0px;
-        margin-right: 0px;
-      }
-    </style>
-  </head>
-
-  <body data-aos-easing="ease" data-aos-duration="1500" data-aos-delay="100">
-    <!-- Tournaments -->
-    <section class="d-tournaments-calendar">
-      <div class="container b-calendar-list">
-        <div class="row">
-          <div class="col-12">
-            <h2 class="title-2 aos-init aos-animate" data-aos="fade-up">
-              Torneos Activos
-            </h2>
-            {
-              tournaments?.tournaments?.length > 0 &&
-                tournaments?.tournaments?.map(
-                  (tournament: any) =>
-                    tournament.status == 0 && (
-                      <div
-                        class="row b-tournament type-masterf aos-init aos-animate"
-                        data-aos="fade-up"
-                      >
-                        <div class="col-md-4 col-lg-3 b-num">
-                          <div>
-                            <p>
-                              {getDateDay(tournament.date)}
-                              <>
-                                <br />
-                                <span>{getDateMonth(tournament.date)}</span>
-                              </>
-                            </p>
-                          </div>
+<SiteLayout
+  title="iPadel"
+  image="/favicon.svg"
+  url={`https://torneos-manager.vercel.app`}
+>
+  <!-- Tournaments -->
+  <section class="d-tournaments-calendar">
+    <div class="container b-calendar-list">
+      <div class="row">
+        <div class="col-12">
+          <h2 class="title-2 aos-init aos-animate" data-aos="fade-up">
+            Torneos Activos
+          </h2>
+          {
+            tournaments?.tournaments?.length > 0 &&
+              tournaments?.tournaments?.map(
+                (tournament: any) =>
+                  tournament.status == 0 && (
+                    <div
+                      class="row b-tournament type-masterf aos-init aos-animate"
+                      data-aos="fade-up"
+                    >
+                      <div class="col-md-4 col-lg-3 b-num">
+                        <div>
+                          <p>
+                            {getDateDay(tournament.date)}
+                            <>
+                              <br />
+                              <span>{getDateMonth(tournament.date)}</span>
+                            </>
+                          </p>
                         </div>
-                        <div class="col-md-8 col-lg-9 b-name">
-                          <div class="row">
-                            <div class="col-6">
-                              <p>{tournament.name}</p>
-                            </div>
-                            <div class="col-6 text-end">
-                              <picture>
-                                <img
-                                  decoding="async"
-                                  loading="lazy"
-                                  data-src={tournament.image}
-                                  src={tournament.image}
-                                  height="100"
-                                  width="100"
-                                  alt={tournament.name}
-                                  title={tournament.name}
-                                />
-                              </picture>
-                            </div>
-                          </div>
-                        </div>
-                        <a href={`tournaments/${tournament.id}`} />
                       </div>
-                    )
-                )
-            }
-            <h2 class="title-2 aos-init aos-animate my-4" data-aos="fade-up">
-              Torneos Finalizados
-            </h2>
-            {
-              tournaments?.tournaments?.length > 0 &&
-                tournaments?.tournaments?.map(
-                  (tournament: any) =>
-                    tournament.status == 1 && (
-                      <div
-                        class="row b-tournament type-masterf aos-init aos-animate"
-                        data-aos="fade-up"
-                      >
-                        <div class="col-md-4 col-lg-3 b-num">
-                          <div>
-                            <p>
-                              {getDateDay(tournament.date)}
-                              <>
-                                <br />
-                                <span>{getDateMonth(tournament.date)}</span>
-                              </>
-                            </p>
+                      <div class="col-md-8 col-lg-9 b-name">
+                        <div class="row">
+                          <div class="col-6">
+                            <p>{tournament.name}</p>
+                          </div>
+                          <div class="col-6 text-end">
+                            <picture>
+                              <img
+                                decoding="async"
+                                loading="lazy"
+                                data-src={tournament.image}
+                                src={tournament.image}
+                                height="100"
+                                width="100"
+                                alt={tournament.name}
+                                title={tournament.name}
+                              />
+                            </picture>
                           </div>
                         </div>
-                        <div class="col-md-8 col-lg-9 b-name">
-                          <div class="row">
-                            <div class="col-6">
-                              <p>{tournament.name}</p>
-                            </div>
-                            <div class="col-6 text-end">
-                              <picture>
-                                <img
-                                  decoding="async"
-                                  loading="lazy"
-                                  data-src={tournament.image}
-                                  src={tournament.image}
-                                  height="100"
-                                  width="100"
-                                  alt={tournament.name}
-                                  title={tournament.name}
-                                />
-                              </picture>
-                            </div>
-                          </div>
-                        </div>
-                        <a href={`tournaments/${tournament.id}`} />
                       </div>
-                    )
-                )
-            }
-          </div>
+                      <a href={`tournaments/${tournament.id}`} />
+                    </div>
+                  )
+              )
+          }
+          <h2 class="title-2 aos-init aos-animate my-4" data-aos="fade-up">
+            Torneos Finalizados
+          </h2>
+          {
+            tournaments?.tournaments?.length > 0 &&
+              tournaments?.tournaments?.map(
+                (tournament: any) =>
+                  tournament.status == 1 && (
+                    <div
+                      class="row b-tournament type-masterf aos-init aos-animate"
+                      data-aos="fade-up"
+                    >
+                      <div class="col-md-4 col-lg-3 b-num">
+                        <div>
+                          <p>
+                            {getDateDay(tournament.date)}
+                            <>
+                              <br />
+                              <span>{getDateMonth(tournament.date)}</span>
+                            </>
+                          </p>
+                        </div>
+                      </div>
+                      <div class="col-md-8 col-lg-9 b-name">
+                        <div class="row">
+                          <div class="col-6">
+                            <p>{tournament.name}</p>
+                          </div>
+                          <div class="col-6 text-end">
+                            <picture>
+                              <img
+                                decoding="async"
+                                loading="lazy"
+                                data-src={tournament.image}
+                                src={tournament.image}
+                                height="100"
+                                width="100"
+                                alt={tournament.name}
+                                title={tournament.name}
+                              />
+                            </picture>
+                          </div>
+                        </div>
+                      </div>
+                      <a href={`tournaments/${tournament.id}`} />
+                    </div>
+                  )
+              )
+          }
         </div>
       </div>
-    </section>
-    <!-- End Tournaments -->
-    <!-- JS -->
-    <script is:inline src="assets/js/jquery-3.6.1.min.js"></script>
-    <script is:inline src="https://code.jquery.com/jquery-latest.js"></script>
-    <script
-      is:inline
-      src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>
-    <script
-      is:inline
-      src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
-
-    <script is:inline src="assets/js/aos.min.js"></script>
-    <script is:inline src="assets/js/lazyload.js"></script>
-    <script is:inline src="assets/js/bootstrap.min.js"></script>
-    <script is:inline src="assets/js/custom.js"></script>
-
-    <script is:inline>
-      AOS.init({
-        once: true,
-        duration: 1500,
-        delay: 100,
-        disable: "mobile",
-      });
-      $(window).scroll(function () {
-        AOS.refresh();
-      });
-    </script>
-  </body>
-</html>
+    </div>
+  </section>
+  <!-- End Tournaments -->
+</SiteLayout>
