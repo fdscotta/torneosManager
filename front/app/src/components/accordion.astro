@@ -7,7 +7,7 @@ let matches: any;
 switch (round) {
   case "8":
     matches = await fetch(
-      `https://torneos-manager.vercel.app/api/couples/by8vos/${tID}`,
+      `https://torneos-manager.vercel.app/api/tournaments/couples/by8vos/${tID}`,
       {
         method: "POST",
       }
@@ -16,7 +16,7 @@ switch (round) {
 
   case "4":
     matches = await fetch(
-      `https://torneos-manager.vercel.app/api/couples/by4tos/${tID}`,
+      `https://torneos-manager.vercel.app/api/tournaments/couples/by4tos/${tID}`,
       {
         method: "POST",
       }
@@ -25,7 +25,7 @@ switch (round) {
 
   case "2":
     matches = await fetch(
-      `https://torneos-manager.vercel.app/api/couples/bySemis/${tID}`,
+      `https://torneos-manager.vercel.app/api/tournaments/couples/bySemis/${tID}`,
       {
         method: "POST",
       }
@@ -34,7 +34,7 @@ switch (round) {
 
   case "1":
     matches = await fetch(
-      `https://torneos-manager.vercel.app/api/couples/byFinal/${tID}`,
+      `https://torneos-manager.vercel.app/api/tournaments/couples/byFinal/${tID}`,
       {
         method: "POST",
       }

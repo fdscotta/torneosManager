@@ -302,3 +302,47 @@ export async function getTournamentAmountGroups(tournament_id: string) {
     throw new Error("Failed to fetch getTournamentAmountGroups.");
   }
 }
+
+export async function getCouplesGlobalQ(tournamentID: string) {
+  const groups: any = await getGroupsByTournament(tournamentID);
+  const tournament: any = await getTournamentById(tournamentID);
+
+  let totalResults: GroupResultsTable[] = [];
+  let qCouples: GroupResultsTable[] = [];
+
+  await Promise.all(
+    groups.map(async (item: GroupsSelect) => {
+      const resultsByGroups = await getResultsByGroups(
+        tournamentID,
+        item.group_id
+      );
+
+      qCouples = resultsByGroups.slice(
+        0,
+        parseInt(tournament.param_q_per_group)
+      );
+
+      qCouples.forEach((couple: GroupResultsTable, index: number) => {
+        couple.id = (index + 1).toString();
+        totalResults.push(couple);
+      });
+    })
+  );
+  totalResults.sort((a, b) => {
+    if (a.id < b.id) {
+      return -1;
+    }
+    if (a.id > b.id) {
+      return 1;
+    }
+    if (a.group_id < b.group_id) {
+      return -1;
+    }
+    if (a.group_id > b.group_id) {
+      return 1;
+    }
+    return 0;
+  });
+
+  return totalResults;
+}
