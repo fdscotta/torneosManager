@@ -7,6 +7,9 @@ export const metadata: Metadata = {
     template: '%s | Administrador de Torneos',
     default: 'Administrador de Torneos',
   },
+  icons: {
+    icon: '/favicon.ico',
+  }
 };
 export default function RootLayout({
   children,

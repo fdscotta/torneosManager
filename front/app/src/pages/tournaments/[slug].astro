@@ -2,6 +2,7 @@
 import Accordion from "~/components/accordion.astro";
 import GroupTable from "~/components/groupTables.astro";
 import GroupsQ from "~/components/leagueGroupsQ.astro";
+import SiteLayout from "~/layouts/siteLayout.astro";
 const { slug } = Astro.params;
 
 const tournament = await fetch(
@@ -12,140 +13,66 @@ const tournament = await fetch(
 ).then((response) => response.json());
 ---
 
-<html lang="en-GB">
-  <head>
-    <meta charset="utf-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, shrink-to-fit=no"
-    />
-    <meta name="application-name" content=" " />
-    <meta name="msapplication-TileColor" content="#FFFFFF" />
-
-    <!-- CSS -->
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css"
-    />
-    <link rel="stylesheet" href="/assets/css/main.min.css?1.0.2" />
-    <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
-    <link rel="stylesheet" href="/assets/css/dev-styles.css" />
-
-    <title>{tournament.tournament.name}</title>
-
-    <meta name="robots" content="index, follow" />
-    <meta name="description" content={tournament.tournament.name} />
-
-    <!-- OpenGraph -->
-    <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="torneos-manager.vercel.app" />
-    <meta property="og:title" content={tournament.tournament.name} />
-    <meta
-      property="og:url"
-      content={`https://torneos-manager.vercel.app/trounaments/${slug}`}
-    />
-
-    <meta property="og:image" content={tournament.tournament.image} />
-    <meta property="og:description" content={tournament.tournament.name} />
-
-    <!-- TwitterCard -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta
-      name="twitter:url"
-      content={`https://torneos-manager.vercel.app/trounaments/${slug}`}
-    />
-    <meta name="twitter:title" content={tournament.tournament.name} />
-    <meta
-      name="twitter:text:description"
-      content={tournament.tournament.name}
-    />
-    <meta name="twitter:image:src" content={tournament.tournament.image} />
-  </head>
-
-  <body data-aos-easing="ease" data-aos-duration="1500" data-aos-delay="100">
-    <!-- Title -->
-    <section class="d-menu-tournament">
-      <div id="menu-top" class="container">
-        <div class="row">
-          <div class="container d-nne b-fixed-title-tournament">
-            <div class="row">
-              <div class="b-title">
-                <h1 class="title">{tournament.tournament.name}</h1>
-              </div>
+<SiteLayout
+  title={tournament.tournament.name}
+  image={tournament.tournament.image}
+  url={`https://torneos-manager.vercel.app/trounaments/${slug}`}
+>
+  <!-- Title -->
+  <section class="d-menu-tournament">
+    <div id="menu-top" class="container">
+      <div class="row">
+        <div class="container d-nne b-fixed-title-tournament">
+          <div class="row">
+            <div class="b-title">
+              <h1 class="title">{tournament.tournament.name}</h1>
             </div>
           </div>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- Draws -->
-    <section class="d-info-results d-info">
-      <div class="container">
-        <div class="row">
-          <div class="col-12 b-accordion" id="resultados_torneo_data">
-            <div class="accordion" id="accordionPanelsStayOpen-2">
-              <Accordion round="1" tID={slug} />
-              <Accordion round="2" tID={slug} />
-              <Accordion round="4" tID={slug} />
-              <Accordion round="8" tID={slug} />
-            </div>
+  <!-- Draws -->
+  <section class="d-info-results d-info">
+    <div class="container">
+      <div class="row">
+        <div class="col-12 b-accordion" id="resultados_torneo_data">
+          <div class="accordion" id="accordionPanelsStayOpen-2">
+            <Accordion round="1" tID={slug} />
+            <Accordion round="2" tID={slug} />
+            <Accordion round="4" tID={slug} />
+            <Accordion round="8" tID={slug} />
           </div>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- Groups -->
-    <section class="d-ranking d-tournaments-calendar bg-img-race">
-      <div class="col-12 container b-ranking-race b-top">
-        <div class="row">
-          {
-            (tournament.tournament.type = "liga" &&
-              tournament.tournament.param_q_per_group != "2" && (
-                <div class="d-info-results d-info">
-                  <div class="col-12 b-accordion" id="resultados_torneo_data">
-                    <div class="accordion" id="accordionPanelsStayOpen-2">
-                      <GroupsQ tID={slug} />
-                    </div>
+  <!-- Groups -->
+  <section class="d-ranking d-tournaments-calendar bg-img-race">
+    <div class="col-12 container b-ranking-race b-top">
+      <div class="row">
+        {
+          (tournament.tournament.type = "liga" &&
+            tournament.tournament.param_q_per_group != "2" && (
+              <div class="d-info-results d-info">
+                <div class="col-12 b-accordion" id="resultados_torneo_data">
+                  <div class="accordion" id="accordionPanelsStayOpen-2">
+                    <GroupsQ tID={slug} />
                   </div>
                 </div>
-              ))
-          }
-          <GroupTable groupID="A" tID={slug} />
-          <GroupTable groupID="B" tID={slug} />
-          <GroupTable groupID="C" tID={slug} />
-          <GroupTable groupID="D" tID={slug} />
-          <GroupTable groupID="F" tID={slug} />
-          <GroupTable groupID="G" tID={slug} />
-          <GroupTable groupID="H" tID={slug} />
-        </div>
+              </div>
+            ))
+        }
+        <GroupTable groupID="A" tID={slug} />
+        <GroupTable groupID="B" tID={slug} />
+        <GroupTable groupID="C" tID={slug} />
+        <GroupTable groupID="D" tID={slug} />
+        <GroupTable groupID="F" tID={slug} />
+        <GroupTable groupID="G" tID={slug} />
+        <GroupTable groupID="H" tID={slug} />
       </div>
-    </section>
-  </body>
-  <!-- JS -->
-  <script is:inline src="assets/js/jquery-3.6.1.min.js"></script>
-  <script is:inline src="https://code.jquery.com/jquery-latest.js"></script>
-  <script
-    is:inline
-    src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>
-  <script
-    is:inline
-    src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
-
-  <script is:inline src="/assets/js/aos.min.js"></script>
-  <script is:inline src="/assets/js/lazyload.js"></script>
-  <script is:inline src="/assets/js/bootstrap.min.js"></script>
-  <script is:inline src="/assets/js/custom.js"></script>
-
-  <script is:inline>
-    AOS.init({
-      once: true,
-      duration: 1500,
-      delay: 100,
-      disable: "mobile",
-    });
-    $(window).scroll(function () {
-      AOS.refresh();
-    });
-  </script>
-</html>
+    </div>
+  </section>
+</SiteLayout>

@@ -2,17 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
-input[type='number'] {
+input[type="number"] {
   -moz-appearance: textfield;
   appearance: textfield;
 }
 
-input[type='number']::-webkit-inner-spin-button {
+input[type="number"]::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
 
-input[type='number']::-webkit-outer-spin-button {
+input[type="number"]::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
@@ -22,7 +22,7 @@ input[type='number']::-webkit-outer-spin-button {
 }
 
 .has-tooltip:hover .tooltip {
-  @apply visible z-50
+  @apply visible z-50;
 }
 
 .upload-button {
@@ -30,7 +30,16 @@ input[type='number']::-webkit-outer-spin-button {
   font-weight: bold;
   text-transform: uppercase;
   background-color: $color-cloudinary-orange;
-  padding: .6em 1.2em;
+  padding: 0.6em 1.2em;
   border: none;
   border-radius: 999px;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
