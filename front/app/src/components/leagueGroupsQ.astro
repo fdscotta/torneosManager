@@ -1,5 +1,4 @@
 ---
-import Versus from "./versus.astro";
 import Arrow from "public/assets/img/icons/arrow-accordion.svg";
 const { tID } = Astro.props;
 const round = "gq";
@@ -23,7 +22,7 @@ const globalQ = await fetch(
           aria-expanded="false"
           aria-controls={`ppanelsStayOpen-collapse-0-${round}`}
         >
-          "Clasificacion Global"
+          Clasificacion Global
           <img
             decoding="async"
             loading="lazy"
@@ -41,35 +40,48 @@ const globalQ = await fetch(
         style=""
       >
         <div class="accordion-body">
-          <div class="row">
-            <div
-              class="col-lg-12 b-player-info-points player-item-f aos-init aos-animate"
-              data-aos="fade-up"
-            >
-              <div class="info-tournament-points">
-                {globalQ?.couples?.map((item: any) => (
-                  <div>
-                    <p class="group_couple mb-4">{item.couple_names}</p>
-                    <div class="row d-flex justify-content-center">
-                      <div class="col-3 text-center">
-                        <p>Sets</p>
-                        <p class="points">{item.sets_total}</p>
-                      </div>
-                      <div class="col-3 text-center">
-                        <p>Games</p>
-                        <p class="points">{item.total_games}</p>
-                      </div>
-                      <div class="col-3 text-center">
-                        <p>Games+</p>
-                        <p class="points">{item.games_positive}</p>
-                      </div>
-                      <div class="col-3 text-center">
-                        <p>Ganados</p>
-                        <p class="points">{item.wins}</p>
+          <div
+            class="col-lg-12 col-sm-12 col-md-12 b-list-ranking aos-init aos-animate"
+            data-aos="fade-up"
+          >
+            <div class="row">
+              <div
+                class="col-lg-12 b-player-info-points player-item-f aos-init aos-animate"
+                data-aos="fade-up"
+              >
+                <div class="info-tournament-points">
+                  {globalQ?.couples?.map((item: any, index) => (
+                    <div>
+                      <p class="group_couple mb-4">{item.couple_names}</p>
+                      <div class="row d-flex justify-content-center">
+                        <div class="col-2 text-center">
+                          <p>&nbsp;</p>
+                          <p class="points">{index + 1}</p>
+                        </div>
+                        <div class="col-2 text-center">
+                          <p>Grupo</p>
+                          <p class="points">{item.group_id + item.id}</p>
+                        </div>
+                        <div class="col-2 text-center">
+                          <p>Sets</p>
+                          <p class="points">{item.sets_total}</p>
+                        </div>
+                        <div class="col-2 text-center">
+                          <p>Games</p>
+                          <p class="points">{item.total_games}</p>
+                        </div>
+                        <div class="col-2 text-center">
+                          <p>Games+</p>
+                          <p class="points">{item.games_positive}</p>
+                        </div>
+                        <div class="col-2 text-center">
+                          <p>Ganados</p>
+                          <p class="points">{item.wins}</p>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
             </div>
           </div>

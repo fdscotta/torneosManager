@@ -6767,8 +6767,8 @@ div:not(.d-hero-bottom) + .d-tournaments:before {
 .d-info .b-accordion .accordion .accordion-item .accordion-body {
   padding-left: 0;
   padding-right: 0;
-  padding-top: 90px;
-  padding-bottom: 90px;
+  padding-top: 45px;
+  padding-bottom: 45px;
 }
 @media (max-width: 768px) {
   .d-info .b-accordion .accordion .accordion-item .accordion-body {
