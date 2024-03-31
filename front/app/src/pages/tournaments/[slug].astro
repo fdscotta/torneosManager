@@ -1,6 +1,7 @@
 ---
 import Accordion from "~/components/accordion.astro";
 import GroupTable from "~/components/groupTables.astro";
+import GroupsQ from "~/components/leagueGroupsQ.astro";
 const { slug } = Astro.params;
 
 const tournament = await fetch(
@@ -26,7 +27,7 @@ const tournament = await fetch(
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css"
     />
-    <link rel="stylesheet" href="/assets/css/main.min.css?1.0.1" />
+    <link rel="stylesheet" href="/assets/css/main.min.css?1.0.2" />
     <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     <link rel="stylesheet" href="/assets/css/dev-styles.css" />
@@ -98,6 +99,18 @@ const tournament = await fetch(
     <section class="d-ranking d-tournaments-calendar bg-img-race">
       <div class="col-12 container b-ranking-race b-top">
         <div class="row">
+          {
+            (tournament.tournament.type = "liga" &&
+              tournament.tournament.param_q_per_group != "2" && (
+                <div class="d-info-results d-info">
+                  <div class="col-12 b-accordion" id="resultados_torneo_data">
+                    <div class="accordion" id="accordionPanelsStayOpen-2">
+                      <GroupsQ tID={slug} />
+                    </div>
+                  </div>
+                </div>
+              ))
+          }
           <GroupTable groupID="A" tID={slug} />
           <GroupTable groupID="B" tID={slug} />
           <GroupTable groupID="C" tID={slug} />
@@ -108,31 +121,31 @@ const tournament = await fetch(
         </div>
       </div>
     </section>
-    <!-- JS -->
-    <script is:inline src="assets/js/jquery-3.6.1.min.js"></script>
-    <script is:inline src="https://code.jquery.com/jquery-latest.js"></script>
-    <script
-      is:inline
-      src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>
-    <script
-      is:inline
-      src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
-
-    <script is:inline src="/assets/js/aos.min.js"></script>
-    <script is:inline src="/assets/js/lazyload.js"></script>
-    <script is:inline src="/assets/js/bootstrap.min.js"></script>
-    <script is:inline src="/assets/js/custom.js"></script>
-
-    <script is:inline>
-      AOS.init({
-        once: true,
-        duration: 1500,
-        delay: 100,
-        disable: "mobile",
-      });
-      $(window).scroll(function () {
-        AOS.refresh();
-      });
-    </script>
   </body>
+  <!-- JS -->
+  <script is:inline src="assets/js/jquery-3.6.1.min.js"></script>
+  <script is:inline src="https://code.jquery.com/jquery-latest.js"></script>
+  <script
+    is:inline
+    src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>
+  <script
+    is:inline
+    src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
+
+  <script is:inline src="/assets/js/aos.min.js"></script>
+  <script is:inline src="/assets/js/lazyload.js"></script>
+  <script is:inline src="/assets/js/bootstrap.min.js"></script>
+  <script is:inline src="/assets/js/custom.js"></script>
+
+  <script is:inline>
+    AOS.init({
+      once: true,
+      duration: 1500,
+      delay: 100,
+      disable: "mobile",
+    });
+    $(window).scroll(function () {
+      AOS.refresh();
+    });
+  </script>
 </html>
