@@ -25,7 +25,7 @@ export default function EditGroupResultForm({
     const [state, dispatch] = useFormState(updateGroupResultAction, initialState);
 
     useEffect(() => {
-        fetch(`/api/couples/bygroup/${tournamentID}/${selectedGroup}`, {
+        fetch(`/api/tournaments/couples/bygroup/${tournamentID}/${selectedGroup}`, {
             method: "POST",
         })
             .then((res) => res.json())
