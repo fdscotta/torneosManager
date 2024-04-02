@@ -1,6 +1,7 @@
 ---
 import Match from "~/components/match.astro";
 import SiteLayout from "~/layouts/siteLayout.astro";
+import ArrowBack from "public/assets/img/icons/arrow-back.svg";
 
 const { tid, gid } = Astro.params;
 
@@ -32,11 +33,21 @@ const tournament = await fetch(
           <div class="row">
             <div class="b-title">
               <a
-                class="navbar-brand"
+                class="navbar-brand w-full position-relative d-flex align-items-center"
                 href={`/tournaments/${tid}`}
                 title="Back Torneo"
               >
-                <h1 class="title">{tournament.tournament.name}</h1>
+                <h1 class="title">Volver</h1>
+                <img
+                  style="rotate:  45deg;filter: brightness(0) saturate(100%) invert(84%) sepia(85%) saturate(456%) hue-rotate(2deg) brightness(89%) contrast(104%);"
+                  class="mx-2"
+                  decoding="async"
+                  loading="lazy"
+                  src={ArrowBack.src}
+                  width="30"
+                  height="30"
+                  alt="arrow"
+                />
               </a>
             </div>
           </div>
