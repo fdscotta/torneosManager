@@ -148,8 +148,11 @@ export async function updateGroupResult(
   const group_id = formData.get("group_id")?.toString() || "";
 
   if (
-    Number(set_1_c1) + Number(set_2_c1) + Number(set_3_c1) >
-    Number(set_1_c2) + Number(set_2_c2) + Number(set_3_c2)
+    (Number(set_1_c1) > Number(set_1_c2) &&
+      Number(set_2_c1) > Number(set_2_c2)) ||
+    (Number(set_1_c1) > Number(set_1_c2) &&
+      Number(set_3_c1) > Number(set_3_c2)) ||
+    (Number(set_2_c1) > Number(set_2_c2) && Number(set_3_c1) > Number(set_3_c2))
   ) {
     winner = "couple_1";
   } else {
