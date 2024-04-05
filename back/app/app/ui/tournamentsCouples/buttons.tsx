@@ -1,7 +1,7 @@
 'use client'
 import { PencilIcon, PlusIcon, TrashIcon } from '@heroicons/react/24/outline';
 import { deleteCouple } from '@/app/lib/tournamentsCouplesActions';
-import { deleteGroupResult } from '@/app/lib/tournamentGroupResultActions';
+import { deleteGroupResult, generateGroupsMatches } from '@/app/lib/tournamentGroupResultActions';
 import Link from 'next/link';
 import { useState } from 'react';
 
@@ -101,6 +101,20 @@ export function AddGroupResult({ tournamentID }: { tournamentID: string }) {
         </>
       }
     </Link>
+  );
+}
+
+export function GenerateGroupsMatches({ tournamentID }: { tournamentID: string }) {
+  const generate = generateGroupsMatches.bind(null, tournamentID);
+  return (
+    <form action={generate}>
+      <button
+        className="flex h-10 items-center rounded-lg bg-blue-600 px-4 text-sm font-medium text-white transition-colors hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+      >
+        <span className="sr-only">Borrar</span>
+        <TrashIcon className="w-5" />
+      </button>
+    </form>
   );
 }
 

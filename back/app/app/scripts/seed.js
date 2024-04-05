@@ -257,6 +257,7 @@ async function createGroupTableResultsView (client) {
           b.player2,
           a.group_id
       ORDER BY
+          wins DESC,
           sets_total DESC,
           total_games DESC,
           games_positive DESC;

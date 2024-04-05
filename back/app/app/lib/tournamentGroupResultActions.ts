@@ -219,6 +219,70 @@ export async function deleteGroupResult(id: string) {
   }
 }
 
+export async function generateGroupsMatches(tournamentID: string) {
+  try {
+    const groupsMatchesR = await sql`SELECT * FROM group_results
+      WHERE tournament_id = ${tournamentID}`;
+    const groupsMatches = groupsMatchesR.rows;
+
+    const groupsR =
+      await sql`SELECT a.couple_id, a.group_id FROM group_couples as a
+      INNER JOIN tournament_couples as b ON b.id::text = a.couple_id
+      WHERE b.tournament_id =  ${tournamentID}
+      ORDER BY a.group_id`;
+    const group = groupsR.rows;
+
+    const allPossibleMatches: any = [];
+    group.forEach((couple) => {
+      if (couple.group_id == "A") {
+        const matches = groupsMatches.filter(
+          (match) => match.group_id === couple.group_id
+        );
+        const gc = group.filter(
+          (x) =>
+            x.group_id == couple.group_id && x.couple_id != couple.couple_id
+        );
+
+        const cm = matches.filter(
+          (x) =>
+            x.couple1_id == couple.couple_id || x.couple2_id == couple.couple_id
+        );
+
+        gc.forEach((c) => {
+          if (
+            !cm.some(
+              (x) =>
+                (x.couple1_id == c.couple_id &&
+                  x.couple2_id == couple.couple_id) ||
+                (x.couple1_id == couple.couple_id &&
+                  x.couple2_id == c.couple_id)
+            )
+          ) {
+            if (
+              !allPossibleMatches.some(
+                (x: any) =>
+                  (x.couple1_id == c.couple_id &&
+                    x.couple2_id == couple.couple_id) ||
+                  (x.couple1_id == couple.couple_id &&
+                    x.couple2_id == c.couple_id)
+              )
+            ) {
+              allPossibleMatches.push({
+                couple1_id: couple.couple_id,
+                couple2_id: c.couple_id,
+              });
+            }
+          }
+        });
+      }
+    });
+
+    return { message: "Borrar Resultado" };
+  } catch (error) {
+    return { message: "Database Error: Failed to Delete Couple." };
+  }
+}
+
 //  declareRounds(qualificationRound, tournamentID);
 
 export async function declareRounds(tournamentID: string) {
