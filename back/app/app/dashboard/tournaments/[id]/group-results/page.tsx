@@ -1,7 +1,7 @@
 import Breadcrumbs from '@/app/ui/tournaments/breadcrumbs';
 import { Metadata } from 'next';
 import Search from '@/app/ui/search';
-import { AddGroupResult } from '@/app/ui/tournamentsCouples/buttons';
+import { AddGroupResult, GenerateGroupsMatches } from '@/app/ui/tournamentsCouples/buttons';
 import { Suspense } from 'react';
 import { TournamentTableSkeleton } from '@/app/ui/skeletons';
 import Table from '@/app/ui/tournamentsCouples/table-results';
@@ -42,6 +42,7 @@ export default async function Page({
         <Search placeholder="Buscar Resultado..." />
         <AddGroupResult tournamentID={params.id} />
       </div>
+      {/* <GenerateGroupsMatches tournamentID={params.id} /> */}
       <Filters filterValue={filter} />
       <Suspense key={JSON.stringify(searchParams)} fallback={<TournamentTableSkeleton />}>
         <Table tournamentID={params.id} query={query} filter={filter} />
