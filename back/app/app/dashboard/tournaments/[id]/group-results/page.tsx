@@ -42,7 +42,7 @@ export default async function Page({
         <Search placeholder="Buscar Resultado..." />
         <AddGroupResult tournamentID={params.id} />
       </div>
-      {/* <GenerateGroupsMatches tournamentID={params.id} /> */}
+      <GenerateGroupsMatches tournamentID={params.id} />
       <Filters filterValue={filter} />
       <Suspense key={JSON.stringify(searchParams)} fallback={<TournamentTableSkeleton />}>
         <Table tournamentID={params.id} query={query} filter={filter} />

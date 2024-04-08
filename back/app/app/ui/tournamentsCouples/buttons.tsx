@@ -109,10 +109,9 @@ export function GenerateGroupsMatches({ tournamentID }: { tournamentID: string }
   return (
     <form action={generate}>
       <button
-        className="flex h-10 items-center rounded-lg bg-blue-600 px-4 text-sm font-medium text-white transition-colors hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+        className="mt-2 flex float-right h-10 items-center rounded-lg bg-blue-600 px-4 text-sm font-medium text-white transition-colors hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
       >
-        <span className="sr-only">Borrar</span>
-        <TrashIcon className="w-5" />
+        Generar Partidos
       </button>
     </form>
   );

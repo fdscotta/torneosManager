@@ -220,6 +220,20 @@ export async function deleteGroupResult(id: string) {
 }
 
 export async function generateGroupsMatches(tournamentID: string) {
+  let row = {
+    group_id: "",
+    couple1_id: "",
+    couple2_id: "",
+    set_1_c1: "",
+    set_2_c1: "",
+    set_3_c1: "",
+    set_1_c2: "",
+    set_2_c2: "",
+    set_3_c2: "",
+    match_date: "",
+    rel_to: "",
+    tournament_id: "",
+  };
   try {
     const groupsMatchesR = await sql`SELECT * FROM group_results
       WHERE tournament_id = ${tournamentID}`;
@@ -234,56 +248,116 @@ export async function generateGroupsMatches(tournamentID: string) {
 
     const allPossibleMatches: any = [];
     group.forEach((couple) => {
-      if (couple.group_id == "A") {
-        const matches = groupsMatches.filter(
-          (match) => match.group_id === couple.group_id
-        );
-        const gc = group.filter(
-          (x) =>
-            x.group_id == couple.group_id && x.couple_id != couple.couple_id
-        );
+      const matches = groupsMatches.filter(
+        (match) => match.group_id === couple.group_id
+      );
+      const gc = group.filter(
+        (x) => x.group_id == couple.group_id && x.couple_id != couple.couple_id
+      );
 
-        const cm = matches.filter(
-          (x) =>
-            x.couple1_id == couple.couple_id || x.couple2_id == couple.couple_id
-        );
+      const cm = matches.filter(
+        (x) =>
+          x.couple1_id == couple.couple_id || x.couple2_id == couple.couple_id
+      );
 
-        gc.forEach((c) => {
+      gc.forEach((c) => {
+        if (
+          !cm.some(
+            (x) =>
+              (x.couple1_id == c.couple_id &&
+                x.couple2_id == couple.couple_id) ||
+              (x.couple1_id == couple.couple_id && x.couple2_id == c.couple_id)
+          )
+        ) {
           if (
-            !cm.some(
-              (x) =>
+            !allPossibleMatches.some(
+              (x: any) =>
                 (x.couple1_id == c.couple_id &&
                   x.couple2_id == couple.couple_id) ||
                 (x.couple1_id == couple.couple_id &&
                   x.couple2_id == c.couple_id)
             )
           ) {
-            if (
-              !allPossibleMatches.some(
-                (x: any) =>
-                  (x.couple1_id == c.couple_id &&
-                    x.couple2_id == couple.couple_id) ||
-                  (x.couple1_id == couple.couple_id &&
-                    x.couple2_id == c.couple_id)
-              )
-            ) {
-              allPossibleMatches.push({
-                couple1_id: couple.couple_id,
-                couple2_id: c.couple_id,
-              });
-            }
+            allPossibleMatches.push({
+              group_id: couple.group_id,
+              couple1_id: couple.couple_id,
+              couple2_id: c.couple_id,
+              rel_to: null,
+            });
           }
-        });
-      }
+        }
+      });
     });
 
-    return { message: "Borrar Resultado" };
+    await Promise.all(
+      allPossibleMatches.map(
+        async (item: {
+          group_id: string;
+          couple1_id: string;
+          couple2_id: string;
+          rel_to: string;
+        }) => {
+          row.group_id = item.group_id;
+          row.couple1_id = item.couple1_id;
+          row.couple2_id = item.couple2_id;
+          row.rel_to = item.rel_to;
+          row.tournament_id = tournamentID;
+          await generateMatch(row);
+        }
+      )
+    );
+
+    return { message: "Matches Generated" };
   } catch (error) {
     return { message: "Database Error: Failed to Delete Couple." };
   }
 }
 
-//  declareRounds(qualificationRound, tournamentID);
+export async function generateMatch(match: any) {
+  try {
+    const result = await sql`
+      INSERT INTO group_results (
+        group_id,
+        couple1_id,
+        couple2_id,
+        winner,
+        set_1_c1,
+        set_2_c1,
+        set_3_c1,
+        set_1_c2,
+        set_2_c2,
+        set_3_c2,
+        match_date,
+        rel_to,
+        tournament_id,
+        rel_from_1,
+        rel_from_2
+      )
+      VALUES (
+        ${match.group_id},
+        ${match.couple1_id},
+        ${match.couple2_id},
+        '',
+        '',
+        '',
+        '',
+        '',
+        '',
+        '',
+        null,
+        ${match.rel_to},
+        ${match.tournament_id},
+        null,
+        null
+      )
+      `;
+  } catch (error) {
+    // If a database error occurs, return a more specific error.
+    return {
+      message: error + "Database Error: Error al crear round.",
+    };
+  }
+}
 
 export async function declareRounds(tournamentID: string) {
   let row = {
