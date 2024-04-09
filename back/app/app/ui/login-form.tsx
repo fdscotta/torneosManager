@@ -36,7 +36,7 @@ export default function LoginForm() {
                 name="email"
                 required
               />
-              <AtSymbolIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900 text-white"/>
+              <AtSymbolIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900 text-white" />
             </div>
           </div>
           <div className="mt-4">
@@ -58,8 +58,8 @@ export default function LoginForm() {
               <KeyIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900 text-white" />
             </div>
           </div>
+          <LoginButton />
         </div>
-        <LoginButton />
         <div
           className="flex h-8 items-end space-x-1"
           aria-live="polite"
@@ -81,7 +81,7 @@ function LoginButton() {
   const { pending } = useFormStatus();
 
   return (
-    <Button className="mt-4 w-full" aria-disabled={pending}>
+    <Button aria-disabled={pending}>
       Log in <ArrowRightIcon className="ml-auto h-5 w-5 text-gray-50" />
     </Button>
   );

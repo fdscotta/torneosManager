@@ -7,6 +7,7 @@ import { TournamentTableSkeleton } from '@/app/ui/skeletons';
 import { Suspense } from 'react';
 import { fetchTournamentsPages } from '@/app/lib/data';
 import { Metadata } from 'next';
+import { auth, getUser } from '@/auth';
 
 export const metadata: Metadata = {
   title: 'Torneos',
@@ -20,6 +21,10 @@ export default async function Page({
     page?: string;
   };
 }) {
+  const session = await auth();
+  const sessionEmail = session?.user?.email || '';
+  const user = await getUser(sessionEmail);
+
   const query = searchParams?.query || '';
   const currentPage = Number(searchParams?.page) || 1;
 
@@ -35,7 +40,7 @@ export default async function Page({
         <CreateTournament />
       </div>
       <Suspense key={query + currentPage} fallback={<TournamentTableSkeleton />}>
-        <Table query={query} currentPage={currentPage} />
+        <Table query={query} currentPage={currentPage} userRole={user?.role} />
       </Suspense>
       <div className="mt-5 flex w-full justify-center">
         <Pagination totalPages={totalPages} />

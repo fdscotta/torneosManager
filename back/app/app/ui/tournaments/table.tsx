@@ -8,11 +8,13 @@ import logo from "@/app/logoNuevo.png";
 export default async function TournamentsTable({
   query,
   currentPage,
+  userRole
 }: {
   query: string;
   currentPage: number;
+  userRole?: string;
 }) {
-  const tournaments = await fetchFilteredTournaments(query, currentPage);
+  const tournaments = await fetchFilteredTournaments(query, currentPage, userRole);
 
   return (
     <div className="mt-6 flow-root">
@@ -45,7 +47,7 @@ export default async function TournamentsTable({
                   {(tournament.status === 0) && <GroupResults id={tournament.id} />}
                   {(tournament.status === 0) && <UpdateTournament id={tournament.id} />}
                   {(tournament.status === 0) && <CloseTournament id={tournament.id} />}
-                  {(tournament.status === 1) && <DeleteTournament id={tournament.id} />}
+                  {/* {(tournament.status === 1) && <DeleteTournament id={tournament.id} />} */}
                 </div>
               </div>
             ))}
@@ -96,7 +98,7 @@ export default async function TournamentsTable({
                       {(tournament.status === 0) && <GroupResults id={tournament.id} />}
                       {(tournament.status === 0) && <UpdateTournament id={tournament.id} />}
                       {(tournament.status === 0) && <CloseTournament id={tournament.id} />}
-                      {(tournament.status === 1) && <DeleteTournament id={tournament.id} />}
+                      {/* {(tournament.status === 1) && <DeleteTournament id={tournament.id} />} */}
                     </div>
                   </td>
                 </tr>
