@@ -5,7 +5,7 @@ import { lusitana } from '@/app/ui/fonts';
 import { fetchActiveTournaments } from '@/app/lib/data';
 import TournamentStatus from '../tournaments/status';
 import { formatDateToLocal } from '@/app/lib/utils';
-import { auth, getUser } from '@/auth';
+
 
 export default async function ActiveTournaments() {
   const activeTournaments = await fetchActiveTournaments();

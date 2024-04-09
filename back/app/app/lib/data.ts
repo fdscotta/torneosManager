@@ -1,12 +1,6 @@
-import { sql } from '@vercel/postgres';
-import {
-  CouplesSelect,
-  GroupsSelect,
-  Tournaments,
-  User,
-} from './definitions';
-import { unstable_noStore as noStore } from 'next/cache';
-
+import { sql } from "@vercel/postgres";
+import { CouplesSelect, GroupsSelect, Tournaments, User } from "./definitions";
+import { unstable_noStore as noStore } from "next/cache";
 
 export async function fetchActiveTournaments() {
   noStore();
@@ -20,8 +14,8 @@ export async function fetchActiveTournaments() {
     return data.rows;
     //return activeTournaments?.id;
   } catch (error) {
-    console.error('Database Error:', error);
-    throw new Error('Failed to fetch the active tournaments.');
+    console.error("Database Error:", error);
+    throw new Error("Failed to fetch the active tournaments.");
   }
 }
 
@@ -29,23 +23,33 @@ const ITEMS_PER_PAGE = 6;
 export async function fetchFilteredTournaments(
   query: string,
   currentPage: number,
+  userRole?: string
 ) {
   noStore();
   const offset = (currentPage - 1) * ITEMS_PER_PAGE;
+  if (query == undefined) {
+    query = "";
+  }
   try {
     const tournaments = await sql<Tournaments>`
       SELECT *
       FROM tournaments
       WHERE
         lower(name::text) LIKE lower(${`%${query}%`})
+        AND (
+          CASE
+              WHEN ${userRole} = 'admin' THEN 1=1
+              ELSE tournament_type = ${userRole}
+          END
+        )
       ORDER BY status,date
       LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
     `;
 
     return tournaments.rows;
   } catch (error) {
-    console.error('Database Error:', error);
-    throw new Error('Failed to fetch tournaments.');
+    console.error("Database Error:", error);
+    throw new Error("Failed to fetch tournaments.");
   }
 }
 
@@ -58,8 +62,8 @@ export async function fetchTournamentsPages(query: string) {
     const totalPages = Math.ceil(Number(count.rows[0].count) / ITEMS_PER_PAGE);
     return totalPages;
   } catch (error) {
-    console.error('Database Error:', error);
-    throw new Error('Failed to fetch total number of tournaments.');
+    console.error("Database Error:", error);
+    throw new Error("Failed to fetch total number of tournaments.");
   }
 }
 
@@ -76,8 +80,8 @@ export async function fetchTournamentById(id: string) {
 
     return tournament[0];
   } catch (error) {
-    console.error('Database Error:', error);
-    throw new Error('Failed to fetch tournament.');
+    console.error("Database Error:", error);
+    throw new Error("Failed to fetch tournament.");
   }
 }
 
@@ -86,7 +90,7 @@ export async function getUser(email: string) {
     const user = await sql<User>`SELECT * from USERS where email=${email}`;
     return user.rows[0] as User;
   } catch (error) {
-    console.error('Failed to fetch user:', error);
-    throw new Error('Failed to fetch user.');
+    console.error("Failed to fetch user:", error);
+    throw new Error("Failed to fetch user.");
   }
 }
