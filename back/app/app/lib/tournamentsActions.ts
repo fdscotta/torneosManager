@@ -5,6 +5,7 @@ import { sql } from "@vercel/postgres";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { updateImageCloud } from "./cloudinary";
+import { auth, getUser } from "@/auth";
 
 const ACCEPTED_IMAGE_TYPES = [
   "image/jpeg",
@@ -53,6 +54,10 @@ export type State = {
 };
 
 export async function createTournament(prevState: State, formData: FormData) {
+  const session = await auth();
+  const sessionEmail = session?.user?.email || "";
+  const user = await getUser(sessionEmail);
+
   // Validate form fields using Zod
   const validatedFields = CreateTournament.safeParse({
     name: formData.get("name"),
@@ -88,7 +93,8 @@ export async function createTournament(prevState: State, formData: FormData) {
         type,
         date,
         image,
-        param_q_per_group
+        param_q_per_group,
+        tournament_type
       )
       VALUES (
         ${name},
@@ -96,7 +102,8 @@ export async function createTournament(prevState: State, formData: FormData) {
         ${t_type},
         ${formatDate},
         ${imagePosted},
-        ${param_q_per_group}
+        ${param_q_per_group},
+        ${user?.role}
       )
     `;
   } catch (error) {
