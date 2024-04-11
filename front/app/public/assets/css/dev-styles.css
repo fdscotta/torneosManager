@@ -74,3 +74,8 @@ body {
     margin-left: 0px;
   }
 }
+
+.tableColumnsInfo {
+  line-height: 14px;
+  font-size: 14px;
+}
