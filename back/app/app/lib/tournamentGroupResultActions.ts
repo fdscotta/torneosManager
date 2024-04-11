@@ -555,7 +555,7 @@ export async function updateDrawFromGroups(
     }
     drawRow = await sql<GroupResult>`
         SELECT * FROM group_results
-        WHERE rel_from_1 = ${realPosition} or rel_from_2  = ${realPosition}
+        WHERE (rel_from_1 = ${realPosition} or rel_from_2  = ${realPosition})
         AND tournament_id = ${tournament.id}`;
 
     if (drawRow.rowCount == 1) {
