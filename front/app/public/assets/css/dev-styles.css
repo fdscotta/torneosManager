@@ -79,3 +79,13 @@ body {
   line-height: 14px;
   font-size: 14px;
 }
+
+footer {
+  position: relative;
+  background-color: #021060;
+  border-top-left-radius: 0px;
+  border-top-right-radius: 0px;
+  padding-top: 44px;
+  padding-bottom: 44px;
+  margin-top: 0px;
+}

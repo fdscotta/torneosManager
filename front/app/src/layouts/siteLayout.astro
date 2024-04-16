@@ -60,21 +60,13 @@ const { title, image, url } = Astro.props;
       is:inline
       src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
 
-    <script is:inline src="/assets/js/aos.min.js"></script>
+    <script is:inline src="https://unpkg.com/aos@next/dist/aos.js"></script>
     <script is:inline src="/assets/js/lazyload.js"></script>
     <script is:inline src="/assets/js/bootstrap.min.js"></script>
     <script is:inline src="/assets/js/custom.js"></script>
 
     <script is:inline>
-      AOS.init({
-        once: true,
-        duration: 1500,
-        delay: 100,
-        disable: "mobile",
-      });
-      $(window).scroll(function () {
-        AOS.refresh();
-      });
+      AOS.init();
     </script>
   </body>
 </html>
