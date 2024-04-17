@@ -49,8 +49,8 @@ switch (round) {
 {
   matches?.couples?.length > 0 &&
     matches?.couples?.find(
-      (x: any) => x.couple1_id == null && x.couple2_id == null
-    ) == undefined && (
+      (x: any) => x.couple1_id != null || x.couple2_id != null
+    ) != undefined && (
       <div class="accordion-item aos-init aos-animate" data-aos="fade-up">
         <h2 class="accordion-header" id={`ppanelsStayOpen-heading-0-${round}`}>
           <button
