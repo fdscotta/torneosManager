@@ -9,7 +9,11 @@ const { item } = Astro.props;
   </div>
   <div class="col-6 col-lg-4 b-players order-1">
     <div>
-      <p class="group_couple_position">{item.rel_from_1}</p>
+      {
+        item.group_id != "2" && item.group_id != "1" && (
+          <p class="group_couple_position">{item.rel_from_1}</p>
+        )
+      }
       <picture>
         <img
           decoding="async"
@@ -60,9 +64,13 @@ const { item } = Astro.props;
   </div>
   <div class="col-6 col-lg-4 b-players order-1 order-lg-3">
     <div>
-      <p class="group_couple_position group_couple_position_r">
-        {item.rel_from_2}
-      </p>
+      {
+        item.group_id != "2" && item.group_id != "1" && (
+          <p class="group_couple_position group_couple_position_r">
+            {item.rel_from_2}
+          </p>
+        )
+      }
       <picture>
         <img
           decoding="async"
