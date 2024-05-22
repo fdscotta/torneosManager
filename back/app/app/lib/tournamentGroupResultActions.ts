@@ -364,6 +364,7 @@ export async function declareRounds(tournamentID: string) {
     group_id: "",
     couple1_id: "",
     couple2_id: "",
+    winner: "",
     set_1_c1: "",
     set_2_c1: "",
     set_3_c1: "",
@@ -425,11 +426,13 @@ export async function declareRounds(tournamentID: string) {
           rel_from_1: string;
           rel_from_2: string;
           rel_to: string;
+          winner: string;
         }) => {
           row.group_id = item.round;
           row.couple1_id = item.rel_from_1;
           row.couple2_id = item.rel_from_2;
           row.rel_to = item.rel_to;
+          row.winner = item.winner;
           row.tournament_id = tournamentID;
           await insertRound(row, tournamentID);
         }
@@ -443,6 +446,10 @@ export async function declareRounds(tournamentID: string) {
 
 export async function insertRound(round: any, tournamentID: string) {
   try {
+    round.winner = "";
+    if ((round.rel_from_2 = "")) {
+      round.winner = "couple_1";
+    }
     const result = await sql`
       INSERT INTO group_results (
         group_id,
@@ -465,7 +472,7 @@ export async function insertRound(round: any, tournamentID: string) {
         ${round.group_id},
         '',
         '',
-        '',
+        ${round.winner},
         '',
         '',
         '',
