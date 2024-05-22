@@ -83,9 +83,7 @@ switch (round) {
         >
           <div class="accordion-body">
             {matches?.couples?.map((item: any) => (
-              <>
-                <Versus item={item} />
-              </>
+              <>{item.rel_from_2 != "" && <Versus item={item} />}</>
             ))}
           </div>
         </div>

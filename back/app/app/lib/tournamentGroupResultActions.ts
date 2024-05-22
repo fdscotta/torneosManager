@@ -447,9 +447,10 @@ export async function declareRounds(tournamentID: string) {
 export async function insertRound(round: any, tournamentID: string) {
   try {
     round.winner = "";
-    if ((round.rel_from_2 = "")) {
+    if (round.couple2_id == "" && round.group_id == "8") {
       round.winner = "couple_1";
     }
+
     const result = await sql`
       INSERT INTO group_results (
         group_id,
