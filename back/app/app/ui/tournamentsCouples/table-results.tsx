@@ -74,8 +74,7 @@ export default async function TournamentsGroupResultTable({
               </thead>
               <tbody className="dark:bg-slate-800 text-white">
                 {results?.map((result) => (
-                  result.group_id == '8' && result.couple2_id !== null &&
-                  (<tr
+                  <tr
                     key={result.id}
                     className="w-full border-b py-3 text-sm last-of-type:border-none [&:first-child>td:first-child]:rounded-tl-lg [&:first-child>td:last-child]:rounded-tr-lg [&:last-child>td:first-child]:rounded-bl-lg [&:last-child>td:last-child]:rounded-br-lg"
                   >
@@ -108,7 +107,7 @@ export default async function TournamentsGroupResultTable({
                         <DeleteGroupResult resultID={result.id} />
                       </div>
                     </td>
-                  </tr>)
+                  </tr>
                 ))}
               </tbody>
             </table>
