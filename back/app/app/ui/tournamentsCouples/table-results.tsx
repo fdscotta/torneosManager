@@ -12,8 +12,6 @@ export default async function TournamentsGroupResultTable({
   filter: string;
 }) {
   const results = await fetchFilteredResultsLikeCouple(query, tournamentID, filter);
-  console.log(results)
-
 
   return (
     <>

@@ -1,11 +1,27 @@
 ---
 import NoImage from "public/assets/img/icons/no-image-big.svg";
 const { item } = Astro.props;
+
+const dateOptionsMonth: Intl.DateTimeFormatOptions = {
+  weekday: "long",
+  day: "numeric",
+  hour: "2-digit",
+  minute: "2-digit",
+};
+
+function getDate(dateStr: string) {
+  const date = new Date(dateStr);
+  const formatter = new Intl.DateTimeFormat("es-ES", dateOptionsMonth);
+  return formatter.format(date);
+}
 ---
 
 <div class="row justify-content-center">
   <div class="col-11 text-center">
     <p>Partido Nro: {item.rel_to}</p>
+  </div>
+  <div class="col-12 text-center">
+    {item.match_date != null ? <p>{getDate(item.match_date)}</p> : <p />}
   </div>
   <div class="col-6 col-lg-4 b-players order-1">
     <div>
