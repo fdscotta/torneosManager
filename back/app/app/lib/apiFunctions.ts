@@ -253,7 +253,7 @@ export async function getMatchesByGroups(
       WHERE
         tournament_id = ${tournament_id}
         AND group_id = ${group_id}
-      ORDER BY a.match_date DESC
+      ORDER BY a.set_1_c1 ASC, a.match_date DESC
     `;
 
     return data.rows;
