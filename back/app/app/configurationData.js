@@ -721,5 +721,6 @@ module.exports = {
     qualificationRoundTournament151617,
     qualificationRoundTournament181920,
     qualificationRoundTournament212223,
-    qualificationRoundTournament242526
+    qualificationRoundTournament242526,
+    qualificationRoundLeague242526Especial
 };
