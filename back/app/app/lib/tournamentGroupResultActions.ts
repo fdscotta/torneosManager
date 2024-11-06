@@ -382,7 +382,7 @@ export async function declareRounds(tournamentID: string) {
 
   if (!tournament.param_draw_set) {
     const gAmount: number = await getTournamentAmountGroups(tournamentID);
-    if (tournament.id == "7ee8907b-52d3-418e-ab0e-ce4ceea2a5aa") {
+    if (tournamentID == "7ee8907b-52d3-418e-ab0e-ce4ceea2a5aa") {
       dataRef = qualificationRoundLeague242526Especial;
     } else {
       if (
