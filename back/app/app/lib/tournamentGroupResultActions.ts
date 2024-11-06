@@ -13,6 +13,7 @@ const {
   qualificationRoundTournament181920,
   qualificationRoundTournament212223,
   qualificationRoundTournament242526,
+  qualificationRoundLeague242526Especial,
 } = require("../configurationData.js");
 import {
   getGroupsByTournament,
@@ -381,42 +382,46 @@ export async function declareRounds(tournamentID: string) {
 
   if (!tournament.param_draw_set) {
     const gAmount: number = await getTournamentAmountGroups(tournamentID);
-    if (
-      tournament.type == "torneo" ||
-      (tournament.type == "liga" && tournament.param_q_per_group == "2")
-    ) {
-      switch (gAmount) {
-        case 2:
-          dataRef = qualificationRoundTournament678;
-          break;
-        case 3:
-          dataRef = qualificationRoundTournament91011;
-          break;
-        case 4:
-          dataRef = qualificationRoundTournament121314;
-          break;
-        case 5:
-          dataRef = qualificationRoundTournament151617;
-          break;
-        case 6:
-          dataRef = qualificationRoundTournament181920;
-          break;
-        case 7:
-          dataRef = qualificationRoundTournament212223;
-          break;
-        case 8:
-          dataRef = qualificationRoundTournament242526;
-          break;
-      }
+    if (tournament.id == "7ee8907b-52d3-418e-ab0e-ce4ceea2a5aa") {
+      dataRef = qualificationRoundLeague242526Especial;
     } else {
-      const cAmount = tournament.param_q_per_group * gAmount;
-      switch (cAmount) {
-        case 8:
-          dataRef = qualificationRoundLeague;
-          break;
-        case 16:
-          dataRef = qualificationRoundLeague242526;
-          break;
+      if (
+        tournament.type == "torneo" ||
+        (tournament.type == "liga" && tournament.param_q_per_group == "2")
+      ) {
+        switch (gAmount) {
+          case 2:
+            dataRef = qualificationRoundTournament678;
+            break;
+          case 3:
+            dataRef = qualificationRoundTournament91011;
+            break;
+          case 4:
+            dataRef = qualificationRoundTournament121314;
+            break;
+          case 5:
+            dataRef = qualificationRoundTournament151617;
+            break;
+          case 6:
+            dataRef = qualificationRoundTournament181920;
+            break;
+          case 7:
+            dataRef = qualificationRoundTournament212223;
+            break;
+          case 8:
+            dataRef = qualificationRoundTournament242526;
+            break;
+        }
+      } else {
+        const cAmount = tournament.param_q_per_group * gAmount;
+        switch (cAmount) {
+          case 8:
+            dataRef = qualificationRoundLeague;
+            break;
+          case 16:
+            dataRef = qualificationRoundLeague242526;
+            break;
+        }
       }
     }
     await Promise.all(
