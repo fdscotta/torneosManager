@@ -27,7 +27,9 @@ function getDate(dateStr: string) {
       <div class="col-6 col-lg-4 b-players order-1">
         <div>
           <p class="group_couple_position">{item.rel_from_1}</p>
-          <div class="names">
+          <div
+            class={`names ${item.winner == "couple_1" ? "winnerColor" : ""}`}
+          >
             {item.couple1_name != null ? (
               <>
                 <p>{item.couple1_name?.split("-")[0]}</p>
@@ -60,7 +62,9 @@ function getDate(dateStr: string) {
           <p class="group_couple_position group_couple_position_r">
             {item.rel_from_2}
           </p>
-          <div class="names">
+          <div
+            class={`names ${item.winner == "couple_2" ? "winnerColor" : ""}`}
+          >
             {item.couple2_name != null ? (
               <>
                 <p>{item.couple2_name?.split("-")[0]}</p>
