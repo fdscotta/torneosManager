@@ -8,6 +8,7 @@ const group = await fetch(
     method: "POST",
   }
 ).then((response) => response.json());
+console.log(group);
 ---
 
 {
@@ -77,7 +78,9 @@ const group = await fetch(
                     <div class="col-4 text-center">
                       <p>Wins</p>
                       <p class="points">
-                        {item.wins} / {item.lost.amount}
+                        {item.lost.type == "torneo"
+                          ? item.wins
+                          : item.wins + "/" + item.lost.amount}
                       </p>
                     </div>
                     <div class="col-4 text-center">

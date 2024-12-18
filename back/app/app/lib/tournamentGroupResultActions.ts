@@ -4,8 +4,10 @@ import { QueryResult, sql } from "@vercel/postgres";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 const {
-  qualificationRoundLeague,
-  qualificationRoundLeague242526,
+  qualificationRoundLeague8,
+  qualificationRoundLeague10,
+  qualificationRoundLeague12,
+  qualificationRoundLeague16,
   qualificationRoundTournament678,
   qualificationRoundTournament91011,
   qualificationRoundTournament121314,
@@ -413,10 +415,16 @@ export async function declareRounds(tournamentID: string) {
       const cAmount = tournament.param_q_per_group * gAmount;
       switch (cAmount) {
         case 8:
-          dataRef = qualificationRoundLeague;
+          dataRef = qualificationRoundLeague8;
+          break;
+        case 10:
+          dataRef = qualificationRoundLeague10;
+          break;
+        case 12:
+          dataRef = qualificationRoundLeague12;
           break;
         case 16:
-          dataRef = qualificationRoundLeague242526;
+          dataRef = qualificationRoundLeague16;
           break;
       }
     }
