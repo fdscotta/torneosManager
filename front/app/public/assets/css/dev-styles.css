@@ -89,3 +89,16 @@ footer {
   padding-bottom: 44px;
   margin-top: 0px;
 }
+
+.d-info .b-accordion .accordion .accordion-item .accordion-body {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.d-info-results .b-accordion .accordion .accordion-item .accordion-body > .row {
+  margin-bottom: 40px !important;
+}
+
+.winnerColor p {
+  color: #e0e721;
+}
