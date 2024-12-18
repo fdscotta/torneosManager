@@ -8,7 +8,6 @@ const group = await fetch(
     method: "POST",
   }
 ).then((response) => response.json());
-console.log(group);
 ---
 
 {
@@ -76,11 +75,11 @@ console.log(group);
                   </div>
                   <div class="row d-flex justify-content-center mb-2">
                     <div class="col-4 text-center">
-                      <p>Wins</p>
+                      <p>{item.lost.type === "torneo" ? "Wins" : "Win/Lose"}</p>
                       <p class="points">
-                        {item.lost.type == "torneo"
+                        {item.lost.type === "torneo"
                           ? item.wins
-                          : item.wins + "/" + item.lost.amount}
+                          : `${item.wins}/${item.lost.amount}`}
                       </p>
                     </div>
                     <div class="col-4 text-center">
