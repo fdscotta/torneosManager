@@ -1,0 +1,78 @@
+---
+import Match from "~/components/match.astro";
+import ArrowBack from "public/assets/img/icons/arrow-back.svg";
+
+const { id, open, item, tid, gid, cid } = Astro.props;
+
+const matches = await fetch(
+  `https://torneos-manager.vercel.app/api/groups/matches/${tid}/${gid}`,
+  {
+    method: "POST",
+  }
+).then((response) => response.json());
+
+const tournament = await fetch(
+  `https://torneos-manager.vercel.app/api/tournaments/${tid}`,
+  {
+    method: "POST",
+  }
+).then((response) => response.json());
+---
+
+<a
+  style="text-decoration: none; cursor:pointer"
+  onclick={`window.${id}.showModal()`}
+>
+  <p class="group_couple mb-4">
+    {open}
+    <img
+      style="rotate:  135deg;filter: brightness(0) saturate(100%) invert(84%) sepia(85%) saturate(456%) hue-rotate(2deg) brightness(89%) contrast(104%);"
+      class="mx-2"
+      decoding="async"
+      loading="lazy"
+      src={ArrowBack.src}
+      width="14"
+      height="14"
+      alt="arrow"
+    />
+  </p>
+</a>
+
+<style>
+  dialog {
+    width: 100%;
+    padding: 0px;
+  }
+  .d-info {
+    top: 0;
+  }
+</style>
+
+<dialog id={id}>
+  <form
+    method="dialog"
+    class="px-2 pt-4 d-flex justify-content-end"
+    style="background-color: #040738;"
+  >
+    <slot name="close" />
+  </form>
+  <section class="d-info-results d-info d-tournaments">
+    <div class="container">
+      <div class="row">
+        <div class="col-12 b-accordion">
+          <div class="accordion">
+            <div class="accordion-item aos-init aos-animate" data-aos="fade-up">
+              <div class="accordion-body">
+                {
+                  matches?.matches?.map((item: any) => (
+                    <Match item={item} cid={cid} />
+                  ))
+                }
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</dialog>
