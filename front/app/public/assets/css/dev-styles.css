@@ -91,14 +91,18 @@ footer {
 }
 
 .d-info .b-accordion .accordion .accordion-item .accordion-body {
-  padding-top: 20px;
-  padding-bottom: 20px;
+  padding-top: 0px;
+  padding-bottom: 0px;
 }
 
 .d-info-results .b-accordion .accordion .accordion-item .accordion-body > .row {
-  margin-bottom: 40px !important;
+  margin-bottom: 20px !important;
 }
 
 .winnerColor p {
   color: #e0e721;
+}
+
+.d-info-results .d-info .d-tournaments {
+  padding-top: 0px !important;
 }

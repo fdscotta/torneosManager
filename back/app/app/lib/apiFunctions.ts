@@ -358,14 +358,16 @@ export async function getLostByCouple(
   noStore();
   try {
     const data = await sql`
-      SELECT count(*) as amount
-          FROM group_results
+      SELECT count(gr.*) as amount, t.type
+          FROM group_results as gr
+          INNER JOIN tournaments as t ON gr.tournament_id = t.id::text
       WHERE
-          tournament_id = ${tournament_id}
+          gr.tournament_id = ${tournament_id}
           AND
-          (couple1_id = ${couple_id} OR
-          couple2_id = ${couple_id})
-              AND winner != ''
+          (gr.couple1_id = ${couple_id} OR
+          gr.couple2_id = ${couple_id})
+          AND gr.winner != ''
+      GROUP BY t.type
     `;
     return data.rows[0];
   } catch (error) {
