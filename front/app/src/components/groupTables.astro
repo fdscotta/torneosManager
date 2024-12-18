@@ -2,9 +2,8 @@
 const { groupID, tID } = Astro.props;
 import ArrowBack from "public/assets/img/icons/arrow-back.svg";
 import Modal from "~/components/modal.astro";
-/* `https://torneos-manager.vercel.app/api/groups/results-by-group/${tID}/${groupID}`, */
 const group = await fetch(
-  `http://localhost:3000/api/groups/results-by-group/${tID}/${groupID}`,
+  `https://torneos-manager.vercel.app/api/groups/results-by-group/${tID}/${groupID}`,
   {
     method: "POST",
   }
@@ -12,7 +11,7 @@ const group = await fetch(
 ---
 
 {
-  group?.groupsResults?.length > 0 && (
+  group?.updatedGroupsResults?.length > 0 && (
     <>
       <div
         class="col-lg-6 col-sm-12 col-md-12 b-list-ranking aos-init aos-animate"
@@ -23,7 +22,7 @@ const group = await fetch(
             <div class="row">
               <div class="col">
                 <h2 class="title">
-                  G-{groupID} ({group.groupsResults.length} Parejas)
+                  G-{groupID} ({group.updatedGroupsResults.length} Parejas)
                 </h2>
               </div>
             </div>
@@ -35,7 +34,7 @@ const group = await fetch(
             data-aos="fade-up"
           >
             <div class="info-tournament-points">
-              {group?.groupsResults?.map((item: any) => (
+              {group?.updatedGroupsResults?.map((item: any) => (
                 <div>
                   <div class="d-flex justify-content-between m-2">
                     <p class="group_couple mb-4">{item.couple_names}</p>
