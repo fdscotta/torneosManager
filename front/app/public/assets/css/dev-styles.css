@@ -106,3 +106,7 @@ footer {
 .d-info-results .d-info .d-tournaments {
   padding-top: 0px !important;
 }
+
+.accordion-collapse.collapse.show {
+  margin-top: 20px;
+}
