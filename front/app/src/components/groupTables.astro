@@ -2,8 +2,9 @@
 const { groupID, tID } = Astro.props;
 import ArrowBack from "public/assets/img/icons/arrow-back.svg";
 import Modal from "~/components/modal.astro";
+/* `https://torneos-manager.vercel.app/api/groups/results-by-group/${tID}/${groupID}`, */
 const group = await fetch(
-  `https://torneos-manager.vercel.app/api/groups/results-by-group/${tID}/${groupID}`,
+  `http://localhost:3000/api/groups/results-by-group/${tID}/${groupID}`,
   {
     method: "POST",
   }
@@ -44,7 +45,6 @@ const group = await fetch(
                         .trim()
                         .replaceAll(" ", "")}
                       open="Partidos"
-                      item={item}
                       tid={tID}
                       gid={groupID}
                       cid={item.couple_names}
@@ -53,6 +53,10 @@ const group = await fetch(
                         style="text-decoration: none; cursor:pointer;outline:none;"
                         slot="close"
                         href="#"
+                        onclick={`document.getElementById('${item.couple_names
+                          .replaceAll("-", "")
+                          .trim()
+                          .replaceAll(" ", "")}').close()`}
                       >
                         <p class="group_couple mb-0">
                           Cerrar
@@ -70,23 +74,19 @@ const group = await fetch(
                       </a>
                     </Modal>
                   </div>
-                  <div class="row d-flex justify-content-center m-2">
+                  <div class="row d-flex justify-content-center mb-2">
                     <div class="col-4 text-center">
                       <p>Wins</p>
-                      <p class="points">{item.wins}</p>
-                    </div>
-                    {/* <div class="col-4 text-center">
-                      <p>Lose</p>
                       <p class="points">
-                        {group.groupsResults.length - item.wins}
+                        {item.wins} / {item.lost.amount}
                       </p>
-                    </div> */}
+                    </div>
                     <div class="col-4 text-center">
                       <p>Sets</p>
                       <p class="points">{item.sets_total}</p>
                     </div>
                     <div class="col-4 text-center">
-                      <p>DG</p>
+                      <p>Games</p>
                       <p class="points">{item.total_games}</p>
                     </div>
                   </div>

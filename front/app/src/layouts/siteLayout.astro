@@ -1,5 +1,4 @@
 ---
-import { ViewTransitions } from "astro:transitions";
 const { title, image, url } = Astro.props;
 ---
 
@@ -44,11 +43,9 @@ const { title, image, url } = Astro.props;
     <meta name="twitter:title" content={title} />
     <meta name="twitter:text:description" content={title} />
     <meta name="twitter:image:src" content={image} />
-
-    <ViewTransitions />
   </head>
 
-  <body>
+  <body data-aos-easing="ease" data-aos-duration="500" data-aos-delay="100">
     <slot />
     <!-- JS -->
     <script is:inline src="/assets/js/jquery-3.6.1.min.js"></script>
