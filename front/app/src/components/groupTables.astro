@@ -21,9 +21,7 @@ const group = await fetch(
           <div class="container">
             <div class="row">
               <div class="col">
-                <h2 class="title">
-                  G-{groupID} ({group.updatedGroupsResults.length} Parejas)
-                </h2>
+                <h2 class="title">G-{groupID}</h2>
               </div>
             </div>
           </div>
@@ -75,7 +73,7 @@ const group = await fetch(
                   </div>
                   <div class="row d-flex justify-content-center mb-2">
                     <div class="col-4 text-center">
-                      <p>{item.lost.type === "torneo" ? "Wins" : "Win/Lose"}</p>
+                      <p>Wins</p>
                       <p class="points">
                         {item.lost.type === "torneo"
                           ? item.wins
