@@ -350,3 +350,26 @@ export async function getCouplesGlobalQ(tournamentID: string) {
 
   return totalResults;
 }
+
+export async function getLostByCouple(
+  tournament_id: string,
+  couple_id: string
+) {
+  noStore();
+  try {
+    const data = await sql`
+      SELECT count(*) as amount
+          FROM group_results
+      WHERE
+          tournament_id = ${tournament_id}
+          AND
+          (couple1_id = ${couple_id} OR
+          couple2_id = ${couple_id})
+              AND winner != ''
+    `;
+    return data.rows[0];
+  } catch (error) {
+    console.error("Database Error:", error);
+    throw new Error("Failed to fetch getLostByCouple.");
+  }
+}
