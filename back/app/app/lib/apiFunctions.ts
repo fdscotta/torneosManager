@@ -367,6 +367,7 @@ export async function getLostByCouple(
           (gr.couple1_id = ${couple_id} OR
           gr.couple2_id = ${couple_id})
           AND gr.winner != ''
+          AND gr.group_id NOT IN ('8', '4', '2', '1')
       GROUP BY t.type
     `;
     return data.rows[0];
