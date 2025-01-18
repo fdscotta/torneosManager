@@ -88,7 +88,7 @@ const qualificationRoundLeague10 = [
     },
     {
         round: "8",
-        rel_from_1: "1",
+        rel_from_1: "2",
         rel_from_2: "",
         rel_to: "88",
     },
