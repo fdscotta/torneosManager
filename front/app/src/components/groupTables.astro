@@ -75,9 +75,9 @@ const group = await fetch(
                     <div class="col-4 text-center">
                       <p>Wins</p>
                       <p class="points">
-                        {item.lost.type === "torneo"
+                        {item.lost?.type === "torneo"
                           ? item.wins
-                          : `${item.wins}/${item.lost.amount}`}
+                          : `${item.wins}/${item.lost?.amount == undefined ? 0 : item.lost?.amount}`}
                       </p>
                     </div>
                     <div class="col-4 text-center">

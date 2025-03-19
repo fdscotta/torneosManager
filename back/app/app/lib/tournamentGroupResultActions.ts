@@ -7,6 +7,7 @@ const {
   qualificationRoundLeague8,
   qualificationRoundLeague10,
   qualificationRoundLeague12,
+  qualificationRoundLeague14,
   qualificationRoundLeague16,
   qualificationRoundTournament678,
   qualificationRoundTournament91011,
@@ -413,6 +414,7 @@ export async function declareRounds(tournamentID: string) {
       }
     } else {
       const cAmount = tournament.param_q_per_group * gAmount;
+      console.log(cAmount);
       switch (cAmount) {
         case 8:
           dataRef = qualificationRoundLeague8;
@@ -422,6 +424,9 @@ export async function declareRounds(tournamentID: string) {
           break;
         case 12:
           dataRef = qualificationRoundLeague12;
+          break;
+        case 14:
+          dataRef = qualificationRoundLeague14;
           break;
         case 16:
           dataRef = qualificationRoundLeague16;
