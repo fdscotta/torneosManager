@@ -238,8 +238,8 @@ const qualificationRoundLeague14 = [
     },
     {
         round: "8",
-        rel_from_1: "",
-        rel_from_2: "8",
+        rel_from_1: "8",
+        rel_from_2: "",
         rel_to: "82",
     },
     {
