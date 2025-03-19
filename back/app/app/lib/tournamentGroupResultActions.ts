@@ -414,6 +414,7 @@ export async function declareRounds(tournamentID: string) {
       }
     } else {
       const cAmount = tournament.param_q_per_group * gAmount;
+      console.log(cAmount);
       switch (cAmount) {
         case 8:
           dataRef = qualificationRoundLeague8;
