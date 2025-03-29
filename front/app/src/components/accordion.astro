@@ -5,6 +5,15 @@ const { round, tID } = Astro.props;
 
 let matches: any;
 switch (round) {
+  case "16":
+    matches = await fetch(
+      `https://torneos-manager.vercel.app/api/tournaments/couples/by16vos/${tID}`,
+      {
+        method: "POST",
+      }
+    ).then((response) => response.json());
+    break;
+
   case "8":
     matches = await fetch(
       `https://torneos-manager.vercel.app/api/tournaments/couples/by8vos/${tID}`,

@@ -1,7 +1,7 @@
 ---
 import Accordion from "~/components/accordion.astro";
 import GroupTable from "~/components/groupTables.astro";
-import GroupsQ from "~/components/leagueGroupsQ.astro";
+/* import GroupsQ from "~/components/leagueGroupsQ.astro"; */
 import SiteLayout from "~/layouts/siteLayout.astro";
 const { slug } = Astro.params;
 
@@ -43,6 +43,7 @@ const tournament = await fetch(
             <Accordion round="2" tID={slug} />
             <Accordion round="4" tID={slug} />
             <Accordion round="8" tID={slug} />
+            <Accordion round="16" tID={slug} />
           </div>
         </div>
       </div>
@@ -53,7 +54,7 @@ const tournament = await fetch(
   <section class="d-ranking d-tournaments-calendar bg-img-race">
     <div class="col-12 container b-ranking-race b-top">
       <div class="row">
-        {
+        <!--         {
           (tournament.tournament.type = "liga" &&
             tournament.tournament.param_q_per_group != "2" && (
               <div class="d-info-results d-info">
@@ -64,7 +65,7 @@ const tournament = await fetch(
                 </div>
               </div>
             ))
-        }
+        } -->
         <GroupTable groupID="A" tID={slug} />
         <GroupTable groupID="B" tID={slug} />
         <GroupTable groupID="C" tID={slug} />

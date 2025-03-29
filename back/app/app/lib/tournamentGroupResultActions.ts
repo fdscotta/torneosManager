@@ -9,6 +9,7 @@ const {
   qualificationRoundLeague12,
   qualificationRoundLeague14,
   qualificationRoundLeague16,
+  qualificationRoundLeague18,
   qualificationRoundTournament678,
   qualificationRoundTournament91011,
   qualificationRoundTournament121314,
@@ -431,6 +432,9 @@ export async function declareRounds(tournamentID: string) {
         case 16:
           dataRef = qualificationRoundLeague16;
           break;
+        case 18:
+          dataRef = qualificationRoundLeague18;
+          break;
       }
     }
 
@@ -556,7 +560,9 @@ export async function updateQRounds(tournamentID: string) {
     await updateDrawFromGroups(couple, index + 1, tournament);
   });
 
-  if (cAmount > 8) {
+  if (cAmount > 16) {
+    await updateDraw("16", "8", tournament);
+  } else if (cAmount > 8) {
     await updateDraw("8", "4", tournament);
   }
   await updateDraw("4", "2", tournament);
