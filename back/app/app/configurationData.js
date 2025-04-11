@@ -1199,6 +1199,7 @@ module.exports = {
     qualificationRoundLeague14,
     qualificationRoundLeague16,
     qualificationRoundLeague18,
+    qualificationRoundLeague28,
     qualificationRoundTournament678,
     qualificationRoundTournament91011,
     qualificationRoundTournament121314,
