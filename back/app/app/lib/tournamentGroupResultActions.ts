@@ -10,6 +10,7 @@ const {
   qualificationRoundLeague14,
   qualificationRoundLeague16,
   qualificationRoundLeague18,
+  qualificationRoundLeague28,
   qualificationRoundTournament678,
   qualificationRoundTournament91011,
   qualificationRoundTournament121314,
@@ -434,6 +435,9 @@ export async function declareRounds(tournamentID: string) {
           break;
         case 18:
           dataRef = qualificationRoundLeague18;
+          break;
+        case 28:
+          dataRef = qualificationRoundLeague28;
           break;
       }
     }
