@@ -416,7 +416,7 @@ export async function declareRounds(tournamentID: string) {
       }
     } else {
       const cAmount = tournament.param_q_per_group * gAmount;
-      console.log(cAmount);
+
       switch (cAmount) {
         case 8:
           dataRef = qualificationRoundLeague8;
@@ -441,7 +441,6 @@ export async function declareRounds(tournamentID: string) {
           break;
       }
     }
-
     await Promise.all(
       dataRef.map(
         async (item: {
@@ -469,8 +468,9 @@ export async function declareRounds(tournamentID: string) {
 
 export async function insertRound(round: any, tournamentID: string) {
   try {
-    round.winner = "";
-    if (round.couple2_id == "" && round.group_id == "8") {
+    if (round.couple1_id !== "" && round.couple2_id !== "") {
+      round.winner = "";
+    } else {
       round.winner = "couple_1";
     }
 
@@ -586,10 +586,13 @@ export async function updateDrawFromGroups(
     } else {
       realPosition = position.toString();
     }
+
     drawRow = await sql<GroupResult>`
-        SELECT * FROM group_results
-        WHERE (rel_from_1 = ${realPosition} or rel_from_2  = ${realPosition})
-        AND tournament_id = ${tournament.id}`;
+    SELECT * FROM group_results
+    WHERE (rel_from_1 = ${realPosition} or rel_from_2  = ${realPosition})
+    AND tournament_id = ${tournament.id}
+    ORDER BY group_id DESC
+    LIMIT 1`;
 
     if (drawRow.rowCount == 1) {
       const couple1_id =
@@ -635,7 +638,7 @@ export async function updateDraw(
       AND tournament_id = ${tournament.id}
     `;
 
-    if (drawRow.rowCount == 0) {
+    /*     if (drawRow.rowCount == 0) {
       await sql`
         UPDATE group_results SET
           couple1_id = '',
@@ -644,7 +647,7 @@ export async function updateDraw(
         AND tournament_id = ${tournament.id}
       `;
       return true;
-    }
+    } */
 
     const drawToRow = await sql<GroupResult>`
       SELECT * FROM group_results

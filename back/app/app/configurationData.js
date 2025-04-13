@@ -565,8 +565,8 @@ const qualificationRoundLeague28 = [
     },
     {
         round: "16",
-        rel_from_1: "",
-        rel_from_2: "4",
+        rel_from_1: "4",
+        rel_from_2: "",
         rel_to: "168",
     },
     {
@@ -613,8 +613,8 @@ const qualificationRoundLeague28 = [
     },
     {
         round: "16",
-        rel_from_1: "",
-        rel_from_2: "2",
+        rel_from_1: "2",
+        rel_from_2: "",
         rel_to: "1616",
     },
     {
