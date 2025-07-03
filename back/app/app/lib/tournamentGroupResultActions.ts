@@ -566,6 +566,7 @@ export async function updateQRounds(tournamentID: string) {
 
   if (cAmount > 16) {
     await updateDraw("16", "8", tournament);
+    await updateDraw("8", "4", tournament);
   } else if (cAmount > 8) {
     await updateDraw("8", "4", tournament);
   }
