@@ -6,6 +6,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { updateImageCloud } from "./cloudinary";
 import { auth, getUser } from "@/auth";
+import { roleImageMap } from "./utils";
 
 const ACCEPTED_IMAGE_TYPES = [
   "image/jpeg",
@@ -80,6 +81,8 @@ export async function createTournament(prevState: State, formData: FormData) {
   if (file.size > 0) {
     imagePosted = await updateImageCloud(file);
   }
+
+  imagePosted = user?.role ? roleImageMap[user.role] ?? "" : "";
 
   const { name, date, param_q_per_group, t_type } = validatedFields.data;
 

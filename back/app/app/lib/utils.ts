@@ -74,3 +74,12 @@ export const generatePagination = (currentPage: number, totalPages: number) => {
     totalPages,
   ];
 };
+
+export const roleImageMap: Record<string, string> = {
+  cristal:
+    "https://res.cloudinary.com/dioc4jjum/image/upload/v1717473190/yehj4xb2bgpetjfjlcvm.png",
+  jaula:
+    "https://res.cloudinary.com/dioc4jjum/image/upload/v1711036549/cntcxjoliltx3ldnehg8.png",
+  pampa:
+    "https://res.cloudinary.com/dioc4jjum/image/upload/v1752796369/pampapadel_bufdhc.png",
+};
