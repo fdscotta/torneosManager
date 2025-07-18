@@ -75,7 +75,7 @@ export default function Filters({ filterValue }: { filterValue: string }) {
                         }}
                     />
                     <label
-                        htmlFor="2"
+                        htmlFor="3"
                         className="block cursor-pointer select-none rounded-xl p-2 text-center peer-checked:bg-blue-600"
                     >
                         8vos
@@ -95,7 +95,7 @@ export default function Filters({ filterValue }: { filterValue: string }) {
                         }}
                     />
                     <label
-                        htmlFor="3"
+                        htmlFor="4"
                         className="block cursor-pointer select-none rounded-xl p-2 text-center peer-checked:bg-blue-600"
                     >
                         4tos
@@ -115,7 +115,7 @@ export default function Filters({ filterValue }: { filterValue: string }) {
                         }}
                     />
                     <label
-                        htmlFor="4"
+                        htmlFor="5"
                         className="block cursor-pointer select-none rounded-xl p-2 text-center peer-checked:bg-blue-600"
                     >
                         Semis
@@ -135,7 +135,7 @@ export default function Filters({ filterValue }: { filterValue: string }) {
                         }}
                     />
                     <label
-                        htmlFor="5"
+                        htmlFor="6"
                         className="block cursor-pointer select-none rounded-xl p-2 text-center peer-checked:bg-blue-600"
                     >
                         Final
