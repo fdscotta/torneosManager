@@ -19,7 +19,13 @@ export default async function TournamentsGroupResultTable({
         <div className="inline-block min-w-full align-middle">
           <div className="rounded-lg dark:bg-slate-800 p-2 md:pt-0">
             <div className="md:hidden">
-              {results?.map((result) => (
+              {results?.filter(
+                (result) =>
+                  !(
+                    result.winner &&
+                    (!result.couple1_id || !result.couple2_id)
+                  )
+              ).map((result) => (
                 <div
                   key={result.id}
                   className="mb-2 w-full rounded-md dark:bg-slate-800 p-4"
@@ -71,7 +77,13 @@ export default async function TournamentsGroupResultTable({
                 </tr>
               </thead>
               <tbody className="dark:bg-slate-800 text-white">
-                {results?.map((result) => (
+                {results?.filter(
+                  (result) =>
+                    !(
+                      result.winner &&
+                      (!result.couple1_id || !result.couple2_id)
+                    )
+                ).map((result) => (
                   <tr
                     key={result.id}
                     className="w-full border-b py-3 text-sm last-of-type:border-none [&:first-child>td:first-child]:rounded-tl-lg [&:first-child>td:last-child]:rounded-tr-lg [&:last-child>td:first-child]:rounded-bl-lg [&:last-child>td:last-child]:rounded-br-lg"

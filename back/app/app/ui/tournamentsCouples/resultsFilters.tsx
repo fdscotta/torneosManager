@@ -47,6 +47,26 @@ export default function Filters({ filterValue }: { filterValue: string }) {
                         type="radio"
                         name="option"
                         id="2"
+                        value="16"
+                        className="peer hidden"
+                        checked={filterValue === '16'}
+                        onChange={(e) => {
+                            handleFilter(e.target.value);
+                        }}
+                    />
+                    <label
+                        htmlFor="2"
+                        className="block cursor-pointer select-none rounded-xl p-2 text-center peer-checked:bg-blue-600"
+                    >
+                        16vos
+                    </label>
+                </div>
+
+                <div>
+                    <input
+                        type="radio"
+                        name="option"
+                        id="3"
                         value="8"
                         className="peer hidden"
                         checked={filterValue === '8'}
@@ -66,7 +86,7 @@ export default function Filters({ filterValue }: { filterValue: string }) {
                     <input
                         type="radio"
                         name="option"
-                        id="3"
+                        id="4"
                         value="4"
                         className="peer hidden"
                         checked={filterValue === '4'}
@@ -86,7 +106,7 @@ export default function Filters({ filterValue }: { filterValue: string }) {
                     <input
                         type="radio"
                         name="option"
-                        id="4"
+                        id="5"
                         value="2"
                         className="peer hidden"
                         checked={filterValue === '2'}
@@ -106,7 +126,7 @@ export default function Filters({ filterValue }: { filterValue: string }) {
                     <input
                         type="radio"
                         name="option"
-                        id="5"
+                        id="6"
                         value="1"
                         className="peer hidden"
                         checked={filterValue === '1'}
